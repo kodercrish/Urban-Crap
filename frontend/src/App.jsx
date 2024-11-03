@@ -1,14 +1,49 @@
-import AdminHome from "./admin/webPages/home/page.jsx";
-import CustomerHome from "./customer/webPages/home/page.jsx";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './authentication/login.jsx';
 
-function App() {
+import AdminSignIn from './admin/webPages/signIn/page.jsx';
+import CustomerSignIn from './customer/webPages/signIn/page.jsx';
+import AgentSignIn from './serviceAgent/webPages/signIn/page.jsx';
+
+import CustomerSignUp from './customer/webPages/signUp/page.jsx';
+
+import AdminHome from "./admin/webPages/home/page.jsx";
+import AdminProfile from "./admin/webPages/profile/page.jsx";
+
+import AgentHome from "./serviceAgent/webPages/home/page.jsx";
+import AgentProfile from "./serviceAgent/webPages/profile/page.jsx";
+
+import CustomerHome from "./customer/webPages/home/page.jsx";
+import CustomerProfile from "./customer/webPages/profile/page.jsx";
+
+const App = () => {
   return (
-    <>
-      <AdminHome />
-      <hr style={{ border: '1px solid black', margin: '20px 0' }} />
-      <CustomerHome />
-    </>
+      <Router>
+          <Routes>
+              {/* Initial Login Selection Page */}
+              <Route path="/" element={<Login />} />
+
+              {/* Separate Sign-In Pages for Each User Type */}
+              <Route path="/customer/SignIn" element={<CustomerSignIn />} />
+              <Route path="/agent/SignIn" element={<AgentSignIn />} />
+              <Route path="/admin/SignIn" element={<AdminSignIn />} />
+
+              {/* Customer Sign-Up Page*/}
+              <Route path="/customer/SignUp" element={<CustomerSignUp />} />
+
+              {/* Home and Profile Pages for Each User Type */}
+              <Route path="/customer/home" element={<CustomerHome />} />
+              <Route path="/customer/profile" element={<CustomerProfile />} />        
+
+              <Route path="/agent/home" element={<AgentHome />} />
+              <Route path="/agent/profile" element={<AgentProfile />} />
+
+              <Route path="/admin/home" element={<AdminHome />} />
+              <Route path="/admin/profile" element={<AdminProfile />} />
+          </Routes>
+      </Router>
   );
-}
+};
 
 export default App;

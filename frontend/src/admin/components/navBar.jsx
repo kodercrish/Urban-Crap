@@ -1,80 +1,50 @@
+import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import logo from '../../assets/logo.jpg';
 
-function NavBar() {
-
-    return(
-        <>
-        
-        <header className="header-area header-sticky bg-[#f6a32f]">
-            <div className="container">
-                <div className="row">
-                    <div className="col-12" style = {{display: "inline"}}>    
-                        <nav className="main-nav" style = {{display: "flex", flexWrap: "wrap"}}>
-                            {/* Profile Icon */}
-                        
-                            {/* <!-- ***** Logo Start ***** --> */}
-                            <img src = {logo} alt = "logo" style={{borderRadius: "50%", width: 100, height: 100, background: "white", display: "block"}} />
-                            {/* <!-- ***** Logo End ***** -->
-                            // <!-- ***** Menu Start ***** --> */}
-                            <ul id="nav">
-                                <li>Home</li>
-                                <li>New Reads</li>
-                                <li>The Team</li>
-                                <li>Previous Editions</li>
-                                <li>Reach Us</li>
-                            </ul>
-                            {/* <!-- ***** Menu End ***** --> */}
-                        </nav>
-                    </div>
-                </div>
+const NavBar = () => {
+  return (
+    <div>
+      <header className="bg-[#1c4e80] py-2 sticky top-0 w-full z-10">
+        <div className="max-w-full mx-auto px-8">
+          <nav className="flex items-center justify-between gap-5">
+            {/* Left Section: Logo and Brand Name */}
+            <div className="flex items-center gap-5">
+              {/* Logo */}
+              <div>
+                <img src={logo} alt="Logo" className="h-[65px] w-[65px] rounded-full" />
+              </div>
+              <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
             </div>
-        </header>
-        </>
-    );
-}
+
+            {/* Right Section: Agent List and Profile */}
+            <div className="flex items-center gap-8">
+              {/* Agent List */}
+              <div className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
+                Agent List
+              </div>
+
+              {/* Profile Section */}
+              <div className="flex items-center gap-5">
+                <div className="w-[45px] h-[45px] rounded-full border-2 border-white flex items-center justify-center overflow-hidden mr-2">
+                  <Link to="/admin/profile">
+                  <img
+                    src="https://static.vecteezy.com/system/resources/previews/036/885/313/non_2x/blue-profile-icon-free-png.png"
+                    alt="Profile"
+                    className="w-[100px] h-[40px] rounded-full transition duration-300 brightness-53 hover:brightness-50"
+                  />
+                  </Link>
+                </div>
+                <button className="text-white border border-white px-4 py-1 rounded transition duration-300 hover:bg-[#66b3e0] hover:text-white text-lg">
+                  Logout
+                </button>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+    </div>
+  );
+};
 
 export default NavBar;
-/*
-
-/*
-logo
-agents_list
-profile "pic" and name
-logout 
-*/
-
-
-/*
-<header className="header-area header-sticky">
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    <nav className="main-nav">
-                        <!-- ***** Logo Start ***** -->
-                        <style>
-                            @import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');
-                          </style>
-                        <a href="index.html" className="logo" style="font-family: 'Tilt Neon', sans-serif;">
-                            8Bit
-                        </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
-                        <ul className="nav">
-                            <li className="scroll-to-section"><a href="#welcome" className="menu-item active">Home</a></li>
-                            <li className="scroll-to-section"><a href="#about" className="menu-item">New Reads</a></li>
-                            <li><a href="./team/team.html">The Team</a>
-                            </li><li>
-                                <a href="./magazinePage/mag.html">Previous Editions</a>
-                            </li>
-                            <li className="scroll-to-section"><a href="#contact-us" className="menu-item">Reach Us</a></li>
-                        </ul>
-                        <a className="menu-trigger">
-                            <span>Menu</span>
-                        </a>
-                        <!-- ***** Menu End ***** -->
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-*/ 
