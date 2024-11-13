@@ -29,6 +29,7 @@ public class Admin extends User {
      * @param action "add" to add an agent, "remove" to remove an agent
      * @param agent  the ServiceAgent to add or remove
      */
+    
     public void manageAgents(String action, ServiceAgent agent) {
         // Check if action is "add"
         if (action.equalsIgnoreCase("add")) {
