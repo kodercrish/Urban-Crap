@@ -5,10 +5,10 @@ public class Admin extends User {
     private String accessCode;
 
     // Stores orders with order ID as key and order details as value
-    private Map<Integer, String> orderList;
+    static private Map<Integer, String> orderList;
 
     // Stores service agents with agent ID as key and ServiceAgent object as value
-    private Map<Integer, ServiceAgent> agentList;
+    static private Map<Integer, ServiceAgent> agentList;
 
     // Constructor to initialize admin attributes
     public Admin(String name, String email, String password, String accessCode) {
@@ -36,7 +36,8 @@ public class Admin extends User {
             // Add agent to the agent list
             agentList.put(agent.getAgentId(), agent);
             System.out.println("Agent with ID " + agent.getAgentId() + " added.");
-        } 
+        }
+        
         // Check if action is "remove"
         else if (action.equalsIgnoreCase("remove")) {
             // Remove agent if it exists in the list
