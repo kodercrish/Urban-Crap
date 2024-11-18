@@ -40,7 +40,7 @@ const CustomerSignUp = () => {
       </button>
 
       {/* Logo and Company Name */}
-      <div className="flex flex-col items-center mb-12">
+      <div className="flex flex-col items-center mb-7">
         <img 
           src={logo} 
           alt="Urban Crap Logo" 
@@ -49,9 +49,15 @@ const CustomerSignUp = () => {
         <h1 className="text-3xl font-bold text-[#1c4e80]">Urban Crap</h1>
       </div>
 
+      {/* Intro Section */}
+      <div className="text-center mb-3 ml-4">
+        <h2 className="text-2xl font-semibold text-[#1c4e80]">Ready to embark on a new journey with us?</h2>
+        {/* <h2 className="text-2xl font-semibold text-[#1c4e80]">We're excited to have you back!</h2>  */}
+      </div>
+
       {/* Sign Up Form */}
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
-        <h2 className="text-2xl font-semibold text-[#1c4e80] mb-8">Sign Up</h2>
+        <h2 className="text-2xl font-semibold text-[#1c4e80] mb-8">Let's go!</h2>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>

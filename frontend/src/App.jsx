@@ -17,6 +17,15 @@ import AgentProfile from "./serviceAgent/webPages/profile/page.jsx";
 import CustomerHome from "./customer/webPages/home/page.jsx";
 import CustomerProfile from "./customer/webPages/profile/page.jsx";
 
+import ACRepairPage from './customer/webPages/services/ACRepair.jsx';//newly added
+import CleaningPestPage from './customer/webPages/services/CleanPest.jsx';
+import EPCPage from './customer/webPages/services/epc.jsx';
+import  PaintingPage from './customer/webPages/services/paintdecor.jsx';
+import SalonPage from './customer/webPages/services/Salon.jsx';
+import GardeningPage from './customer/webPages/services/GardenLands.jsx';
+
+
+
 const App = () => {
   return (
       <Router>
@@ -41,6 +50,15 @@ const App = () => {
 
               <Route path="/admin/home" element={<AdminHome />} />
               <Route path="/admin/profile" element={<AdminProfile />} />
+
+              {/*Customer Service Pages*/}
+              <Route path="/customer/services/ACRepair" element={<ACRepairPage />} />
+              <Route path="/customer/services/cleaningpest" element={<CleaningPestPage />} />
+              <Route path="/customer/services/epc" element={<EPCPage />} />
+              <Route path="/customer/services/painting" element={<PaintingPage />} />
+              <Route path="/customer/services/salon" element={<SalonPage />} />
+              <Route path="/customer/services/gardening" element={<GardeningPage />} />
+
           </Routes>
       </Router>
   );
