@@ -2,14 +2,42 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import logo from '../../../assets/logo.jpg';
 
-const CustomerSignIn = () => {
+const AdminSignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const[accesscode,setAccessCode]=useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    navigate('/admin/home');
+    try {
+        const response = await fetch('http://localhost:8080/api/loginadmin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                accesscode: accesscode
+            })
+        });
+
+      const data = await response.json();
+      if(data.adminId==0 || data.adminId==-1) {
+        alert(data.message);
+      }
+      else {
+        // Store the customerId in local storage
+        localStorage.setItem('adminId', data.adminId);
+        
+        // store the customerId in local storage
+        navigate('/admin/home');
+      }
+
+    } catch (error) {
+        alert("Login failed. Please try again.");
+    }
   };
 
   return (
@@ -63,15 +91,23 @@ const CustomerSignIn = () => {
 
           <div>
             <input
-              type="access code"
-              placeholder="Access Code"
+              type="password"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1c4e80] focus:border-transparent outline-none transition"
             />
           </div>
 
-
+          <div>
+            <input
+              type="password"
+              placeholder="Access Code"
+              value={accesscode}
+              onChange={(e) => setAccessCode(e.target.value)}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1c4e80] focus:border-transparent outline-none transition"
+            />
+          </div>
           
           <button
             type="submit"
@@ -85,4 +121,4 @@ const CustomerSignIn = () => {
   );
 };
 
-export default CustomerSignIn;
+export default AdminSignIn;

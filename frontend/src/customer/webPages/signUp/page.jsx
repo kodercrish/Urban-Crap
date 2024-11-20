@@ -10,10 +10,39 @@ const CustomerSignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate('/customer/home');
-  };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          if (password !== confirmPassword) {
+              alert("Passwords do not match");
+              return;
+          }
+  
+          const response = await fetch('http://localhost:8080/api/addcustomer', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  name: name,
+                  email: email,
+                  phone: parseInt(phone), // Convert to integer
+                  password: password
+              })
+          });
+
+        const data = await response.json();
+        if(data.customerId==0 || data.customerId==-1){
+          alert(data.message);
+        }
+        else{
+          // store the customerId in local storage
+          navigate('/customer/home');
+        }
+      } catch (error) {
+          alert("Registration failed. Please try again.");
+      }
+  }
 
   return (
     <div className="min-h-screen bg-[#eaf0f7] p-8">
@@ -89,6 +118,7 @@ const CustomerSignUp = () => {
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-[#1c4e80] focus:border-transparent outline-none transition"
             />
           </div>
+
 
           <div>
             <input

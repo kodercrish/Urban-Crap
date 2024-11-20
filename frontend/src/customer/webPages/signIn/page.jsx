@@ -8,34 +8,63 @@ const CustomerSignIn = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/customer/home');
-  };
+    try {
+        const response = await fetch('http://localhost:8080/api/logincustomer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+
+            })
+        });
+
+      const data = await response.json();
+      if(data.customerId==0 || data.customerId==-1){
+        alert(data.message);
+      }
+      else {
+        // Store the customerId in local storage
+        localStorage.setItem('customerId', data.customerId);
+        
+        // store the customerId in local storage
+        navigate('/customer/home');
+      }
+
+    } catch (error) {
+        alert("Login failed. Please try again.");
+    }
+}
 
   return (
     <div className="min-h-screen bg-[#eaf0f7] p-8">
       {/* Back Button */}
-      <button 
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-[#1c4e80] hover:text-[#2d7abc] mb-8"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-5 w-5" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
+      <Link to="/">
+        <button 
+          
+          className="flex items-center gap-2 text-[#1c4e80] hover:text-[#2d7abc] mb-8"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-          />
-        </svg>
-        Back
-      </button>
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-5 w-5" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+            />
+          </svg>
+          Back
+        </button>
+        </Link>
 
       {/* Logo and Company Name */}
       <div className="flex flex-col items-center mb-6">
