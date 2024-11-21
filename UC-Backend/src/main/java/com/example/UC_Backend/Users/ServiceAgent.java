@@ -1,5 +1,6 @@
 package com.example.UC_Backend.Users;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.UC_Backend.Extra.ExtraFunctions;
@@ -10,20 +11,29 @@ import java.util.ArrayList;
  */
 @Document(collection = "service_agents")
 public class ServiceAgent extends User{
-
-    private int agentId;
-    private record agentcoord(int x, int y) { };
-    private int range;
-    private String[] skill;
     ExtraFunctions func =new ExtraFunctions();
     private ExtraFunctions.JobStatus jobstatus;//Enum used from ExtraFunctions
+    private record agentcoord(int x, int y) { };
     private String[] scheduledTime;
+    
+    @Id
+    private int agentId;
+    private int range;
+    private String[] skill;
 
 
-    public ServiceAgent(String name, String emailId, String password,String[] scheduledTime) {
-        super(name, emailId, password);
+    public ServiceAgent(String name, String email, String password,String[] skill) {
+        super(name, email, password);
         this.agentId= func.generateID();
-        this.scheduledTime=scheduledTime;
+        this.skill=skill;
+
+    }
+
+    public int getAgentId() {
+        return agentId;
+    }
+    public String getPassword() {
+        return super.getPassword();
     }
     
 }

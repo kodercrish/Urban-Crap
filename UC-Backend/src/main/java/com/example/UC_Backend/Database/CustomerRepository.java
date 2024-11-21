@@ -11,5 +11,6 @@ import com.example.UC_Backend.Users.Customer;
 public interface CustomerRepository extends MongoRepository<Customer, String> {
     Optional<Customer> findByEmail(String email);  // Find customer by email
     Optional<Customer> findByPhone(int phone);     // Find customer by phone number
+    // Optional<Customer> findById(int customerId);
     
 }

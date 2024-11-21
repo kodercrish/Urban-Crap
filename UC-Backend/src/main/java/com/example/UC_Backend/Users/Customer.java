@@ -1,5 +1,6 @@
 package com.example.UC_Backend.Users;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.example.UC_Backend.Extra.ExtraFunctions;
@@ -9,11 +10,12 @@ import com.example.UC_Backend.Extra.ExtraFunctions;
  */
 @Document(collection = "customers")
 public class Customer extends User{
-
-    private int customerId;
     private record cuscoord(int x, int y) { };
-    private int phone;
     ExtraFunctions func =new ExtraFunctions();
+    
+    @Id
+    private int customerId;
+    private int phone;
 
 
     public Customer(String name, String email,int phone, String password) {

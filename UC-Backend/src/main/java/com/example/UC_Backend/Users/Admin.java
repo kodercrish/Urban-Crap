@@ -1,5 +1,6 @@
 package com.example.UC_Backend.Users;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -7,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "admins")
 public class Admin extends User{
+    @Id
     private int adminId;
     private String accesscode;
 

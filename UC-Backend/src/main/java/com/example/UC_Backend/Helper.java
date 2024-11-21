@@ -2,12 +2,20 @@ package com.example.UC_Backend;
 
 import com.example.UC_Backend.Users.Admin;
 import com.example.UC_Backend.Users.Customer;
+import com.example.UC_Backend.Users.ServiceAgent;
+
 import com.example.UC_Backend.Database.AdminRepository;
 import com.example.UC_Backend.Database.CustomerRepository;
+import com.example.UC_Backend.Database.ServiceAgentRepository;
 
 import com.example.UC_Backend.HelperFunctionIO.addCustomer.*;
+import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.*;
+
 import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
+import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
 import com.example.UC_Backend.HelperFunctionIO.loginAdmin.*;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +35,8 @@ public class Helper {
     private CustomerRepository customerCollection;
     @Autowired
     private AdminRepository adminCollection;
+    @Autowired
+    private ServiceAgentRepository saCollection;
 
 
     @PostMapping("/addcustomer")
@@ -73,8 +83,25 @@ public class Helper {
         }
     }
 
+    @PostMapping("/addsa")
+    public addServiceAgentResponse addServiceAgent(@RequestBody addServiceAgentRequest request) {
+        try {
+            Optional<ServiceAgent> existingSAEmail = saCollection.findByEmail(request.getEmail());
+
+            if (existingSAEmail.isPresent()) {
+                return new addServiceAgentResponse("EMAIL ID EXISTS", 0);
+            } else {
+                ServiceAgent sa=new ServiceAgent(request.getName(),request.getEmail(),request.getPassword(),request.getSkill());
+                saCollection.save(sa);
+                return new addServiceAgentResponse("Service agent added successfully", sa.getAgentId());
+            }
+        } catch (Exception e) {
+            return new addServiceAgentResponse(e.getMessage(),-1);
+        }
+    }
+
     @PostMapping("/loginadmin")
-     public loginAdminResponse loginAdmin(@RequestBody loginAdminRequest request) {
+    public loginAdminResponse loginAdmin(@RequestBody loginAdminRequest request) {
         try {
             Optional<Admin> existingAdminByEmail = adminCollection.findByEmail(request.getEmail());
 
@@ -95,11 +122,36 @@ public class Helper {
         }
     }
     
+    @PostMapping("/loginsa")
+    public LoginSAResponse loginSA(@RequestBody LoginSARequest request) {
+        try {
+            Optional<ServiceAgent> existingSAEmail = saCollection.findByEmail(request.getEmail());
 
-
-    @GetMapping("/addcustomer")
-    public String handleGet() {
-        return "Please use POST method for this endpoint.";
+            if(existingSAEmail.isPresent()) {
+                ServiceAgent sa_fetched = existingSAEmail.get();
+                if (sa_fetched.getPassword().equals(request.getPassword())) {
+                    return new LoginSAResponse("Service Agent logedin successfully", sa_fetched.getAgentId());
+                } else {
+                    return new LoginSAResponse("INCORRECT PASSWORD",0);
+                }
+            }
+            else{
+                return new LoginSAResponse("EMAIL ID DOES NOT EXIST",0);
+            }
+        }
+        catch (Exception e) {
+            return new LoginSAResponse(e.getMessage(),-1);
+        }
     }
 
+    // @GetMapping("/api/customer/{id}")
+    // public getCustomerDetails getCustomerById(@PathVariable int id) {
+    // Optional<Customer> customer = customerCollection.findCustomerById(id);
+
+    // if (customer.isPresent()) {
+            
+    //     return new getCustomerDetails("Customer retrieved successfully.", customer.ge, 200);
+    // } else {
+    //     return new getCustomerDetails("Customer not found.", null, 404);
+    // }
 }
