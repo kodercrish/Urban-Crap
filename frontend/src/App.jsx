@@ -16,6 +16,7 @@ import AgentProfile from "./serviceAgent/webPages/profile/page.jsx";
 
 import CustomerHome from "./customer/webPages/home/page.jsx";
 import CustomerProfile from "./customer/webPages/profile/page.jsx";
+import CustomerShoppingCart from "./customer/webPages/cart/page.jsx";
 
 import ACRepairPage from './customer/webPages/services/ACRepair.jsx';//newly added
 import CleaningPestPage from './customer/webPages/services/CleanPest.jsx';
@@ -23,6 +24,8 @@ import EPCPage from './customer/webPages/services/epc.jsx';
 import  PaintingPage from './customer/webPages/services/paintdecor.jsx';
 import SalonPage from './customer/webPages/services/Salon.jsx';
 import GardeningPage from './customer/webPages/services/GardenLands.jsx';
+
+import AboutUs from './customer/webPages/aboutUs/page.jsx';
 
 
 
@@ -58,6 +61,13 @@ const App = () => {
               <Route path="/customer/services/painting" element={<PaintingPage />} />
               <Route path="/customer/services/salon" element={<SalonPage />} />
               <Route path="/customer/services/gardening" element={<GardeningPage />} />
+
+              {/*Customer Shopping Cart*/}
+              <Route path="/customer/cart"  element={<CustomerShoppingCart />} />
+
+              {/*About Us*/}
+             <Route path="/about-us"  element={<AboutUs />} />
+
 
           </Routes>
       </Router>

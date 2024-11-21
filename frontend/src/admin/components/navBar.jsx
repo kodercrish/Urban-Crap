@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import logo from '../../assets/logo.jpg';
 
 const NavBar = () => {
+
+
   return (
     <div>
       <header className="bg-[#1c4e80] py-2 sticky top-0 w-full z-10">
@@ -35,9 +37,16 @@ const NavBar = () => {
                   />
                   </Link>
                 </div>
-                <button className="text-white border border-white px-4 py-1 rounded transition duration-300 hover:bg-[#66b3e0] hover:text-white text-lg">
-                  Logout
-                </button>
+                <Link to="/admin/SignIn">
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem("adminId"); // Remove the admin token from local storage
+                    }}
+                    className="text-white border border-white px-4 py-1 rounded transition duration-300 hover:bg-[#66b3e0] hover:text-white text-lg"
+                  >
+                    Logout
+                  </button>
+                </Link>
               </div>
             </div>
           </nav>

@@ -3,6 +3,8 @@ package com.example.UC_Backend.Users;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 import com.example.UC_Backend.Extra.ExtraFunctions;
 
 /**
@@ -14,6 +16,7 @@ public class Customer extends User{
     ExtraFunctions func =new ExtraFunctions();
     
     @Id
+    private String id = UUID.randomUUID().toString(); // Unique value for each document;
     private int customerId;
     private int phone;
 

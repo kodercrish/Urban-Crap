@@ -10,15 +10,12 @@ import com.example.UC_Backend.Database.ServiceAgentRepository;
 
 import com.example.UC_Backend.HelperFunctionIO.addCustomer.*;
 import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.*;
-
+import com.example.UC_Backend.HelperFunctionIO.getCustomerDetails.*;
 import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
 import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
 import com.example.UC_Backend.HelperFunctionIO.loginAdmin.*;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -144,14 +141,20 @@ public class Helper {
         }
     }
 
-    // @GetMapping("/api/customer/{id}")
-    // public getCustomerDetails getCustomerById(@PathVariable int id) {
-    // Optional<Customer> customer = customerCollection.findCustomerById(id);
+    @PostMapping("/getcustomerdetails")
+    public getCustomerDetailsResponse getCustomerDetails(@RequestBody getCustomerDetailsRequest request) {
+        try {
+        Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
+            if (customerOptional.isPresent()) {
+                Customer customer = customerOptional.get();
+                return new getCustomerDetailsResponse("Customer Details Sent Succussfully", customer.getName(), customer.getEmail(), customer.getPhone());
+            } else {
+                return new getCustomerDetailsResponse("AGENT_ID_NOT_FOUND", "NULL", "NULL", -1);
 
-    // if (customer.isPresent()) {
-            
-    //     return new getCustomerDetails("Customer retrieved successfully.", customer.ge, 200);
-    // } else {
-    //     return new getCustomerDetails("Customer not found.", null, 404);
-    // }
+            }
+        } catch (Exception e) {
+            return new getCustomerDetailsResponse("ERROR", "NULL", "NULL", -1);
+        }
+    }
+
 }

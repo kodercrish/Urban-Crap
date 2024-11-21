@@ -37,6 +37,7 @@ const CustomerSignUp = () => {
         }
         else{
           // store the customerId in local storage
+
           navigate('/customer/home');
         }
       } catch (error) {

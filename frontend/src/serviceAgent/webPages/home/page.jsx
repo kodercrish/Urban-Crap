@@ -1,17 +1,27 @@
 import Layout from '../../layout.jsx';
+import React, { useRef ,useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-// function AgentHome() {
-//   return (
-//     <Layout>
-//       <div className="admin-home bg-[#eaf0f7] min-h-screen p-6">
-//         <h1 className="text-[#1c4e80] text-3xl font-bold mb-4">Welcome to the Service Agent Home Page</h1>
-//         <p className="text-gray-700 mb-6">Manage and oversee site content with ease.</p>
-//       </div>
-//     </Layout>
-//   );
-// }
+const AgentHome = () => {
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-function AgentHome() {
+    // Check if the admin is authenticated
+    useEffect(() => {
+      const agentToken = localStorage.getItem('agentId'); // Example: storing a token in local storage
+      console.log(agentToken);
+      if (!agentToken) {
+        navigate("/agent/SignIn"); // Redirect to login if no token is found
+      } else {
+        setIsAuthenticated(true); // Mark as authenticated
+      }
+    }, [navigate]);
+  
+    // Only render the page if the admin is authenticated
+    if(!isAuthenticated) {
+      return null; // Optionally display a loading spinner here
+    }
+
   return (
     <Layout>
       <div className="admin-home bg-[#eaf0f7] min-h-screen p-6">
@@ -95,8 +105,5 @@ function AgentHome() {
     </Layout>
   );
 }
-
-
-
 
 export default AgentHome;

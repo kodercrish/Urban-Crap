@@ -35,9 +35,15 @@ const NavBar = () => {
                   />
                   </Link>
                 </div>
-                <button className="text-white border border-white px-4 py-1 rounded transition duration-300 hover:bg-[#66b3e0] hover:text-white text-lg">
+                <Link to ="/agent/SignIn">
+                <button 
+                onClick={() => {
+                  localStorage.removeItem("agentId"); // Remove the admin token from local storage
+                }}
+                className="text-white border border-white px-4 py-1 rounded transition duration-300 hover:bg-[#66b3e0] hover:text-white text-lg">
                   Logout
                 </button>
+                </Link>
               </div>
             </div>
           </nav>

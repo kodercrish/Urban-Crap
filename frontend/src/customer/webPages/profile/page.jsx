@@ -1,124 +1,119 @@
 // CustomerProfile.js
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../../layout.jsx';
-import { FaUser, FaPhone, FaEnvelope } from 'react-icons/fa'; // Import icons
+import { FaUser, FaPhone, FaEnvelope } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-// Define styles
-const styles = {
-  container: {
-    width: '80%',
-    maxWidth: '800px',
-    margin: '50px auto',
-    backgroundColor: '#ffffff',
-    borderRadius: '10px',
-    boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.1)',
-    padding: '20px',
-  },
-  header: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#1c4e80',
-    color: 'white',
-    padding: '10px 20px',
-    borderRadius: '10px 10px 0 0',
-  },
-  profileImage: {
-    width: '100px',
-    height: '100px',
-    borderRadius: '50%',
-    backgroundColor: '#f0f4f8', // Light background for image placeholder
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '36px',
-    color: '#1c4e80',
-    border: '3px solid white',
-    marginBottom: '15px',
-  },
-  headerTitle: {
-    fontSize: '26px',
-    fontWeight: 'bold',
-    margin: '10px 0 0',
-  },
-  welcomeMessage: {
-    fontSize: '16px',
-    color: '#666',
-    marginTop: '10px',
-    textAlign: 'center',
-  },
-  profileDetails: {
-    marginTop: '32px',
-  },
-  profileTitle: {
-    color: '#1c4e80',
-    fontSize: '24px',
-    fontWeight: 'bold',
-    paddingBottom: '8px',
-    marginBottom: '20px',
-    borderBottom: '2px solid #1c4e80',
-    textAlign: 'center',
-  },
-  detail: {
-    display: 'flex',
-    alignItems: 'center',
-    padding: '12px 0',
-    borderBottom: '1px solid #eee',
-  },
-  icon: {
-    color: '#1c4e80',
-    marginRight: '12px',
-    fontSize: '20px',
-  },
-  label: {
-    fontWeight: '600',
-    color: '#333',
-    marginRight: '10px',
-  },
-  value: {
-    color: '#555',
-  },
-};
 
-// Functional component for Customer Profile
-const CustomerProfile = ({ name, phoneNumber, email }) => {
+const CustomerProfile = () => {
+  
+  const [profileData, setProfileData] = useState({
+    name: '',
+    email: '',
+    phone: ''
+  });
+
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check if the admin is authenticated
+  useEffect(() => {
+    const customerToken = localStorage.getItem('customerId'); // Example: storing a token in local storage
+    if (!customerToken) {
+      navigate("/customer/SignIn"); // Redirect to login if no token is found
+    } else {
+      setIsAuthenticated(true); // Mark as authenticated
+      fetchProfileData(customerToken);
+    };
+  }, [navigate]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const customerToken = localStorage.getItem('customerId');
+  //     if (!customerToken) {
+  //       navigate("/customer/SignIn");
+  //     } else {
+  //       setIsAuthenticated(true);
+  //       await fetchProfileData(customerToken);
+  //     }
+  //   };
+    
+  //   fetchData();
+  // }, [navigate]);
+
+  const fetchProfileData = async (customerId) => {
+    try {
+      const response = await fetch('http://localhost:8080/api/getcustomerdetails', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerId: parseInt(customerId)  // Make sure this matches your backend expected field name
+        })
+      });
+
+      const data = await response.json();
+      if (data.phone!=-1) {
+        setProfileData({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+        });
+      } else {
+        console.error('Failed to fetch profile data');
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    }
+  };
+
+
+
+  // Only render the page if the admin is authenticated
+  if (!isAuthenticated) {
+    return null; // Optionally display a loading spinner here
+  }
+
   return (
     <Layout>
-      <div style={styles.container}>
-        
-        {/* Header Section with Profile Image */}
-        <div style={styles.header}>
-          
-          <h1 style={styles.headerTitle}>Welcome, [Customer Name]{name}!</h1>
+      <div className="w-4/5 max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg p-5">
+              
+        {/* Header Section */}
+        <div className="flex flex-col items-center bg-[#1c4e80] text-white p-4 rounded-t-lg">
+          <h1 className="text-2xl font-bold mt-2">Welcome, {profileData.name}!</h1>
         </div>
 
         {/* Welcome Message */}
-        <div style={styles.welcomeMessage}>
+        <div className="text-center text-gray-600 mt-4">
           <p>We're glad to have you here! Check your profile details below.</p>
         </div>
 
         {/* Profile Details Section */}
-        <div style={styles.profileDetails}>
-          <h2 style={styles.profileTitle}>Profile Details</h2>
+        <div className="mt-8">
+          <h2 className="text-[#1c4e80] text-2xl font-bold pb-2 mb-5 border-b-2 border-[#1c4e80] text-center">
+            Profile Details
+          </h2>
 
-          <div style={styles.detail}>
-            <FaUser style={styles.icon} />
-            <span style={styles.label}>Name:</span>
-            <span style={styles.value}>{name}</span>
+          <div className="flex items-center py-3 border-b border-gray-200">
+            <FaUser className="text-[#1c4e80] text-xl mr-3" />
+            <span className="font-semibold text-gray-700 mr-2">Name:</span>
+            <span className="text-gray-600">{profileData.name}</span>
           </div>
 
-          <div style={styles.detail}>
-            <FaPhone style={styles.icon} />
-            <span style={styles.label}>Phone Number:</span>
-            <span style={styles.value}>{phoneNumber}</span>
+          <div className="flex items-center py-3 border-b border-gray-200">
+            <FaPhone className="text-[#1c4e80] text-xl mr-3" />
+            <span className="font-semibold text-gray-700 mr-2">Phone Number:</span>
+            <span className="text-gray-600">{profileData.phone}</span>
           </div>
 
-          <div style={styles.detail}>
-            <FaEnvelope style={styles.icon} />
-            <span style={styles.label}>Email Address:</span>
-            <span style={styles.value}>{email}</span>
+          <div className="flex items-center py-3 border-b border-gray-200">
+            <FaEnvelope className="text-[#1c4e80] text-xl mr-3" />
+            <span className="font-semibold text-gray-700 mr-2">Email Address:</span>
+            <span className="text-gray-600">{profileData.email}</span>
           </div>
+
         </div>
       </div>
     </Layout>
@@ -126,3 +121,8 @@ const CustomerProfile = ({ name, phoneNumber, email }) => {
 };
 
 export default CustomerProfile;
+
+
+
+
+

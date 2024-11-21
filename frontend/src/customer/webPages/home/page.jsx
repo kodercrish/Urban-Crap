@@ -1,4 +1,4 @@
-import React, {  useRef } from 'react';
+import React, { useRef ,useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../../layout.jsx';
 import aclogo from '../../../assets/ac.jpeg';
@@ -11,11 +11,9 @@ import collage from '../../../assets/clg.png';
 import salon from '../../../assets/salon.png';
 import spa from '../../../assets/spa.png';  
 import bedbug from '../../../assets/bed.png';
+import { useNavigate } from 'react-router-dom';
 
-
-
-
-function CustomerHome() {
+const CustomerHome = () => {
 
   const scrollContainerRef = useRef(null);
 
@@ -25,9 +23,7 @@ function CustomerHome() {
     { img: bedbug, title: 'Bedbugs Pest Control' },
     { img: paintinglogo, title: 'Full Home Painting' },
     { img: gardeninglogo, title: 'Front & Back Gardening' },
-    { img: spa, title: 'Ayurvedic Spa' },
-
-   
+    { img: spa, title: 'Ayurvedic Spa' },   
   ];
 
   const slideLeft = () => {
@@ -48,7 +44,25 @@ function CustomerHome() {
       });
     }
   };
-  
+
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Check if the admin is authenticated
+  useEffect(() => {
+    const customerToken = localStorage.getItem('customerId'); // Example: storing a token in local storage
+    if (!customerToken) {
+      navigate("/customer/SignIn"); // Redirect to login if no token is found
+    } else {
+      setIsAuthenticated(true); // Mark as authenticated
+    }
+  }, [navigate]);
+
+  // Only render the page if the admin is authenticated
+  if (!isAuthenticated) {
+    return null; // Optionally display a loading spinner here
+  }
+
   
 
   return (

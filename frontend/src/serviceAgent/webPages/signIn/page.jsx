@@ -7,13 +7,40 @@ const CustomerSignIn = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/agent/home');
-  };
+    try {
+      const response = await fetch('http://localhost:8080/api/loginsa', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              email: email,
+              password: password
+          })
+      });
+
+      const data = await response.json();
+      console.log(data);
+      if(data.agentId==0 || data.agentId==-1){
+        alert(data.message);
+      }
+      else {
+        // Store the agentId in local storage
+        localStorage.setItem('agentId', data.agentId);
+        
+        // store the agentId in local storage
+        navigate('/agent/home');
+      }
+    } catch (error) {
+        alert("Login failed. Please try again.");
+    }
+  }; 
 
   return (
     <div className="min-h-screen bg-[#eaf0f7] p-8">
+      <Link to="/">
       {/* Back Button */}
       <button 
         onClick={() => navigate(-1)}
@@ -35,6 +62,7 @@ const CustomerSignIn = () => {
         </svg>
         Back
       </button>
+      </Link>
 
       {/* Logo and Company Name */}
       <div className="flex flex-col items-center mb-12">

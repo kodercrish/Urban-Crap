@@ -30,7 +30,6 @@ const AdminSignIn = () => {
       else {
         // Store the customerId in local storage
         localStorage.setItem('adminId', data.adminId);
-        
         // store the customerId in local storage
         navigate('/admin/home');
       }
@@ -42,6 +41,7 @@ const AdminSignIn = () => {
 
   return (
     <div className="min-h-screen bg-[#eaf0f7] p-8">
+      <Link to="/">
       {/* Back Button */}
       <button 
         onClick={() => navigate(-1)}
@@ -63,6 +63,7 @@ const AdminSignIn = () => {
         </svg>
         Back
       </button>
+      </Link>
 
       {/* Logo and Company Name */}
       <div className="flex flex-col items-center mb-12">
