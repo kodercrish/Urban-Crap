@@ -9,12 +9,13 @@ public class addServiceAgentRequest {
     private String email;
     private String password;
     private String[] skill;
-
-    addServiceAgentRequest(String name, String email, String password,String[] skill) {
+    private int range;
+    addServiceAgentRequest(String name, String email, String password,String[] skill,int range) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.skill=skill;
+        this.range=range;
     }
     public String getName() {
         return name;
@@ -27,5 +28,8 @@ public class addServiceAgentRequest {
     }
     public String getPassword() {
         return password;
+    }
+    public int getRange(){
+        return range;
     }
 }

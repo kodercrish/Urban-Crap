@@ -17,13 +17,16 @@ import AgentProfile from "./serviceAgent/webPages/profile/page.jsx";
 import CustomerHome from "./customer/webPages/home/page.jsx";
 import CustomerProfile from "./customer/webPages/profile/page.jsx";
 import CustomerShoppingCart from "./customer/webPages/cart/page.jsx";
+import OrderHistory from './customer/webPages/orderHistory/page.jsx';
 
-import ACRepairPage from './customer/webPages/services/ACRepair.jsx';//newly added
+
+import ACRepairPage from './customer/webPages/services/ACRepair.jsx';
 import CleaningPestPage from './customer/webPages/services/CleanPest.jsx';
 import EPCPage from './customer/webPages/services/epc.jsx';
 import  PaintingPage from './customer/webPages/services/paintdecor.jsx';
 import SalonPage from './customer/webPages/services/Salon.jsx';
 import GardeningPage from './customer/webPages/services/GardenLands.jsx';
+
 
 import AboutUs from './customer/webPages/aboutUs/page.jsx';
 
@@ -44,9 +47,10 @@ const App = () => {
               {/* Customer Sign-Up Page*/}
               <Route path="/customer/SignUp" element={<CustomerSignUp />} />
 
-              {/* Home and Profile Pages for Each User Type */}
+              {/* Home ,Order History and Profile Pages for Each User Type */}
               <Route path="/customer/home" element={<CustomerHome />} />
-              <Route path="/customer/profile" element={<CustomerProfile />} />        
+              <Route path="/customer/profile" element={<CustomerProfile />} />    
+              <Route path="/customer/order-history" element={<OrderHistory />} />       
 
               <Route path="/agent/home" element={<AgentHome />} />
               <Route path="/agent/profile" element={<AgentProfile />} />
@@ -64,6 +68,8 @@ const App = () => {
 
               {/*Customer Shopping Cart*/}
               <Route path="/customer/cart"  element={<CustomerShoppingCart />} />
+
+
 
               {/*About Us*/}
              <Route path="/about-us"  element={<AboutUs />} />

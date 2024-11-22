@@ -1,57 +1,100 @@
-/*import Layout from '../../layout.jsx';
-
-const CustomerShoppingCart = () => {
-    return (
-        <Layout>
-            <div className="flex flex-col items-center justify-center h-screen">
-                <h1 className="text-2xl font-bold text-[#1c4e80] mb-4">
-                    Welcome to Your Shopping Cart!
-                </h1>
-                <p className="text-lg text-gray-600">
-                    Explore and manage the items you've added to your cart.
-                </p>
-            </div>
-        </Layout>
-    );
-};
-
-
-export default CustomerShoppingCart;
-*/
+import { services } from '../../components/servicesData.jsx';
+import { ServiceCard } from '../../components/ServiceCard';
 import Layout from '../../layout.jsx';
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CustomerShoppingCart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
-    // Simulate fetching data from a database
-    const fetchCartItems = async () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    // Check if the admin is authenticated
+    useEffect(() => {
+        const customerToken = localStorage.getItem('customerId'); // Example: storing a token in local storage
+        if (!customerToken) {
+            navigate("/customer/SignIn"); // Redirect to login if no token is found
+        } else {
+            setIsAuthenticated(true); // Mark as authenticated
+        };
+    }, [navigate]);
+
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            const customerId = localStorage.getItem('customerId');
+            try {
+                const response = await fetch(`http://localhost:8080/api/getCartItems/${customerId}`);
+                const data = await response.json();
+
+                // Filter services from servicesData that match cart item IDs
+                const cartServices = Object.values(services)
+                    .flat()
+                    .filter(service => data.cartItems.includes(service.id));
+
+                setCartItems(cartServices);
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchCartItems();
+    }, []);
+
+    const removeFromCart = async (serviceId) => {
+        const customerId = localStorage.getItem('customerId');
         try {
-            // Replace this with your actual API endpoint
-            const response = await fetch('/api/cart');
+            const response = await fetch('http://localhost:8080/api/removeFromCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    serviceId: serviceId,
+                    customerId: parseInt(customerId),
+                })
+            });
             const data = await response.json();
-            setCartItems(data);
+            setCartItems(prevItems => prevItems.filter(item => item.id !== serviceId));
         } catch (error) {
-            console.error('Error fetching cart items:', error);
-        } finally {
-            setLoading(false);
+            console.error('Error removing item from cart:', error);
         }
     };
 
-    // Calculate total price
-    const calculateTotal = () =>
-        cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
-    // Remove item from cart
-    const removeItem = (id) => {
-        setCartItems(cartItems.filter((item) => item.id !== id));
+    //On clicking proceed to checkout what happens
+    const proceedToCheckout = async () => {
+        const customerId = localStorage.getItem('customerId');
+        try {
+            const response = await fetch('http://localhost:8080/api/checkout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    customerId: parseInt(customerId)
+                })
+            });
+            const data = await response.json();
+            if (data.message === "SUCCESSFULL ADDED") {
+                navigate('/customer/home');
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('Error during checkout:', error);
+            alert("Checkout failed. Please try again.");
+        }
+
+        // Only render the page if the admin is authenticated
+        if (!isAuthenticated) {
+            return null; // Optionally display a loading spinner here
+        }
     };
 
-    // Fetch cart items on component mount
-    useEffect(() => {
-        fetchCartItems();
-    }, []);
 
     return (
         <Layout>
@@ -62,82 +105,45 @@ const CustomerShoppingCart = () => {
                     </h1>
 
                     {loading ? (
-                        <p className="text-center text-gray-600">Loading your cart...</p>
-                    ) : cartItems.length === 0 ? (
-                        <p className="text-center text-gray-600">Your cart is empty!</p>
+                        <p className="text-center">Loading cart items...</p>
                     ) : (
-                        <div>
-                            {/* Cart Items */}
-                            <div className="space-y-4">
-                                {cartItems.map((item) => (
-                                    <div
-                                        key={item.id}
-                                        className="flex items-center justify-between border p-4 rounded-lg shadow-md bg-[#f9f9f9]"
-                                    >
-                                        {/* Item Details */}
-                                        <div className="flex items-center">
-                                            <img
-                                                src={item.image}
-                                                alt={item.name}
-                                                className="w-16 h-16 object-cover rounded-lg mr-4"
-                                            />
-                                            <div>
-                                                <h2 className="text-lg font-semibold text-[#1c4e80]">
-                                                    {item.name}
-                                                </h2>
-                                                <p className="text-gray-600">
-                                                    ₹{item.price} x {item.quantity}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        {/* Remove Button */}
-                                        <button
-                                            onClick={() => removeItem(item.id)}
-                                            className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
+                        <>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {cartItems.map(service => (
+                                    <ServiceCard
+                                        key={service.id}
+                                        service={service}
+                                        onRemove={removeFromCart}
+                                        isInCart={true}
+                                    />
                                 ))}
                             </div>
 
-                            {/* Total and Checkout */}
-                            <div className="mt-6 bg-[#f0f8ff] p-4 rounded-lg shadow-lg">
-                                <h2 className="text-xl font-semibold text-[#1c4e80]">
-                                    Total: ₹{calculateTotal()}
-                                </h2>
-                                <button
-                                    className="bg-[#1c4e80] text-white px-6 py-3 rounded-lg mt-4 hover:bg-[#14506d] transition w-full"
-                                >
-                                    Proceed to Checkout
-                                </button>
-                            </div>
-                        </div>
+                            {cartItems.length > 0 && (
+                                <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
+                                    <div className="flex justify-between items-center">
+                                        <h2 className="text-xl font-bold text-[#1c4e80]">Cart Total</h2>
+                                        <p className="text-2xl font-bold text-[#1c4e80]">
+                                            ₹{cartItems.reduce((total, item) => {
+                                                const price = Number(item.price.replace('₹', ''))
+                                                return total + price
+                                            }, 0)}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={proceedToCheckout}
+                                        className="w-full mt-4 bg-[#1c4e80] text-white py-3 rounded-lg hover:bg-[#153a61] transition-colors"
+                                    >
+                                        Proceed to Checkout
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
+
             </div>
         </Layout>
     );
 };
-
 export default CustomerShoppingCart;
-/*
-[
-    {
-        "id": 1,
-        "name": "Premium Paint",
-        "price": 500,
-        "quantity": 2,
-        "image": "/path/to/image.jpg"
-    },
-    {
-        "id": 2,
-        "name": "Luxury Paint",
-        "price": 1000,
-        "quantity": 1,
-        "image": "/path/to/another-image.jpg"
-    }
-]
-*/
-

@@ -13,7 +13,7 @@ const AdminHome = () => {
     range:""
   });
 
-  
+  const [serviceAgents, setServiceAgents] = useState([]); // State to hold service agent detailsययययययययययययययययय  
   const navigate = useNavigate(); // Initialize useNavigate
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -27,6 +27,34 @@ const AdminHome = () => {
         setIsAuthenticated(true); // Mark as authenticated
       }
     }, [navigate]);
+
+
+  useEffect(() => {
+      if (isAuthenticated) {
+        fetchServiceAgents();
+      }
+    }, [isAuthenticated]);
+
+    const fetchServiceAgents = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/getAllServiceAgents", {
+          method: "POST", // Using POST method
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({}), // Empty body for POST
+        });
+        const data = await response.json();
+        if (data.message!=null) {
+          setServiceAgents(data.agents);
+        } else {
+          alert(data.message);
+
+        }
+      } catch (error) {
+        alert("Error fetching service agents. Please try again.");
+      }
+    };
 
 
   const handleInputChange = (e) => {
@@ -60,7 +88,20 @@ const AdminHome = () => {
       }
       else{
         // store the customerId in local storage
-        alert("Service Agent added successfully!");
+        // alert("Service Agent added successfully!");
+
+        // Add the new agent to the state
+        setServiceAgents((prevAgents) => [
+        ...prevAgents,
+        {
+          name: formData.name,
+          email: formData.email,
+          skill: skillArray,
+          range: formData.range
+        }
+      ]);
+
+        navigate('/admin/home');
         setShowForm(false);
         setFormData({
           name: "",
@@ -89,6 +130,41 @@ const AdminHome = () => {
           <p className="text-gray-700 mb-6">
             Manage and oversee site content with ease.
           </p>
+
+          <div className="mt-6">
+        <h2 className="text-2xl font-semibold text-[#1c4e80] mb-4">
+          Service Agents List
+        </h2>
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white shadow-md rounded-lg">
+            <thead>
+              <tr className="bg-[#1c4e80] text-white">
+                <th className="py-3 px-4 text-left">Name</th>
+                <th className="py-3 px-4 text-left">Email</th>
+                <th className="py-3 px-4 text-left">Skills</th>
+                <th className="py-3 px-4 text-left">Service Radius</th>
+              </tr>
+            </thead>
+            <tbody>
+              {serviceAgents.map((agent, index) => (
+                <tr
+                  key={index}
+                  className={`border-t ${
+                    index % 2 === 0 ? "bg-gray-50" : "bg-gray-100"
+                  }`}
+                >
+                  <td className="py-3 px-4">{agent.name}</td>
+                  <td className="py-3 px-4">{agent.email}</td>
+                  <td className="py-3 px-4">
+                  {Array.isArray(agent.skill) ? agent.skill.join(", ") : "No skills listed"}
+                  </td>
+                  <td className="py-3 px-4">{agent.range} km</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
           {/* Add New Entry Button */}
           <button
@@ -195,8 +271,12 @@ const AdminHome = () => {
                 className="w-full h-2 bg-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-[#1c4e80]"
               />
               </div>
+              <span className="ml-4 text-gray-700 font-medium">
+                {formData.range} km
+              </span>
               <div className="flex justify-between">
                 <button
+                  
                   type="submit"
                   className="bg-[#1c4e80] text-white px-6 py-3 rounded-lg shadow-md hover:bg-[#163b62] transition duration-300"
                 >
@@ -219,7 +299,3 @@ const AdminHome = () => {
 };
 
 export default AdminHome;
-
-
-
-

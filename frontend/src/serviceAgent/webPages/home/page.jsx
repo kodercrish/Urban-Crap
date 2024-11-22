@@ -27,7 +27,7 @@ const AgentHome = () => {
       <div className="admin-home bg-[#eaf0f7] min-h-screen p-6">
         {/* Header Section */}
         <h1 className="text-[#1c4e80] text-4xl font-bold mb-6">
-          Welcome to the Admin Dashboard
+          Welcome to the Agent Dashboard
         </h1>
         <p className="text-gray-700 text-lg mb-8">
           Easily manage and oversee all site activities.

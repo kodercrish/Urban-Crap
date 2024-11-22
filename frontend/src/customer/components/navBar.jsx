@@ -28,9 +28,9 @@ const NavBar = () => {
                         <div className="flex items-center gap-8">
                             {/* Navigation Links */}
                             <div className="flex items-center gap-8">
-                                <div className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
-                                    Services
-                                </div>
+                            <Link to="/customer/order-history" className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
+                                    Order History
+                                </Link>
                                 <Link to="/about-us">
                                     <div className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
                                         About Us

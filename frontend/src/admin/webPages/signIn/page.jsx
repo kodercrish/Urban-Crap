@@ -42,28 +42,27 @@ const AdminSignIn = () => {
   return (
     <div className="min-h-screen bg-[#eaf0f7] p-8">
       <Link to="/">
-      {/* Back Button */}
-      <button 
-        onClick={() => navigate(-1)}
-        className="flex items-center gap-2 text-[#1c4e80] hover:text-[#2d7abc] mb-8"
-      >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-5 w-5" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
+        <button 
+          
+          className="flex items-center gap-2 text-[#1c4e80] hover:text-[#2d7abc] mb-8"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-          />
-        </svg>
-        Back
-      </button>
-      </Link>
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            className="h-5 w-5" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            stroke="currentColor"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+            />
+          </svg>
+          Back
+        </button>
+        </Link>
 
       {/* Logo and Company Name */}
       <div className="flex flex-col items-center mb-12">
