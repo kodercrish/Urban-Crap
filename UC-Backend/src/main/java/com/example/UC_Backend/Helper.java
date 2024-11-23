@@ -81,7 +81,6 @@ public class Helper {
     public loginCustomerResponse loginCustomer(@RequestBody loginCustomerRequest request) {
         try {
             Optional<Customer> existingCustomerByEmail = customerCollection.findByEmail(request.getEmail());
-
             
             if(existingCustomerByEmail.isPresent()) {
                 Customer customer_fetched = existingCustomerByEmail.get();
@@ -251,7 +250,7 @@ public class Helper {
         if(customerOptional.isPresent())
         {
             Customer customer=customerOptional.get();
-            Order order=new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED");
+            Order order=new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED" ,request.getTotalprice());
             order.setCart(customer.getShoppingCart());
             orderCollection.save(order);
     
@@ -278,18 +277,23 @@ public class Helper {
         }
     }
     
-    // @PostMapping("/getOrderDetails")
-    // public getOrderDetailsResponse getOrderDetails(@RequestBody getOrderDetailsRequest request) {
-    //     try {
-    //         ArrayList<Order> orderOptional = new ArrayList<>();
-    //         orderCollection.findByCustomerId(request.getCustomerId());
-    //             return new getOrderDetailsResponse("Order Details", order);
-    //         else {
-    //             return new getOrderDetailsResponse("Order not found");
-    //         }
-    //     } catch (Exception e) {
-    //         return new getOrderDetailsResponse(e.getMessage());
-    //     }
-    // }
+    @PostMapping("/order-history")
+    public getOrderDetailsResponse getOrderDetails(@RequestBody getOrderDetailsRequest request) {
+        try {
+
+                ArrayList<Order> orderList = new ArrayList<>();
+
+                // Fetch all orders by customerId
+                List<Order> orders = orderCollection.findByCustomerId(request.getCustomerId());
+                
+                // Add all orders to the ArrayList
+                orderList.addAll(orders);
+            
+                return new getOrderDetailsResponse("Order Details", orderList);
+            
+        } catch (Exception e) {
+            return new getOrderDetailsResponse(e.getMessage(),null);
+       }
+    }
 
 }

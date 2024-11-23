@@ -1,11 +1,13 @@
 export const ServiceCard = ({ service, onBook, onRemove, isInCart }) => {
     return (
-        <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow flex flex-col">
-            <img
-                src={service.image}
-                alt={service.name}
-                className="w-full h-48 object-cover rounded-lg mb-4"
-            />
+        <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow flex flex-col w-full max-w-xl">
+            <div className="w-full aspect-square mb-4">
+                <img
+                    src={service.image}
+                    alt={service.name}
+                    className="w-full h-full object-cover rounded-lg"
+                />
+            </div>
             <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
             <p className="text-gray-600 mb-2">{service.description}</p>
 

@@ -6,10 +6,12 @@ package com.example.UC_Backend.HelperFunctionIO.checkout;
 
 public class checkoutRequest{
     private int customerId;
+    private int totalprice;
 
     public checkoutRequest(){}
-    public checkoutRequest(int customerId){
+    public checkoutRequest(int customerId,int totalprice){
         this.customerId=customerId;
+        this.totalprice=totalprice;
     }
 
     public int getCustomerId(){
@@ -17,6 +19,12 @@ public class checkoutRequest{
     }
     public void setCustomerId(){
         this.customerId=customerId;
+    }
+    public int getTotalprice(){
+        return totalprice;
+    }
+    public void setTotalprice(int totalprice){
+        this.totalprice=totalprice;
     }
 
 }

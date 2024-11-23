@@ -68,6 +68,12 @@ const CustomerShoppingCart = () => {
     //On clicking proceed to checkout what happens
     const proceedToCheckout = async () => {
         const customerId = localStorage.getItem('customerId');
+            // Calculate total price from cart items
+        const totalprice = cartItems.reduce((total, item) => {
+        const price = Number(item.price.replace('₹', ''))
+        return total + price
+    }, 0);
+        
         try {
             const response = await fetch('http://localhost:8080/api/checkout', {
                 method: 'POST',
@@ -75,9 +81,11 @@ const CustomerShoppingCart = () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    customerId: parseInt(customerId)
+                    customerId: parseInt(customerId),
+                    totalprice: totalprice 
                 })
             });
+            console.log(totalprice);
             const data = await response.json();
             if (data.message === "SUCCESSFULL ADDED") {
                 navigate('/customer/home');
