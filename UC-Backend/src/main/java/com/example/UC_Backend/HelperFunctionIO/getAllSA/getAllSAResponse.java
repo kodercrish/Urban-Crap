@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class getAllSAResponse {
     private String message;
     private ArrayList<ServiceAgent> agents;
-
     public getAllSAResponse(String message, ArrayList<ServiceAgent> agents) {
         this.message=message;
         this.agents = agents;

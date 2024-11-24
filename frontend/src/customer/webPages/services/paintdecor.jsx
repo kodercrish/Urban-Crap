@@ -1,5 +1,7 @@
 import Layout from '../../layout.jsx'
 import React, { useState } from 'react';
+import housepaintingImage from "../../../assets/WebImages2/Painting/housePainting.jpg";
+import wallpaintingImage from "../../../assets/WebImages2/Painting/wallPainting.jpg";
 
 function PaintingDecorServices() {
   const [selectedService, setSelectedService] = useState(null);
@@ -10,7 +12,7 @@ function PaintingDecorServices() {
       name: "Full Home Painting",
       basePrice: "₹15,000",
       priceNote: "Final price varies based on home size",
-      image: "/api/placeholder/800/400?text=Full+Home+Painting",
+      image: housepaintingImage,
       shortDesc: "Complete home painting solution with premium quality paints and professional service.",
       details: {
         overview: "Transform your entire home with our comprehensive painting service. We use premium quality paints and professional techniques to ensure a perfect finish.",
@@ -70,7 +72,7 @@ function PaintingDecorServices() {
       name: "Rooms/Walls Painting",
       basePrice: "₹4,000",
       priceNote: "Per room, varies based on size",
-      image: "/api/placeholder/800/400?text=Room+Painting",
+      image: wallpaintingImage,
       shortDesc: "Professional painting service for individual rooms or specific walls.",
       details: {
         overview: "Perfect solution for refreshing individual rooms or accent walls. Choose from various finishes and colors to match your vision.",

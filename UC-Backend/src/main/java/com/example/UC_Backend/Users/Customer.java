@@ -13,7 +13,6 @@ import com.example.UC_Backend.Extra.ExtraFunctions;
  */
 @Document(collection = "customers")
 public class Customer extends User{
-    private record cuscoord(int x, int y) { };
     ExtraFunctions func =new ExtraFunctions();
     
     @Id
@@ -21,6 +20,7 @@ public class Customer extends User{
     private int customerId;
     private int phone;
     private ArrayList<String> shoppingCart = new ArrayList<String>();
+    private String location;
 
 
     public Customer(String name, String email,int phone, String password) {
@@ -29,7 +29,7 @@ public class Customer extends User{
         this.phone=phone;
         // this.shoppingCart=shoppingCart;
     }
- 
+    
     public String getName()
     {
         return super.name;
@@ -57,5 +57,11 @@ public class Customer extends User{
 
     public void addServiveToCart(String ServiceID) {
         this.shoppingCart.add(ServiceID);
+    }
+    public String getLocation(){
+        return this.location;
+    }
+    public void setLocation(String location){
+        this.location=location;
     }
 }

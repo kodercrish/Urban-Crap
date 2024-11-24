@@ -23,6 +23,7 @@ import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
 import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.*;
 import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
 import com.example.UC_Backend.HelperFunctionIO.getAllSA.*;
+import com.example.UC_Backend.HelperFunctionIO.getAvailableSA.*;
 
 //Importing Cart Related files
 import com.example.UC_Backend.HelperFunctionIO.addtoCart.*;
@@ -56,6 +57,11 @@ public class Helper {
     @Autowired
     private OrderRepository orderCollection;
 
+    // static {
+    //     System.loadLibrary("rangeChecker");
+    // }
+
+    public native ArrayList<String> getInRangeAgents(String CustomerLocation, ArrayList<ServiceAgent> agentsList);
 
     @PostMapping("/addcustomer")
     public addCustomerResponse addCustomer(@RequestBody addCustomerRequest request) {
@@ -108,7 +114,14 @@ public class Helper {
             if (existingSAEmail.isPresent()) {
                 return new addServiceAgentResponse("EMAIL ID EXISTS", 0);
             } else {
-                ServiceAgent sa=new ServiceAgent(request.getName(),request.getEmail(),request.getPassword(),request.getSkill(),request.getRange(),"BUSY");
+                ServiceAgent sa = new ServiceAgent(
+                    request.getName(),
+                    request.getEmail(),
+                    request.getPassword(),
+                    request.getSkill(), // This is already String[]
+                    request.getRange(),
+                    request.getLocation()
+                );
                 saCollection.save(sa);
                 return new addServiceAgentResponse("Service agent added successfully", sa.getAgentId());
             }
@@ -250,10 +263,27 @@ public class Helper {
         if(customerOptional.isPresent())
         {
             Customer customer=customerOptional.get();
-            Order order=new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED" ,request.getTotalprice());
+            Order order=new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED" ,request.getTotalprice(), request.getLocation());
             order.setCart(customer.getShoppingCart());
             orderCollection.save(order);
-    
+
+            //GEtting all service agents
+            ArrayList<ServiceAgent> agents = new ArrayList<>();
+            saCollection.findAll().forEach(agents::add);
+
+            
+            
+            // //Object created for getting available Service Agents
+            // getAvailableSA obj= new getAvailableSA(agents);
+
+            // for(String itemId: order.getCart()){
+            //     ArrayList<ServiceAgent> availableSA= obj.findAvailableSA(itemId);
+                
+            // }
+            
+
+            //ArrayList<String> inRangeAgentsIDs = new Helper().getInRangeAgents(customer.getLocation(), agentsList);
+            
             return new checkoutResponse("SUCCESSFULL ADDED");
         }
         else{
@@ -276,6 +306,19 @@ public class Helper {
             return new getAllSAResponse("Error",null);
         }
     }
+
+    // @PostMapping("/sa/orders")
+    // public  giveSAOrdersResponse RequestSAOrder (ArrayList<ServiceAgent> agents,String orderId) {
+    //     // Fetch all service agent details
+    //     try{
+    //         ArrayList<ServiceAgent> agents = new ArrayList<>();
+    //         saCollection.findAll().forEach(agents::add);
+
+    //         return new getAllSAResponse("Sent Successfully",agents);
+    //     }catch(Exception e) {
+    //         return new getAllSAResponse("Error",null);
+    //     }
+    // }
     
     @PostMapping("/order-history")
     public getOrderDetailsResponse getOrderDetails(@RequestBody getOrderDetailsRequest request) {

@@ -1,4 +1,6 @@
 import Layout from '../../layout.jsx';
+import storyImage from '../../../assets/WebImages2/AboutUs/HappyCustomers.png';
+import successImage from '../../../assets/success.jpg';
 
 const AboutUs = () => {
     return (
@@ -22,7 +24,7 @@ const AboutUs = () => {
                     <section className="flex flex-col lg:flex-row items-center mb-16">
                         <div className="lg:w-1/2 mb-8 lg:mb-0">
                             <img
-                                src="/assets/story.jpg"
+                                src={successImage}
                                 alt="Our story"
                                 className="rounded-lg shadow-lg w-full"
                             />
@@ -99,7 +101,7 @@ const AboutUs = () => {
                         </div>
                         <div className="lg:w-1/2 mt-8 lg:mt-0">
                             <img
-                                src="/assets/mission.jpg"
+                                src={storyImage}
                                 alt="Mission and Vision"
                                 className="rounded-lg shadow-lg w-full"
                             />

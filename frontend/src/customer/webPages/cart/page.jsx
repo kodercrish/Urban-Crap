@@ -8,8 +8,40 @@ const CustomerShoppingCart = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const [showLocationPopup, setShowLocationPopup] = useState(false);
+    const [selectedLocation, setSelectedLocation] = useState('');
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    const locations = [
+        "Electronic City",
+        "Bommasandra",
+        "Kormangala",
+        "Marathahalli",
+        "Whitefield",
+        "Hebbal",
+        "Kengeri",
+        "Yelahanka",
+        "Nagawara",
+        "Doddaballapur",
+        "Kundalahalli",
+        "Kadugodi",
+        "Jayanagar",
+        "K R Puram",
+        "Majestic",
+        "Rajarajeshwari Nagar",
+        "M G Road",
+        "Mysore Road",
+        "Vijaynagar",
+        "Peenya",
+        "Attiguppe",
+        "Kengeri Signal",
+        "K R Pet Signal",
+        "RR Nagar",
+        "Attibele",
+        "Hoskote",
+        "HSR Layout"
+    ];
 
     // Check if the admin is authenticated
     useEffect(() => {
@@ -64,16 +96,22 @@ const CustomerShoppingCart = () => {
         }
     };
 
+    const handleCheckoutClick = () => {
+        setShowLocationPopup(true);
+    };
 
-    //On clicking proceed to checkout what happens
     const proceedToCheckout = async () => {
+        if (!selectedLocation) {
+            alert("Please select a location");
+            return;
+        }
+
         const customerId = localStorage.getItem('customerId');
-            // Calculate total price from cart items
         const totalprice = cartItems.reduce((total, item) => {
-        const price = Number(item.price.replace('₹', ''))
-        return total + price
-    }, 0);
-        
+            const price = Number(item.price.replace('₹', ''))
+            return total + price
+        }, 0);
+
         try {
             const response = await fetch('http://localhost:8080/api/checkout', {
                 method: 'POST',
@@ -82,12 +120,14 @@ const CustomerShoppingCart = () => {
                 },
                 body: JSON.stringify({
                     customerId: parseInt(customerId),
-                    totalprice: totalprice 
+                    totalprice: totalprice,
+                    location: selectedLocation
                 })
             });
-            console.log(totalprice);
+
             const data = await response.json();
             if (data.message === "SUCCESSFULL ADDED") {
+                setShowLocationPopup(false);
                 navigate('/customer/home');
             } else {
                 alert(data.message);
@@ -96,12 +136,40 @@ const CustomerShoppingCart = () => {
             console.error('Error during checkout:', error);
             alert("Checkout failed. Please try again.");
         }
-
-        // Only render the page if the admin is authenticated
-        if (!isAuthenticated) {
-            return null; // Optionally display a loading spinner here
-        }
     };
+
+    // Add this JSX for the location popup
+    const LocationPopup = () => (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl w-96">
+                <h2 className="text-xl font-bold text-[#1c4e80] mb-4">Select Your Location</h2>
+                <select
+                    value={selectedLocation}
+                    onChange={(e) => setSelectedLocation(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded mb-4"
+                >
+                    <option value="">Select a location</option>
+                    {locations.map((location) => (
+                        <option key={location} value={location}>{location}</option>
+                    ))}
+                </select>
+                <div className="flex justify-end gap-2">
+                    <button
+                        onClick={() => setShowLocationPopup(false)}
+                        className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        onClick={proceedToCheckout}
+                        className="px-4 py-2 bg-[#1c4e80] text-white rounded hover:bg-[#153a61]"
+                    >
+                        Confirm Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
 
 
     return (
@@ -139,7 +207,7 @@ const CustomerShoppingCart = () => {
                                         </p>
                                     </div>
                                     <button
-                                        onClick={proceedToCheckout}
+                                        onClick={handleCheckoutClick}
                                         className="w-full mt-4 bg-[#1c4e80] text-white py-3 rounded-lg hover:bg-[#153a61] transition-colors"
                                     >
                                         Proceed to Checkout
@@ -151,6 +219,8 @@ const CustomerShoppingCart = () => {
                 </div>
 
             </div>
+            {/* Add the popup to your return statement before the closing Layout tag: */}
+            {showLocationPopup && <LocationPopup />}
         </Layout>
     );
 };

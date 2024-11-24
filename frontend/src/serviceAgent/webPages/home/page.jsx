@@ -1,109 +1,152 @@
+// import React, { useEffect, useState } from 'react';
+// import Layout from '../../layout.jsx';
+// // import axios from 'axios';
+
+// const AgentHome = () => {
+//     const [orders, setOrders] = useState([]);
+
+
+  
+//     const fetchOrders = async () => {
+//       try {
+//         const response = await fetch("http://localhost:8080/api/sa/orders", {
+//           method: "POST", // Using POST method
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({}), // Empty body for POST
+//         });
+//         const data = await response.json();
+//         if (data.message != null) {
+//           setServiceAgents(data.agents);
+//         } else {
+//           alert(data.message);
+  
+//         }
+//       } catch (error) {
+//         alert("Error fetching service agents. Please try again.");
+//       }
+//     };
+
+//   // Fetch orders initially and at regular intervals
+//   useEffect(() => {
+//       fetchOrders(); // Initial fetch
+
+//       const interval = setInterval(() => {
+//           fetchOrders();
+//       }, 5000); // Fetch every 5 seconds
+
+//       return () => clearInterval(interval); // Cleanup interval on unmount
+//   }, []);
+
+//       // Accept order
+//       const handleAccept = async (orderId) => {
+//         try {
+//             await axios.post('/api/orders/accept', { orderId, agentId });
+//             alert('Order accepted successfully!');
+//             fetchOrders(); // Refresh orders after accepting
+//         } catch (error) {
+//             console.error('Error accepting order:', error);
+//         }
+//     };
+
+//     // Reject order
+//     const handleReject = async (orderId) => {
+//         try {
+//             await axios.post('/api/orders/reject', { orderId, agentId });
+//             alert('Order rejected successfully!');
+//             fetchOrders(); // Refresh orders after rejecting
+//         } catch (error) {
+//             console.error('Error rejecting order:', error);
+//         }
+//     };
+
+    // return (
+//         <div>
+//             <h1>Order Requests</h1>
+//             <table>
+//                 <thead>
+//                     <tr>
+//                         <th>Order ID</th>
+//                         <th>Customer ID</th>
+//                         <th>Location</th>
+//                         <th>Total Price</th>
+//                         <th>Action</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     {orders.map((order) => (
+//                         <tr key={order.orderId}>
+//                             <td>{order.orderId}</td>
+//                             <td>{order.customerId}</td>
+//                             <td>{order.location}</td>
+//                             <td>{order.totalPrice}</td>
+//                             <td>
+//                                 <button onClick={() => handleAccept(order.orderId)}>Accept</button>
+//                                 <button onClick={() => handleReject(order.orderId)}>Reject</button>
+//                             </td>
+//                         </tr>
+//                     ))}
+//                 </tbody>
+//             </table>
+//         </div>
+//     );
+// };
+
+// const handleAccept = async (orderId) => {
+//     try {
+//         await axios.post('/api/orders/accept', { orderId });
+//         alert('Order accepted successfully!');
+//     } catch (error) {
+//         console.error('Error accepting order:', error);
+//     }
+// };
+
+// const handleReject = async (orderId) => {
+//     try {
+//         await axios.post('/api/orders/reject', { orderId });
+//         alert('Order rejected successfully!');
+//     } catch (error) {
+//         console.error('Error rejecting order:', error);
+//     }
+// };
+
+// export default AgentHome;
+
+// CustomerProfile.js
+import React, { useState, useEffect } from 'react';
 import Layout from '../../layout.jsx';
-import React, { useRef ,useState, useEffect } from 'react';
+import { FaUser, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const AgentHome = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+const CustomerProfile = ({ name, phoneNumber, email }) => {
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // Check if the admin is authenticated
-    useEffect(() => {
-      const agentToken = localStorage.getItem('agentId'); // Example: storing a token in local storage
-      console.log(agentToken);
-      if (!agentToken) {
-        navigate("/agent/SignIn"); // Redirect to login if no token is found
-      } else {
-        setIsAuthenticated(true); // Mark as authenticated
-      }
-    }, [navigate]);
-  
-    // Only render the page if the admin is authenticated
-    if(!isAuthenticated) {
-      return null; // Optionally display a loading spinner here
+  useEffect(() => {
+    const agentToken = localStorage.getItem('agentId');
+    console.log(agentToken);
+    if (!agentToken) {
+      navigate("/agent/SignIn");
+    } else {
+      setIsAuthenticated(true);
     }
+  }, [navigate]);
+
+  if(!isAuthenticated) {
+    return null;
+  }
 
   return (
     <Layout>
-      <div className="admin-home bg-[#eaf0f7] min-h-screen p-6">
+      <div className="w-4/5 max-w-[800px] mx-auto my-12 bg-white rounded-lg shadow-lg p-5">
+        
         {/* Header Section */}
-        <h1 className="text-[#1c4e80] text-4xl font-bold mb-6">
-          Welcome to the Agent Dashboard
-        </h1>
-        <p className="text-gray-700 text-lg mb-8">
-          Easily manage and oversee all site activities.
-        </p>
-
-        {/* Dashboard Grid */}
-        <div className="dashboard-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* User Management */}
-          <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">User Management</h2>
-            <p className="text-gray-600 mb-4">
-              View, edit, and manage user accounts and roles.
-            </p>
-            <button className="bg-[#1c4e80] text-white py-2 px-4 rounded hover:bg-[#163a60]">
-              Manage Users
-            </button>
-          </div>
-
-          {/* Content Management */}
-          <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Content Management</h2>
-            <p className="text-gray-600 mb-4">
-              Add, edit, or delete content across the platform.
-            </p>
-            <button className="bg-[#1c4e80] text-white py-2 px-4 rounded hover:bg-[#163a60]">
-              Manage Content
-            </button>
-          </div>
-
-          {/* Reports */}
-          <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Reports</h2>
-            <p className="text-gray-600 mb-4">
-              Generate and view detailed reports and analytics.
-            </p>
-            <button className="bg-[#1c4e80] text-white py-2 px-4 rounded hover:bg-[#163a60]">
-              View Reports
-            </button>
-          </div>
-
-          {/* Settings */}
-          <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Settings</h2>
-            <p className="text-gray-600 mb-4">
-              Configure site settings and preferences.
-            </p>
-            <button className="bg-[#1c4e80] text-white py-2 px-4 rounded hover:bg-[#163a60]">
-              Go to Settings
-            </button>
-          </div>
-
-          {/* Notifications */}
-          <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Notifications</h2>
-            <p className="text-gray-600 mb-4">
-              View and manage admin notifications and alerts.
-            </p>
-            <button className="bg-[#1c4e80] text-white py-2 px-4 rounded hover:bg-[#163a60]">
-              Check Notifications
-            </button>
-          </div>
-
-          {/* Help & Support */}
-          <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Help & Support</h2>
-            <p className="text-gray-600 mb-4">
-              Access guides and contact support for assistance.
-            </p>
-            <button className="bg-[#1c4e80] text-white py-2 px-4 rounded hover:bg-[#163a60]">
-              Get Help
-            </button>
-          </div>
+        <div className="flex flex-col items-center bg-[#1c4e80] text-white p-8 rounded-t-lg">
+          <h1 className="text-2xl font-bold mt-2">Welcome</h1>
         </div>
-      </div>
+    </div>
     </Layout>
   );
 }
-
-export default AgentHome;
+export default CustomerProfile;

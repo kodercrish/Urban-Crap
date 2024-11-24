@@ -25,16 +25,18 @@ public class Order {
     private String orderStatus;
     private ArrayList<String> cart = new ArrayList<String>();
     private int totalprice;
+    private String location;
 
     //constructor
     public Order() {
         this.orderId = func.generateID();
     }
-    public Order(int customerId, String orderStatus,int totalprice){
+    public Order(int customerId, String orderStatus,int totalprice, String location) {
         this.customerId = customerId;
         this.orderId = func.generateID();
         this.orderStatus = orderStatus;
         this.totalprice=totalprice;
+        this.location=location;
     }
 
     //getters and setters
@@ -79,5 +81,11 @@ public class Order {
     }
     public void setTotalPrice(int totalprice){
         this.totalprice=totalprice;
+    }
+    public String getLocation(){
+        return location;
+    }
+    public void setLocation(String location){
+        this.location=location;
     }
 }

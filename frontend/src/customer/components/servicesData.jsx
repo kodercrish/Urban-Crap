@@ -1,4 +1,4 @@
-//AC Repairs/Home_Appliances
+  //AC Repairs/Home_Appliances
 import acImage from "../../assets/Website_Images/AC Repair/Home_Appliances/ac.jpg";
 import refImage from "../../assets/Website_Images/AC Repair/Home_Appliances/refrigerator.jpg";
 import gas_stoveImage from "../../assets/Website_Images/AC Repair/Home_Appliances/gas_stove.jpg";
@@ -61,6 +61,16 @@ import pedicureImage2 from "../../assets/Website_Images/Salon/Women/pedicure.jpg
 import threadingImage from "../../assets/Website_Images/Salon/Women/threading.jpg";
 import waxingImage from "../../assets/Website_Images/Salon/Women/waxing.jpg";
 
+//Gardening/Design Services
+import gardenImage from "../../assets/Website_Images/Gardening and Landscapes/design_services/garden.jpg";
+import irrigationImage from "../../assets/Website_Images/Gardening and Landscapes/design_services/irrigation.jpg";
+import landscapeImage from "../../assets/Website_Images/Gardening and Landscapes/design_services/landscape.jpg";
+import lawnImage from "../../assets/Website_Images/Gardening and Landscapes/design_services/lawn.jpg";
+
+//Gardening/planting and installation
+import irrigationImage2 from "../../assets/Website_Images/Gardening and Landscapes/planting and installation/irrigation.jpg";
+import shrubsImage from "../../assets/Website_Images/Gardening and Landscapes/planting and installation/shrubs and flowe.jpg";
+import treeplantingImage from "../../assets/Website_Images/Gardening and Landscapes/planting and installation/tree planting.jpg";
 
 
 export const services = {
@@ -330,11 +340,11 @@ export const services = {
       },
     ],
     ////////////////////////////////
-    repairs: [
+    electrical: [
       {
-        id: "RE1",
-        category: 'Electrician',
-        name: 'Switch & Socket Repair',
+        id: "EL1",
+        category: 'Electrical',
+        name: 'Switch & Socket Service',
         price: '₹199',
         description: 'Professional repair and replacement of faulty switches and sockets.',
         image: switchSocketImage,
@@ -344,180 +354,145 @@ export const services = {
           'Replacement of faulty components',
           'Wiring connections check',
           'Switch functionality test'
-          ]
+        ]
       },
       {
-        id: "RE2",
-        category: 'Electrician',
-        name: 'Fan Repair',
+        id: "EL2",
+        category: 'Electrical',
+        name: 'Fan Service',
         price: '₹299',
-        description: 'Complete fan servicing, repair, and maintenance.',
+        description: 'Complete fan installation, repair, and maintenance.',
         image: fanRepairImage,
         duration: '2-3 hours',
         includes: [
           'Fan motor inspection and repair',
+          'New installation if needed',
           'Blade and bearing alignment',
-          'Lubrication of moving parts',
           'Test run for operation'
-          ]
+        ]
       },
       {
-        id: "RE3",
-        category: 'Electrician',
+        id: "EL3",
+        category: 'Electrical',
         name: 'Wall/Ceiling Light',
         price: '₹249',
-        description: 'Replacement and repair of wall or ceiling light fixtures.',
+        description: 'Installation and repair of wall or ceiling light fixtures.',
         image: ceilingLightImage,
         duration: '2-3 hours',
         includes: [
           'Fixture and bulb replacement',
+          'New installation',
           'Wiring inspection',
-          'Safety check after installation',
-          'Functionality test'
-          ]
+          'Safety check after installation'
+        ]
       },
       {
-        id: "RE4",
-        category: 'Carpenter',
-        name: 'Cupboard & Drawer',
-        price: '₹299',
-        description: 'Repair of cupboards, drawers, and cabinet hardware.',
-        image: cupboardImage,
-        duration: '2-3 hours',
-        includes: [
-          'Inspection of cupboard and drawer components',
-          'Fixing misaligned hinges',
-          'Repair of drawer channels',
-          'Surface restoration'
-          ]
-      },
-      {
-        id: "RE5",
-        category: 'Carpenter',
-        name: 'Door Repair',
-        price: '₹349',
-        description: 'Comprehensive door repair and alignment services.',
-        image: doorImage,
-        duration: '2-3 hours',
-        includes: [
-          'Door alignment and adjustments',
-          'Hinge and latch repair',
-          'Surface refinishing',
-          'Functionality test'
-          ]
-      },
-      {
-        id: "RE6",
-        category: 'Carpenter',
-        name: 'Furniture Repair',
-        price: '₹399',
-        description: 'General furniture repair and restoration services.',
-        image: furnitureImage,
-        duration: '2-3 hours',
-        includes: [
-          'Inspection of joints and structure',
-          'Surface restoration and repair',
-          'Part replacement if needed',
-          'General touch-ups'
-          ]
-        
-        
-      }
-    ],
-    installations: [
-      {
-        id: "IN1",
-        category: 'Electrician',
-        name: 'Fan Installation',
-        price: '₹399',
-        description: 'Professional ceiling fan installation with wiring.',
-        image: fanImage2,
-        duration: '2-3 hours',
-        includes: [
-          'Ceiling fan and bracket installation',
-          'Electrical wiring connections',
-          'Safety checks',
-          'Fan functionality test'
-          ]
-      },
-      {
-        id: "IN2",
-        category: 'Electrician',
-        name: 'Geyser Installation',
+        id: "EL4",
+        category: 'Electrical',
+        name: 'Geyser Service',
         price: '₹599',
-        description: 'Complete geyser installation with safety checks.',
+        description: 'Complete geyser installation and repair with safety checks.',
         image: geyserImage,
         duration: '2-3 hours',
         includes: [
           'Geyser placement and mounting',
-          'Plumbing and electrical connections',
-          'Safety checks',
-          'Geyser functionality test'
-          ]
+          'Repair of existing unit',
+          'Electrical connections',
+          'Safety and functionality test'
+        ]
       },
       {
-        id: "IN3",
-        category: 'Electrician',
-        name: 'Wiring',
+        id: "EL5",
+        category: 'Electrical',
+        name: 'Wiring Service',
         price: '₹799',
-        description: 'New wiring installation and existing wiring updates.',
+        description: 'New wiring installation and existing wiring repairs.',
         image: wiringImage2,
         duration: '2-3 hours',
         includes: [
           'New wiring system installation',
-          'Upgrading existing wiring',
+          'Repair of existing wiring',
           'Electrical safety checks',
-          'Testing functionality'
-          ]
-      },
-      
-     
+          'Complete testing'
+        ]
+      }
+    ],
+    carpenter: [
       {
-        id: "IN4",
+        id: "CP1",
+        category: 'Carpenter',
+        name: 'Cupboard & Drawer',
+        price: '₹299',
+        description: 'Installation and repair of cupboards, drawers, and cabinet hardware.',
+        image: cupboardImage,
+        duration: '2-3 hours',
+        includes: [
+          'Installation and repairs',
+          'Fixing misaligned hinges',
+          'Drawer channel service',
+          'Surface restoration'
+        ]
+      },
+      {
+        id: "CP2",
+        category: 'Carpenter',
+        name: 'Door Service',
+        price: '₹349',
+        description: 'Comprehensive door installation and repair services.',
+        image: doorImage,
+        duration: '2-3 hours',
+        includes: [
+          'Door installation/repair',
+          'Hinge and latch service',
+          'Lock installation',
+          'Alignment adjustment'
+        ]
+      },
+      {
+        id: "CP3",
+        category: 'Carpenter',
+        name: 'Furniture Service',
+        price: '₹399',
+        description: 'Furniture assembly, repair and restoration services.',
+        image: furnitureImage,
+        duration: '2-3 hours',
+        includes: [
+          'Furniture assembly',
+          'Joint and structure repair',
+          'Surface restoration',
+          'Part replacement'
+        ]
+      },
+      {
+        id: "CP4",
         category: 'Carpenter',
         name: 'Curtain Rod Installation',
         price: '₹299',
-        description: 'Secure installation of curtain rods and brackets.',
+        description: 'Professional curtain rod installation service.',
         image: curtainImage,
         duration: '2-3 hours',
         includes: [
-          'Curtain rod and bracket installation',
-          'Secure placement and alignment',
-          'Drilling and fixture setup',
-          'Stability check'
-          ]
+          'Rod and bracket installation',
+          'Secure placement',
+          'Drilling and mounting',
+          'Stability testing'
+        ]
       },
-     
       {
-        id: "IN5",
+        id: "CP5",
         category: 'Carpenter',
         name: 'Bathroom Accessories',
         price: '₹249',
-        description: 'Installation of bathroom holders and hangers.',
+        description: 'Installation of bathroom accessories and fixtures.',
         image: bathroomImage2,
         duration: '2-3 hours',
         includes: [
-          'Bathroom accessory mounting',
-          'Holders and hangers installation',
-          'Secure fixture placement',
-          'Final check for placement'
-          ]
-      },
-      {
-        id: "IN6",
-        category: 'Carpenter',
-        name: 'Door Lock Installation',
-        price: '₹349',
-        description: 'Professional door lock and handle installation.',
-        image: doorLockImage,
-        duration: '2-3 hours',
-        Includes: [
-          'Door lock and handle installation',
-          'Lock mechanism alignment',
-          'Testing lock functionality',
-          'Ensuring smooth operation'
-          ]
-      },
+          'Accessory mounting',
+          'Holders installation',
+          'Secure fixture setup',
+          'Final inspection'
+        ]
+      }
     ],
     ////////////////////////////////
     gardening: [
@@ -526,7 +501,7 @@ export const services = {
         name: 'Landscape Design',
         price: '₹15,999',
         description: 'Professional landscape design service to transform your outdoor space into a beautiful and functional area.',
-        image: '/api/placeholder/300/200?text=Landscape+Design',
+        image: landscapeImage,
         duration: '3-5 days',
         includes: [
           'Site analysis and assessment',
@@ -540,7 +515,7 @@ export const services = {
         name: 'Garden Design',
         price: '₹8,999',
         description: 'Custom garden design service focusing on creating beautiful and sustainable garden spaces.',
-        image: '/api/placeholder/300/200?text=Garden+Design',
+        image: gardenImage,
         duration: '2-3 days',
         includes: [
           'Color scheme planning',
@@ -554,7 +529,7 @@ export const services = {
         name: 'Irrigation Design',
         price: '₹12,999',
         description: 'Expert irrigation system design for efficient water management and plant health.',
-        image: '/api/placeholder/300/200?text=Irrigation+Design',
+        image: irrigationImage,
         duration: '2-3 days',
         includes: [
           'Water requirement analysis',
@@ -568,7 +543,7 @@ export const services = {
         name: 'Lawn Renovation',
         price: '₹9,999',
         description: 'Complete lawn makeover service to revitalize your green space.',
-        image: '/api/placeholder/300/200?text=Lawn+Renovation',
+        image: lawnImage,
         duration: '3-4 days',
         includes: [
           'Soil testing and preparation',
@@ -625,7 +600,7 @@ export const services = {
     ////////////////////////////////
     men: [
       {
-        id: "M1",
+        id: "SM1",
         name: "Haircut",
         price: "₹299",
         description: "Professional styling and precise cutting to match your desired look.",
@@ -639,7 +614,7 @@ export const services = {
         ]
       },
       {
-        id: "M2",
+        id: "SM2",
         name: "Beard Trimming & Styling",
         price: "₹199",
         description: "Perfectly sculpted beard with expert shaping and grooming.",
@@ -653,7 +628,7 @@ export const services = {
         ]
       },
       {
-        id: "M3",
+        id: "SM3",
         name: "Massage",
         price: "₹499",
         description: "Relaxing full-body massage to release tension and rejuvenate.",
@@ -667,7 +642,7 @@ export const services = {
         ]
       },
       {
-        id: "M4",
+        id: "SM4",
         name: "Pedicure",
         price: "₹349",
         description: "Complete foot care with cleaning, exfoliation, and nail treatment.",
@@ -681,7 +656,7 @@ export const services = {
         ]
       },
       {
-        id: "M5",
+        id: "SM5",
         name: "Hair Color",
         price: "₹699",
         description: "Professional hair coloring with premium, long-lasting dyes.",
@@ -695,7 +670,7 @@ export const services = {
         ]
       },
       {
-        id: "M6",
+        id: "SM6",
         name: "Detan",
         price: "₹399",
         description: "Skin brightening treatment to remove tan and even out skin tone.",
@@ -709,7 +684,7 @@ export const services = {
         ]
       },
       {
-        id: "M7",
+        id: "SM7",
         name: "Facial & Cleanup",
         price: "₹599",
         description: "Deep cleansing facial to remove impurities and refresh skin.",
@@ -725,7 +700,7 @@ export const services = {
     ],
     women: [
       {
-        id: "W1",
+        id: "SW1",
         name: "Makeup & Styling",
         price: "₹799",
         description: "Professional makeup application for any occasion or photoshoot.",
@@ -739,7 +714,7 @@ export const services = {
         ]
       },
       {
-        id: "W2",
+        id: "SW2",
         name: "Hair Styling",
         price: "₹399",
         description: "Elegant hairstyling for various looks and events.",
@@ -753,7 +728,7 @@ export const services = {
         ]
       },
       {
-        id: "W3",
+        id: "SW3",
         name: "Massage",
         price: "₹549",
         description: "Soothing massage to relax and revitalize body and mind.",
@@ -767,7 +742,7 @@ export const services = {
         ]
       },
       {
-        id: "W4",
+        id: "SW4",
         name: "Waxing",
         price: "₹299",
         description: "Smooth, long-lasting hair removal for entire body.",
@@ -781,7 +756,7 @@ export const services = {
         ]
       },
       {
-        id: "W5",
+        id: "SW5",
         name: "Facial",
         price: "₹499",
         description: "Customized facial treatment for glowing, healthy skin.",
@@ -795,7 +770,7 @@ export const services = {
         ]
       },
       {
-        id: "W6",
+        id: "SW6",
         name: "Cleanup",
         price: "₹349",
         description: "Thorough skin cleansing and pore treatment.",
@@ -809,7 +784,7 @@ export const services = {
         ]
       },
       {
-        id: "W7",
+        id: "SW7",
         name: "Pedicure",
         price: "₹399",
         description: "Complete foot care with nail polish and massage.",
@@ -823,7 +798,7 @@ export const services = {
         ]
       },
       {
-        id: "W8",
+        id: "SW8",
         name: "Manicure",
         price: "₹249",
         description: "Comprehensive hand and nail care with styling.",
@@ -837,7 +812,7 @@ export const services = {
         ]
       },
       {
-        id: "W9",
+        id: "SW9",
         name: "Threading & Face Wax",
         price: "₹199",
         description: "Precise facial hair removal and shaping.",
@@ -851,7 +826,7 @@ export const services = {
         ]
       },
       {
-        id: "W10",
+        id: "SW10",
         name: "Bleach & Detan",
         price: "₹449",
         description: "Skin brightening and tan removal treatment.",
@@ -867,7 +842,7 @@ export const services = {
     ],
     Ser: [
       {
-        id: "S1",
+        id: "SE1",
         category: "Electrician",
         name: "Switch & Socket Repair",
         price: "₹199",
@@ -882,7 +857,7 @@ export const services = {
         ]
       },
       {
-        id: "S2",
+        id: "SE2",
         category: "Electrician",
         name: "Fan Repair",
         price: "₹299",
@@ -897,7 +872,7 @@ export const services = {
         ]
       },
       {
-        id: "S3",
+        id: "SE3",
         category: "Electrician",
         name: "Wall/Ceiling Light",
         price: "₹249",
@@ -912,7 +887,7 @@ export const services = {
         ]
       },
       {
-        id: "S4",
+        id: "SC4",
         category: "Carpenter",
         name: "Cupboard & Drawer",
         price: "₹299",
@@ -927,7 +902,7 @@ export const services = {
         ]
       },
       {
-        id: "S5",
+        id: "SC5",
         category: "Carpenter",
         name: "Door Repair",
         price: "₹349",
@@ -942,7 +917,7 @@ export const services = {
         ]
       },
       {
-        id: "S6",
+        id: "SC6",
         category: "Carpenter",
         name: "Furniture Repair",
         price: "₹399",
@@ -959,12 +934,12 @@ export const services = {
     ],
     installations: [
       {
-        id: "I1",
+        id: "IE1",
         category: "Electrician",
         name: "Fan Installation",
         price: "₹399",
         description: "Professional ceiling fan installation with wiring.",
-        image: "/api/placeholder/300/200?text=Fan+Installation",
+        image: fanImage2,
         duration: "45-60 mins",
         includes: [
           "Bracket mounting",
@@ -974,12 +949,12 @@ export const services = {
         ]
       },
       {
-        id: "I2",
+        id: "IE2",
         category: "Electrician",
         name: "Geyser Installation",
         price: "₹599",
         description: "Complete geyser installation with safety checks.",
-        image: "/api/placeholder/300/200?text=Geyser",
+        image: geyserImage,
         duration: "1-2 hours",
         includes: [
           "Wall mounting",
@@ -989,12 +964,12 @@ export const services = {
         ]
       },
       {
-        id: "I3",
+        id: "IE3",
         category: "Electrician",
         name: "Wiring",
         price: "₹799",
         description: "New wiring installation and existing wiring updates.",
-        image: "/api/placeholder/300/200?text=Wiring",
+        image: wiringImage2,
         duration: "2-3 hours",
         includes: [
           "Wire routing",
@@ -1004,12 +979,12 @@ export const services = {
         ]
       },
       {
-        id: "I4",
+        id: "IC4",
         category: "Carpenter",
         name: "Curtain Rod Installation",
         price: "₹299",
         description: "Secure installation of curtain rods and brackets.",
-        image: "/api/placeholder/300/200?text=Curtain+Rod",
+        image: curtainImage,
         duration: "30-45 mins",
         includes: [
           "Bracket mounting",
@@ -1019,12 +994,12 @@ export const services = {
         ]
       },
       {
-        id: "I5",
+        id: "IC5",
         category: "Carpenter",
         name: "Bathroom Accessories",
         price: "₹249",
         description: "Installation of bathroom holders and hangers.",
-        image: "/api/placeholder/300/200?text=Bathroom+Accessories",
+        image: bathroomImage2,
         duration: "30-45 mins",
         includes: [
           "Position marking",
@@ -1034,12 +1009,12 @@ export const services = {
         ]
       },
       {
-        id: "I6",
+        id: "IC6",
         category: "Carpenter",
         name: "Door Lock Installation",
         price: "₹349",
         description: "Professional door lock and handle installation.",
-        image: "/api/placeholder/300/200?text=Door+Lock",
+        image: doorLockImage,
         duration: "45-60 mins",
         includes: [
           "Positioning and alignment",
@@ -1056,7 +1031,7 @@ export const services = {
         price: "₹15,999",
         description: "Professional landscape design service to transform your outdoor space into a beautiful and functional area.",
         duration: "3-5 days",
-        image: "/api/placeholder/300/200?text=Landscape+Design",
+        image: landscapeImage,
         includes: [
           "Site analysis and assessment",
           "3D visualization of design",
@@ -1070,7 +1045,7 @@ export const services = {
         price: "₹8,999",
         description: "Custom garden design service focusing on creating beautiful and sustainable garden spaces.",
         duration: "2-3 days",
-        image: "/api/placeholder/300/200?text=Garden+Design",
+        image: gardenImage,
         includes: [
           "Color scheme planning",
           "Seasonal plant selection",
@@ -1084,7 +1059,7 @@ export const services = {
         price: "₹12,999",
         description: "Expert irrigation system design for efficient water management and plant health.",
         duration: "2-3 days",
-        image: "/api/placeholder/300/200?text=Irrigation+Design",
+        image: irrigationImage,
         includes: [
           "Water requirement analysis",
           "Sprinkler layout planning",
@@ -1098,7 +1073,7 @@ export const services = {
         price: "₹9,999",
         description: "Complete lawn makeover service to revitalize your green space.",
         duration: "3-4 days",
-        image: "/api/placeholder/300/200?text=Lawn+Renovation",
+        image: lawnImage,
         includes: [
           "Soil testing and preparation",
           "Grass type selection",
@@ -1114,7 +1089,7 @@ export const services = {
         price: "₹3,999",
         description: "Professional tree planting service including selection, placement, and installation.",
         duration: "1-2 days",
-        image: "/api/placeholder/300/200?text=Tree+Planting",
+        image: treeplantingImage,
         includes: [
           "Tree species consultation",
           "Location assessment",
@@ -1128,7 +1103,7 @@ export const services = {
         price: "₹7,999",
         description: "Complete installation service for shrubs and flower beds to enhance your garden.",
         duration: "2-3 days",
-        image: "/api/placeholder/300/200?text=Flower+Beds",
+        image: shrubsImage,
         includes: [
           "Bed preparation and edging",
           "Plant arrangement",
@@ -1142,7 +1117,7 @@ export const services = {
         price: "₹4,999",
         description: "Turn your backyard into a sustainable vegetable garden.",
         duration: "2-3 days",
-        image: "/api/placeholder/300/200?text=Vegetable+Garden",
+        image: irrigationImage2,
         includes: [
           "Soil preparation",
           "Seedling planting",
