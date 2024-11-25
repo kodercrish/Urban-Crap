@@ -21,7 +21,9 @@ const NavBar = () => {
                                     <img src={logo} alt="Logo" className="h-[65px] w-[65px] rounded-full" />
                                 </div>
                             </Link>
-                            <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
+                            <Link to="/customer/home">
+                                <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
+                            </Link>
                         </div>
 
                         {/* Right Section: Navigation, Shopping Cart and Profile */}
@@ -31,7 +33,7 @@ const NavBar = () => {
                             <Link to="/customer/order-history" className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
                                     Order History
                                 </Link>
-                                <Link to="/about-us">
+                                <Link to="/customer/aboutUs">
                                     <div className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
                                         About Us
                                     </div>

@@ -1,44 +1,33 @@
 package com.example.UC_Backend;
 
 //Importing Users
+import com.example.UC_Backend.Database.AdminRepository;
+import com.example.UC_Backend.Database.CustomerRepository;
+import com.example.UC_Backend.Database.OrderRepository;
+import com.example.UC_Backend.Database.ServiceAgentRepository;
+import com.example.UC_Backend.HelperFunctionIO.addCustomer.*;
+import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.*;
+import com.example.UC_Backend.HelperFunctionIO.addtoCart.*;
+import com.example.UC_Backend.HelperFunctionIO.checkout.*;
+import com.example.UC_Backend.HelperFunctionIO.getAllSA.*;
+import com.example.UC_Backend.HelperFunctionIO.getAvailableSA.*;
+import com.example.UC_Backend.HelperFunctionIO.getCustomerDetails.*;
+import com.example.UC_Backend.HelperFunctionIO.giveSAOrders.*;
+import com.example.UC_Backend.HelperFunctionIO.loginAdmin.*;
+import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
+import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
+import com.example.UC_Backend.HelperFunctionIO.orderHistory.*;
+import com.example.UC_Backend.HelperFunctionIO.removeFromCart.*;
 import com.example.UC_Backend.Users.Admin;
 import com.example.UC_Backend.Users.Customer;
 import com.example.UC_Backend.Users.ServiceAgent;
-
-//Importing Respositories for Database
-import com.example.UC_Backend.Database.AdminRepository;
-import com.example.UC_Backend.Database.CustomerRepository;
-import com.example.UC_Backend.Database.ServiceAgentRepository;
-import com.example.UC_Backend.Database.OrderRepository;
-
-//Importing Admin related files
-import com.example.UC_Backend.HelperFunctionIO.loginAdmin.*;
-
-//Importing Customer Related Files
-import com.example.UC_Backend.HelperFunctionIO.addCustomer.*;
-import com.example.UC_Backend.HelperFunctionIO.getCustomerDetails.*;
-import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
-
-//IMporting Service Agents Related Files
-import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.*;
-import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
-import com.example.UC_Backend.HelperFunctionIO.getAllSA.*;
-import com.example.UC_Backend.HelperFunctionIO.getAvailableSA.*;
-
-//Importing Cart Related files
-import com.example.UC_Backend.HelperFunctionIO.addtoCart.*;
-import com.example.UC_Backend.HelperFunctionIO.removeFromCart.*;
-import com.example.UC_Backend.HelperFunctionIO.checkout.*;
-import com.example.UC_Backend.HelperFunctionIO.orderHistory.*;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Helper handles the input/output operations coming from the frontend.
@@ -266,21 +255,40 @@ public class Helper {
             Order order=new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED" ,request.getTotalprice(), request.getLocation());
             order.setCart(customer.getShoppingCart());
             orderCollection.save(order);
+                        // System.out.print("1111111");
+
 
             //GEtting all service agents
             ArrayList<ServiceAgent> agents = new ArrayList<>();
             saCollection.findAll().forEach(agents::add);
 
-            
-            
-            // //Object created for getting available Service Agents
-            // getAvailableSA obj= new getAvailableSA(agents);
+            // System.out.print("2222222");
 
-            // for(String itemId: order.getCart()){
-            //     ArrayList<ServiceAgent> availableSA= obj.findAvailableSA(itemId);
+ 
+            // System.out.print("3333333");
+
+            //Object created for getting available Service Agents
+            getAvailableSA obj= new getAvailableSA(agents);
+            // System.out.println("dfaafada");
+
+            for(String itemId: order.getCart()){
+                        // System.out.println("44444");
+
+                ArrayList<ServiceAgent> availableSA= new ArrayList<ServiceAgent>();
+                availableSA=obj.findAvailableSA(itemId);
+                // System.out.println("5555555");
+                //We will get filtered list of agents in array of string from cpp
+                for(ServiceAgent sa: availableSA){
+                    // System.out.println("6666666");
+                    sa.getPending_orders().put(itemId,order);
+                    // sa.getCurrent_orders().put(itemId,order);
+                    // System.out.println(sa.getPending_orders().get(0));
+                    // System.out.println(sa.getOrderObject(itemId));
+
+                    saCollection.save(sa);
+                }
                 
-            // }
-            
+            }
 
             //ArrayList<String> inRangeAgentsIDs = new Helper().getInRangeAgents(customer.getLocation(), agentsList);
             
@@ -307,18 +315,17 @@ public class Helper {
         }
     }
 
-    // @PostMapping("/sa/orders")
-    // public  giveSAOrdersResponse RequestSAOrder (ArrayList<ServiceAgent> agents,String orderId) {
-    //     // Fetch all service agent details
-    //     try{
-    //         ArrayList<ServiceAgent> agents = new ArrayList<>();
-    //         saCollection.findAll().forEach(agents::add);
-
-    //         return new getAllSAResponse("Sent Successfully",agents);
-    //     }catch(Exception e) {
-    //         return new getAllSAResponse("Error",null);
-    //     }
-    // }
+    @PostMapping("/sa/orders")
+    public  giveSAOrdersResponse RequestSAOrder (@RequestBody giveSAOrdersRequest request) {
+        // Fetch all service agent details
+        try{
+            Optional<ServiceAgent> saOptional = saCollection.findByAgentId(request.getAgentId());
+            ServiceAgent sa = saOptional.get();
+            return new giveSAOrdersResponse("Sent Successfully", sa);
+        }catch(Exception e) {
+            return new giveSAOrdersResponse("Error", null);
+        }
+    }
     
     @PostMapping("/order-history")
     public getOrderDetailsResponse getOrderDetails(@RequestBody getOrderDetailsRequest request) {

@@ -340,83 +340,83 @@ export const services = {
       },
     ],
     ////////////////////////////////
-    electrical: [
-      {
-        id: "EL1",
-        category: 'Electrical',
-        name: 'Switch & Socket Service',
-        price: '₹199',
-        description: 'Professional repair and replacement of faulty switches and sockets.',
-        image: switchSocketImage,
-        duration: '2-3 hours',
-        includes: [
-          'Detailed switch and socket inspection',
-          'Replacement of faulty components',
-          'Wiring connections check',
-          'Switch functionality test'
-        ]
-      },
-      {
-        id: "EL2",
-        category: 'Electrical',
-        name: 'Fan Service',
-        price: '₹299',
-        description: 'Complete fan installation, repair, and maintenance.',
-        image: fanRepairImage,
-        duration: '2-3 hours',
-        includes: [
-          'Fan motor inspection and repair',
-          'New installation if needed',
-          'Blade and bearing alignment',
-          'Test run for operation'
-        ]
-      },
-      {
-        id: "EL3",
-        category: 'Electrical',
-        name: 'Wall/Ceiling Light',
-        price: '₹249',
-        description: 'Installation and repair of wall or ceiling light fixtures.',
-        image: ceilingLightImage,
-        duration: '2-3 hours',
-        includes: [
-          'Fixture and bulb replacement',
-          'New installation',
-          'Wiring inspection',
-          'Safety check after installation'
-        ]
-      },
-      {
-        id: "EL4",
-        category: 'Electrical',
-        name: 'Geyser Service',
-        price: '₹599',
-        description: 'Complete geyser installation and repair with safety checks.',
-        image: geyserImage,
-        duration: '2-3 hours',
-        includes: [
-          'Geyser placement and mounting',
-          'Repair of existing unit',
-          'Electrical connections',
-          'Safety and functionality test'
-        ]
-      },
-      {
-        id: "EL5",
-        category: 'Electrical',
-        name: 'Wiring Service',
-        price: '₹799',
-        description: 'New wiring installation and existing wiring repairs.',
-        image: wiringImage2,
-        duration: '2-3 hours',
-        includes: [
-          'New wiring system installation',
-          'Repair of existing wiring',
-          'Electrical safety checks',
-          'Complete testing'
-        ]
-      }
-    ],
+    // electrical: [
+    //   {
+    //     id: "EL1",
+    //     category: 'Electrical',
+    //     name: 'Switch & Socket Service',
+    //     price: '₹199',
+    //     description: 'Professional repair and replacement of faulty switches and sockets.',
+    //     image: switchSocketImage,
+    //     duration: '2-3 hours',
+    //     includes: [
+    //       'Detailed switch and socket inspection',
+    //       'Replacement of faulty components',
+    //       'Wiring connections check',
+    //       'Switch functionality test'
+    //     ]
+    //   },
+    //   {
+    //     id: "EL2",
+    //     category: 'Electrical',
+    //     name: 'Fan Service',
+    //     price: '₹299',
+    //     description: 'Complete fan installation, repair, and maintenance.',
+    //     image: fanRepairImage,
+    //     duration: '2-3 hours',
+    //     includes: [
+    //       'Fan motor inspection and repair',
+    //       'New installation if needed',
+    //       'Blade and bearing alignment',
+    //       'Test run for operation'
+    //     ]
+    //   },
+    //   {
+    //     id: "EL3",
+    //     category: 'Electrical',
+    //     name: 'Wall/Ceiling Light',
+    //     price: '₹249',
+    //     description: 'Installation and repair of wall or ceiling light fixtures.',
+    //     image: ceilingLightImage,
+    //     duration: '2-3 hours',
+    //     includes: [
+    //       'Fixture and bulb replacement',
+    //       'New installation',
+    //       'Wiring inspection',
+    //       'Safety check after installation'
+    //     ]
+    //   },
+    //   {
+    //     id: "EL4",
+    //     category: 'Electrical',
+    //     name: 'Geyser Service',
+    //     price: '₹599',
+    //     description: 'Complete geyser installation and repair with safety checks.',
+    //     image: geyserImage,
+    //     duration: '2-3 hours',
+    //     includes: [
+    //       'Geyser placement and mounting',
+    //       'Repair of existing unit',
+    //       'Electrical connections',
+    //       'Safety and functionality test'
+    //     ]
+    //   },
+    //   {
+    //     id: "EL5",
+    //     category: 'Electrical',
+    //     name: 'Wiring Service',
+    //     price: '₹799',
+    //     description: 'New wiring installation and existing wiring repairs.',
+    //     image: wiringImage2,
+    //     duration: '2-3 hours',
+    //     includes: [
+    //       'New wiring system installation',
+    //       'Repair of existing wiring',
+    //       'Electrical safety checks',
+    //       'Complete testing'
+    //     ]
+    //   }
+    // ],
     carpenter: [
       {
         id: "CP1",
