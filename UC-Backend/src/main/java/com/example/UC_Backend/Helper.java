@@ -1,33 +1,52 @@
 package com.example.UC_Backend;
 
 //Importing Users
-import com.example.UC_Backend.Database.AdminRepository;
-import com.example.UC_Backend.Database.CustomerRepository;
-import com.example.UC_Backend.Database.OrderRepository;
-import com.example.UC_Backend.Database.ServiceAgentRepository;
-import com.example.UC_Backend.HelperFunctionIO.addCustomer.*;
-import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.*;
-import com.example.UC_Backend.HelperFunctionIO.addtoCart.*;
-import com.example.UC_Backend.HelperFunctionIO.checkout.*;
-import com.example.UC_Backend.HelperFunctionIO.getAllSA.*;
-import com.example.UC_Backend.HelperFunctionIO.getAvailableSA.*;
-import com.example.UC_Backend.HelperFunctionIO.getCustomerDetails.*;
-import com.example.UC_Backend.HelperFunctionIO.giveSAOrders.*;
-import com.example.UC_Backend.HelperFunctionIO.loginAdmin.*;
-import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
-import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
-import com.example.UC_Backend.HelperFunctionIO.orderHistory.*;
-import com.example.UC_Backend.HelperFunctionIO.removeFromCart.*;
-import com.example.UC_Backend.Users.Admin;
-import com.example.UC_Backend.Users.Customer;
-import com.example.UC_Backend.Users.ServiceAgent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.UC_Backend.Database.AdminRepository;
+import com.example.UC_Backend.Database.CustomerRepository;
+import com.example.UC_Backend.Database.OrderRepository;
+import com.example.UC_Backend.Database.ServiceAgentRepository;
+import com.example.UC_Backend.HelperFunctionIO.addCustomer.addCustomerRequest;
+import com.example.UC_Backend.HelperFunctionIO.addCustomer.addCustomerResponse;
+import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.addServiceAgentRequest;
+import com.example.UC_Backend.HelperFunctionIO.addServiceAgent.addServiceAgentResponse;
+import com.example.UC_Backend.HelperFunctionIO.addtoCart.addtoCartRequest;
+import com.example.UC_Backend.HelperFunctionIO.addtoCart.addtoCartResponse;
+import com.example.UC_Backend.HelperFunctionIO.checkout.checkoutRequest;
+import com.example.UC_Backend.HelperFunctionIO.checkout.checkoutResponse;
+import com.example.UC_Backend.HelperFunctionIO.getAllSA.getAllSAResponse;
+import com.example.UC_Backend.HelperFunctionIO.getAvailableSA.getAvailableSA;
+import com.example.UC_Backend.HelperFunctionIO.getCustomerDetails.getCustomerDetailsRequest;
+import com.example.UC_Backend.HelperFunctionIO.getCustomerDetails.getCustomerDetailsResponse;
+import com.example.UC_Backend.HelperFunctionIO.giveSAOrders.giveSAOrdersRequest;
+import com.example.UC_Backend.HelperFunctionIO.giveSAOrders.giveSAOrdersResponse;
+import com.example.UC_Backend.HelperFunctionIO.loginAdmin.loginAdminRequest;
+import com.example.UC_Backend.HelperFunctionIO.loginAdmin.loginAdminResponse;
+import com.example.UC_Backend.HelperFunctionIO.loginCustomer.loginCustomerRequest;
+import com.example.UC_Backend.HelperFunctionIO.loginCustomer.loginCustomerResponse;
+import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.LoginSARequest;
+import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.LoginSAResponse;
+import com.example.UC_Backend.HelperFunctionIO.orderHistory.getOrderDetailsRequest;
+import com.example.UC_Backend.HelperFunctionIO.orderHistory.getOrderDetailsResponse;
+import com.example.UC_Backend.HelperFunctionIO.removeFromCart.removeFromCartRequest;
+import com.example.UC_Backend.HelperFunctionIO.removeFromCart.removeFromCartResponse;
+import com.example.UC_Backend.Users.Admin;
+import com.example.UC_Backend.Users.Customer;
+import com.example.UC_Backend.Users.ServiceAgent;
 
 /**
  * Helper handles the input/output operations coming from the frontend.
@@ -290,7 +309,7 @@ public class Helper {
                 
             }
 
-            //ArrayList<String> inRangeAgentsIDs = new Helper().getInRangeAgents(customer.getLocation(), agentsList);
+            // ArrayList<String> inRangeAgentsIDs = new RangeChecker().getInRangeAgents(customer.getLocation(), availableSA);
             
             return new checkoutResponse("SUCCESSFULL ADDED");
         }

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 #include <jni.h>
-#include "Helper.h"
+#include "RangeChecker.h"
 #include "Graph.h"
 #include "Map.h"
 #include "ShortestPathAlgo.h"
@@ -10,7 +10,7 @@ using namespace std;
 
 typedef pair<int, int> Edge;
 
-extern "C" JNIEXPORT jobject JNICALL Java_Helper_getAgentsInRange(JNIEnv *env, jobject obj, jstring javaString, jobject arrayList)
+extern "C" JNIEXPORT jobject JNICALL Java_com_example_UC_1Backend_Extra_RangeChecker_getAgentsInRange(JNIEnv *env, jobject obj, jstring javaString, jobject arrayList)
 {
     map<string, int> fake_map;
     vector<vector<Edge> > graph;
