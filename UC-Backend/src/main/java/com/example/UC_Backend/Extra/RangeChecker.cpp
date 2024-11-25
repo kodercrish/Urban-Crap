@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 #include <jni.h>
-#include "Helper.h"
+#include "RangeChecker.h"
 #include "Graph.h"
 #include "Map.h"
 #include "ShortestPathAlgo.h"
