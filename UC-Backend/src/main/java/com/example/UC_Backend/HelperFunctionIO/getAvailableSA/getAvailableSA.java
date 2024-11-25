@@ -4,10 +4,9 @@ package com.example.UC_Backend.HelperFunctionIO.getAvailableSA;
  * This class is used to get all those agents which have the required skills
  */
 
+import com.example.UC_Backend.Users.ServiceAgent;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import com.example.UC_Backend.Users.ServiceAgent;
 
 public class getAvailableSA{
 
@@ -33,7 +32,7 @@ public class getAvailableSA{
             }
         }
         // ELECTRICIAN
-        else if(service.substring(0,3).equals("ACE") || service.substring(0,3).equals("REE") || service.substring(0,3).equals("INE") || service.substring(0,2).equals("SE") || service.substring(0,3).equals("IE")){
+        else if(service.substring(0,3).equals("ACE") || service.substring(0,3).equals("REE") || service.substring(0,3).equals("INE") || service.substring(0,2).equals("SE") || service.substring(0,2).equals("IE") | service.substring(0,2).equals("EL")){
             for(ServiceAgent agent: agents){
                 if(Arrays.asList(agent.getSkill()).contains("Electrician"))
                 {
@@ -43,7 +42,7 @@ public class getAvailableSA{
 
         }
         //CARPENTER
-        else if(service.substring(0,3).equals("REC") || service.substring(0,3).equals("INC") || service.substring(0,2).equals("SC") || service.substring(0,2).equals("IC")) {
+        else if(service.substring(0,3).equals("REC") || service.substring(0,3).equals("INC") || service.substring(0,2).equals("SC") || service.substring(0,2).equals("IC") || service.substring(0,2).equals("CP")) {
             for(ServiceAgent agent: agents){
                 if(Arrays.asList(agent.getSkill()).contains("Carpenter"))
                 {

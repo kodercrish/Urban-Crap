@@ -29,6 +29,7 @@ import GardeningPage from './customer/webPages/services/GardenLands.jsx';
 
 
 import AboutUs from './customer/webPages/aboutUs/page.jsx';
+import AgentAboutUs from './serviceAgent/webPages/aboutUs/page.jsx';
 
 
 
@@ -72,8 +73,8 @@ const App = () => {
 
 
               {/*About Us*/}
-             <Route path="/about-us"  element={<AboutUs />} />
-
+             <Route path="/customer/aboutUs"  element={<AboutUs />} />
+             <Route path="/agent/aboutUs" element={<AgentAboutUs/>} />
 
           </Routes>
       </Router>

@@ -1,152 +1,226 @@
-// import React, { useEffect, useState } from 'react';
 // import Layout from '../../layout.jsx';
-// // import axios from 'axios';
+// import { useState, useEffect } from 'react';
 
-// const AgentHome = () => {
-//     const [orders, setOrders] = useState([]);
+// function AgentHome() {
+//   const [pendingOrders, setPendingOrders] = useState([]);
+//   const [completedOrders, setCompletedOrders] = useState([]);
 
-
-  
+//   useEffect(() => {
 //     const fetchOrders = async () => {
 //       try {
-//         const response = await fetch("http://localhost:8080/api/sa/orders", {
-//           method: "POST", // Using POST method
+//         const response = await fetch('http://localhost:8080/api/sa/orders', {
+//           method: 'POST',
 //           headers: {
-//             "Content-Type": "application/json",
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
 //           },
-//           body: JSON.stringify({}), // Empty body for POST
+//           body: JSON.stringify({
+//             agentId: localStorage.getItem('agentId')
+//           })
 //         });
 //         const data = await response.json();
-//         if (data.message != null) {
-//           setServiceAgents(data.agents);
-//         } else {
-//           alert(data.message);
-  
+//         console.log("Response data:", data);
+//     console.log("Agent data:", data.agent);
+//     console.log("Pending orders:", data.agent?.pending_orders);
+//         if (data.agent) {
+//           setPendingOrders(data.agent.pending_orders);
+//           setCompletedOrders(data.agent.completed_orders);
 //         }
 //       } catch (error) {
-//         alert("Error fetching service agents. Please try again.");
+//         console.error('Error fetching orders:', error);
 //       }
 //     };
+    
 
-//   // Fetch orders initially and at regular intervals
-//   useEffect(() => {
-//       fetchOrders(); // Initial fetch
-
-//       const interval = setInterval(() => {
-//           fetchOrders();
-//       }, 5000); // Fetch every 5 seconds
-
-//       return () => clearInterval(interval); // Cleanup interval on unmount
+//     fetchOrders();
 //   }, []);
 
-//       // Accept order
-//       const handleAccept = async (orderId) => {
-//         try {
-//             await axios.post('/api/orders/accept', { orderId, agentId });
-//             alert('Order accepted successfully!');
-//             fetchOrders(); // Refresh orders after accepting
-//         } catch (error) {
-//             console.error('Error accepting order:', error);
-//         }
-//     };
+//   return (
+//     <Layout>
+//       <div className="admin-home bg-[#eaf0f7] min-h-screen p-6">
+//         {/* Header Section */}
+//         <h1 className="text-[#1c4e80] text-4xl font-bold mb-6">
+//           Service Agent Dashboard
+//         </h1>
+//         <p className="text-gray-700 text-lg mb-8">
+//           Manage your orders and services efficiently
+//         </p>
 
-//     // Reject order
-//     const handleReject = async (orderId) => {
-//         try {
-//             await axios.post('/api/orders/reject', { orderId, agentId });
-//             alert('Order rejected successfully!');
-//             fetchOrders(); // Refresh orders after rejecting
-//         } catch (error) {
-//             console.error('Error rejecting order:', error);
-//         }
-//     };
-
-    // return (
-//         <div>
-//             <h1>Order Requests</h1>
-//             <table>
-//                 <thead>
-//                     <tr>
-//                         <th>Order ID</th>
-//                         <th>Customer ID</th>
-//                         <th>Location</th>
-//                         <th>Total Price</th>
-//                         <th>Action</th>
-//                     </tr>
-//                 </thead>
-//                 <tbody>
-//                     {orders.map((order) => (
-//                         <tr key={order.orderId}>
-//                             <td>{order.orderId}</td>
-//                             <td>{order.customerId}</td>
-//                             <td>{order.location}</td>
-//                             <td>{order.totalPrice}</td>
-//                             <td>
-//                                 <button onClick={() => handleAccept(order.orderId)}>Accept</button>
-//                                 <button onClick={() => handleReject(order.orderId)}>Reject</button>
-//                             </td>
-//                         </tr>
-//                     ))}
-//                 </tbody>
-//             </table>
+//         {/* Dashboard Grid */}
+//         <div className="dashboard-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//           {/* Pending Orders Card */}
+// <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+//   <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Pending Orders</h2>
+//   <div className="max-h-60 overflow-y-auto">
+//     {Object.keys(pendingOrders).length === 0 ? (
+//       <p className="text-gray-500 p-4">No pending orders available</p>
+//     ) : (
+//       Object.entries(pendingOrders).map(([customer, service], index) => (
+//         <div key={index} className="border-b p-4 hover:bg-gray-50">
+//           <p className="font-medium text-[#1c4e80]">Order #{index + 1}</p>
+//           <p className="text-gray-700">Customer: {JSON.stringify(customer)}</p>
+//           <p className="text-gray-600">Service: {service}</p>
+//           <p className="text-gray-500 text-sm mt-2">Status: Pending</p>
 //         </div>
-//     );
-// };
+//       ))
+//     )}
+//   </div>
+// </div>
 
-// const handleAccept = async (orderId) => {
-//     try {
-//         await axios.post('/api/orders/accept', { orderId });
-//         alert('Order accepted successfully!');
-//     } catch (error) {
-//         console.error('Error accepting order:', error);
-//     }
-// };
 
-// const handleReject = async (orderId) => {
-//     try {
-//         await axios.post('/api/orders/reject', { orderId });
-//         alert('Order rejected successfully!');
-//     } catch (error) {
-//         console.error('Error rejecting order:', error);
-//     }
-// };
+
+//           {/* Completed Orders */}
+//           <div className="dashboard-card bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+//             <h2 className="text-xl font-semibold text-[#1c4e80] mb-2">Completed Orders</h2>
+//             <div className="max-h-60 overflow-y-auto">
+//               {Object.entries(completedOrders).map(([customer, service], index) => (
+//                 <div key={index} className="border-b p-2">
+//                   <p className="font-medium">Customer: {customer.name}</p>
+//                   <p className="text-gray-600">Service: {service}</p>
+//                 </div>
+//               ))}
+//             </div>
+//           </div>
+          
+//         </div>
+//       </div>
+//     </Layout>
+//   );
+// }
 
 // export default AgentHome;
 
-// CustomerProfile.js
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../../layout.jsx';
-import { FaUser, FaPhone, FaEnvelope } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
 
-const CustomerProfile = ({ name, phoneNumber, email }) => {
-  const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+function AgentHome() {
+  const [orders, setOrders] = useState({ pending: [], completed: [] });
+  const agentId = localStorage.getItem('agentId'); // Assuming you store agentId in localStorage
 
   useEffect(() => {
-    const agentToken = localStorage.getItem('agentId');
-    console.log(agentToken);
-    if (!agentToken) {
-      navigate("/agent/SignIn");
-    } else {
-      setIsAuthenticated(true);
-    }
-  }, [navigate]);
+    fetchOrders();
+  }, []);
 
-  if(!isAuthenticated) {
-    return null;
+//   const fetchOrders = async () => {
+//     try {
+//       const response = await fetch('http://localhost:8080/api/sa/orders', {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ agentId: parseInt(agentId) })
+//       });
+//       const data = await response.json();
+//       console.log('Full response:', data);
+      
+//       // Access the orders through the agent object from the response
+//       const serviceAgent = data.agent;
+//       console.log('Service Agent data:', serviceAgent);
+      
+//       if (serviceAgent && serviceAgent.pendingOrders) {
+//         setOrders({
+//           pending: serviceAgent.pendingOrders || [],
+//           completed: serviceAgent.completedOrders || []
+//         });
+//       }
+      
+//       console.log('Updated orders state:', orders);
+//     } catch (error) {
+//       console.error('Error fetching orders:', error);
+//     }
+// };
+const fetchOrders = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/api/sa/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ agentId: parseInt(agentId) })
+    });
+    const data = await response.json();
+    
+    const serviceAgent = data.agent;
+    
+    // Convert object of orders to array
+    const pendingOrders = serviceAgent.pending_orders ? 
+      Object.values(serviceAgent.pending_orders) : [];
+    const completedOrders = serviceAgent.completed_orders ?
+      Object.values(serviceAgent.completed_orders) : [];
+    
+    setOrders({
+      pending: pendingOrders,
+      completed: completedOrders
+    });
+    
+  } catch (error) {
+    console.error('Error fetching orders:', error);
   }
+};
+
+
+
 
   return (
     <Layout>
-      <div className="w-4/5 max-w-[800px] mx-auto my-12 bg-white rounded-lg shadow-lg p-5">
-        
-        {/* Header Section */}
-        <div className="flex flex-col items-center bg-[#1c4e80] text-white p-8 rounded-t-lg">
-          <h1 className="text-2xl font-bold mt-2">Welcome</h1>
-        </div>
+      <div className="admin-home bg-[#eaf0f7] min-h-screen p-6">
+        <h1 className="text-[#1c4e80] text-4xl font-bold mb-6">
+          Service Agent Dashboard
+        </h1>
+
+        {/* Pending Orders Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold text-[#1c4e80] mb-4">Pending Orders</h2>
+          <div className="grid gap-4">
+          {orders.pending && orders.pending.map((order, index) => (
+  <div key={`${order.id}-${index}`} className="bg-white p-4 rounded-lg shadow">
+    <div className="grid grid-cols-3 gap-4">
+      <div>
+        <p className="font-semibold">Order ID</p>
+        <p>{order.orderId}</p>
+      </div>
+      <div>
+        <p className="font-semibold">Service ID</p>
+        <p>{order.serviceId}</p>
+      </div>
+      <div>
+        <p className="font-semibold">Customer Location</p>
+        <p>{order.customerLocation}</p>
+      </div>
     </div>
+  </div>
+))}
+
+          </div>
+        </div>
+
+        {/* Completed Orders Section */}
+        <div>
+          <h2 className="text-2xl font-semibold text-[#1c4e80] mb-4">Completed Orders</h2>
+          <div className="grid gap-4">
+            {orders.completed.map(order => (
+              <div key={order.orderId} className="bg-white p-4 rounded-lg shadow">
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <p className="font-semibold">Order ID</p>
+                    <p>{order.orderId}</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Service ID</p>
+                    <p>{order.serviceId}</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">Customer Location</p>
+                    <p>{order.customerLocation}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 }
-export default CustomerProfile;
+
+export default AgentHome;

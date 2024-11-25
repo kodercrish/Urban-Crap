@@ -11,18 +11,24 @@ const NavBar = () => {
             {/* Left Section: Logo and Urban Crap */}
             <div className="flex items-center gap-5">
               {/* Logo */}
-              <div>
-                <img src={logo} alt="Logo" className="h-[65px] w-[65px] rounded-full" />
-              </div>
-              <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
+              <Link to="/agent/home">
+                <div>
+                  <img src={logo} alt="Logo" className="h-[65px] w-[65px] rounded-full" />
+                </div>
+              </Link>
+              <Link to="/agent/home">
+                <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
+              </Link>
             </div>
 
             {/* Right Section: About Us and Profile */}
             <div className="flex items-center gap-8">
+              <Link to="/agent/aboutUs">
               {/* About Us */}
               <div className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
                 About Us
               </div>
+              </Link>
 
               {/* Profile Section */}
               <div className="flex items-center gap-5">
