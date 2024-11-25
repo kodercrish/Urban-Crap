@@ -4,37 +4,33 @@ import logo from '../../assets/logo.jpg';
 
 const NavBar = () => {
 
-
   return (
     <div>
       <header className="bg-[#1c4e80] py-2 sticky top-0 w-full z-10">
         <div className="max-w-full mx-auto px-8">
           <nav className="flex items-center justify-between gap-5">
             {/* Left Section: Logo and Brand Name */}
-            <div className="flex items-center gap-5">
-              {/* Logo */}
-              <div>
-                <img src={logo} alt="Logo" className="h-[65px] w-[65px] rounded-full" />
+            <Link to="/admin/home">
+              <div className="flex items-center gap-5">
+                {/* Logo */}
+                <div>
+                  <img src={logo} alt="Logo" className="h-[65px] w-[65px] rounded-full" />
+                </div>
+                <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
               </div>
-              <h1 className="text-[#e8f0e5] font-medium text-xl">Urban Crap</h1>
-            </div>
+            </Link>
 
             {/* Right Section: Agent List and Profile */}
             <div className="flex items-center gap-8">
-              {/* Agent List */}
-              <div className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
-                Agent List
-              </div>
-
               {/* Profile Section */}
               <div className="flex items-center gap-5">
                 <div className="w-[45px] h-[45px] rounded-full border-2 border-white flex items-center justify-center overflow-hidden mr-2">
                   <Link to="/admin/profile">
-                  <img
-                    src="https://static.vecteezy.com/system/resources/previews/036/885/313/non_2x/blue-profile-icon-free-png.png"
-                    alt="Profile"
-                    className="w-[100px] h-[40px] rounded-full transition duration-300 brightness-53 hover:brightness-50"
-                  />
+                    <img
+                      src="https://static.vecteezy.com/system/resources/previews/036/885/313/non_2x/blue-profile-icon-free-png.png"
+                      alt="Profile"
+                      className="w-[100px] h-[40px] rounded-full transition duration-300 brightness-53 hover:brightness-50"
+                    />
                   </Link>
                 </div>
                 <Link to="/admin/SignIn">

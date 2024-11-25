@@ -12,17 +12,16 @@ const AdminHome = () => {
     range: "",
     location: ""
   });
-  
+
   // Add new state for search and location filtering
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
-  
+
   const [serviceAgents, setServiceAgents] = useState([]);
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
 
-  // ... keep other existing state and constants ...
   const availableSkills = [
     "Electrician",
     "Carpenter",
@@ -32,138 +31,136 @@ const AdminHome = () => {
     "Pest Controller",
     "Gardening"
   ]
-  // Add new function to filter service agents
+  // New function to filter service agents
   const getFilteredAgents = () => {
     return serviceAgents.filter(agent => {
-      const matchesSearch = 
+      const matchesSearch =
         agent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         agent.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        (Array.isArray(agent.skill) && agent.skill.some(skill => 
+        (Array.isArray(agent.skill) && agent.skill.some(skill =>
           skill.toLowerCase().includes(searchTerm.toLowerCase())
         ));
-      
+
       const matchesLocation = !selectedLocation || agent.location === selectedLocation;
-      
+
       return matchesSearch && matchesLocation;
     });
   };
 
-  // ... keep existing useEffect hooks and other functions ...
-// Check if the admin is authenticated
-useEffect(() => {
-  const adminToken = localStorage.getItem("adminId"); // Example: storing a token in local storage
-  if (!adminToken) {
-    navigate("/admin/SignIn"); // Redirect to login if no token is found
-  } else {
-    setIsAuthenticated(true); // Mark as authenticated
-  }
-}, [navigate]);
-
-
-useEffect(() => {
-  if (isAuthenticated) {
-    fetchServiceAgents();
-  }
-}, [isAuthenticated]);
-
-const fetchServiceAgents = async () => {
-  try {
-    const response = await fetch("http://localhost:8080/api/getAllServiceAgents", {
-      method: "POST", // Using POST method
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}), // Empty body for POST
-    });
-    const data = await response.json();
-    if (data.message != null) {
-      setServiceAgents(data.agents);
+  // Check if the admin is authenticated
+  useEffect(() => {
+    const adminToken = localStorage.getItem("adminId"); // Example: storing a token in local storage
+    if (!adminToken) {
+      navigate("/admin/SignIn"); // Redirect to login if no token is found
     } else {
-      alert(data.message);
-
+      setIsAuthenticated(true); // Mark as authenticated
     }
-  } catch (error) {
-    alert("Error fetching service agents. Please try again.");
-  }
-};
+  }, [navigate]);
 
-const handleSkillChange = (skill) => {
-  setSelectedSkills(prev => {
-    const newSkills = prev.includes(skill)
-      ? prev.filter(s => s !== skill)
-      : [...prev, skill];
 
-    setFormData({
-      ...formData,
-      skill: newSkills.join(',')
-    });
-
-    return newSkills;
-  });
-};
-
-const handleInputChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({ ...formData, [name]: value });
-};
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    // Convert skills string to array and ensure all fields are present
-    const skillArray = formData.skill.split(",").map(s => s.trim());
-
-    const response = await fetch('http://localhost:8080/api/addsa', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        skill: selectedSkills,
-        range: parseInt(formData.range),
-        location: formData.location
-      })
-    });
-
-    const data = await response.json();
-    if (data.message === "Service agent added successfully") {
-      // Add the new agent to the state
-      setServiceAgents(prevAgents => [...prevAgents, {
-        name: formData.name,
-        email: formData.email,
-        skill: selectedSkills,
-        range: formData.range,
-        location: formData.location
-      }]);
-
-      // Clear form and close modal
-      setShowForm(false);
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        skill: "",
-        range: "",
-        location: ""
-      });
-      setSelectedSkills([]);
-      // Refresh the list
+  useEffect(() => {
+    if (isAuthenticated) {
       fetchServiceAgents();
-    } else {
-      alert(data.message);
     }
-  } catch (error) {
-    alert("Registration failed. Please try again.");
+  }, [isAuthenticated]);
+
+  const fetchServiceAgents = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/getAllServiceAgents", {
+        method: "POST", // Using POST method
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}), // Empty body for POST
+      });
+      const data = await response.json();
+      if (data.message != null) {
+        setServiceAgents(data.agents);
+      } else {
+        alert(data.message);
+
+      }
+    } catch (error) {
+      alert("Error fetching service agents. Please try again.");
+    }
+  };
+
+  const handleSkillChange = (skill) => {
+    setSelectedSkills(prev => {
+      const newSkills = prev.includes(skill)
+        ? prev.filter(s => s !== skill)
+        : [...prev, skill];
+
+      setFormData({
+        ...formData,
+        skill: newSkills.join(',')
+      });
+      return newSkills;
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Converts skills string to array and ensure all fields are present
+      const skillArray = formData.skill.split(",").map(s => s.trim());
+
+      const response = await fetch('http://localhost:8080/api/addsa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          skill: selectedSkills,
+          range: parseInt(formData.range),
+          location: formData.location
+        })
+      });
+
+      const data = await response.json();
+      if (data.message === "Service agent added successfully") {
+        // Adds the new agent to the state
+        setServiceAgents(prevAgents => [...prevAgents, {
+          name: formData.name,
+          email: formData.email,
+          skill: selectedSkills,
+          range: formData.range,
+          location: formData.location
+        }]);
+
+        // Clears form and close modal
+        setShowForm(false);
+        setFormData({
+          name: "",
+          email: "",
+          password: "",
+          skill: "",
+          range: "",
+          location: ""
+        });
+        setSelectedSkills([]);
+        // Refresh the list
+        fetchServiceAgents();
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert("Registration failed. Please try again.");
+    }
+  };
+  // Only render the page if the admin is authenticated
+  if (!isAuthenticated) {
+    return null;
   }
-};
-// Only render the page if the admin is authenticated
-if (!isAuthenticated) {
-  return null; // Optionally display a loading spinner here
-}
-  // Add handlers for search and location
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -237,7 +234,7 @@ if (!isAuthenticated) {
                   />
                 </svg>
               </div>
-              <select 
+              <select
                 value={selectedLocation}
                 onChange={handleLocationChange}
                 className="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -288,8 +285,8 @@ if (!isAuthenticated) {
                 </thead>
                 <tbody>
                   {getFilteredAgents().map((agent, index) => (
-                    <tr 
-                      key={index} 
+                    <tr
+                      key={index}
                       className={`
                         border-t
                         ${index % 2 === 0 ? "bg-white" : "bg-blue-50"}
@@ -334,11 +331,9 @@ if (!isAuthenticated) {
           </div>
         </div>
 
-        {/* Keep existing form modal */}
-        {/* ... rest of the code remains the same ... */}
       </Layout>
-     {/* Popup Form */}
-     {showForm && (
+      {/* Popup Form */}
+      {showForm && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-y-auto">
           <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-lg relative slide-down my-8">
             <h2 className="text-2xl font-semibold text-[#1c4e80] mb-4">

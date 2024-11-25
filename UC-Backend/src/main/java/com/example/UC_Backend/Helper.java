@@ -18,6 +18,7 @@ import com.example.UC_Backend.HelperFunctionIO.loginCustomer.*;
 import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
 import com.example.UC_Backend.HelperFunctionIO.orderHistory.*;
 import com.example.UC_Backend.HelperFunctionIO.removeFromCart.*;
+import com.example.UC_Backend.HelperFunctionIO.getAgentDetails.*;
 import com.example.UC_Backend.Users.Admin;
 import com.example.UC_Backend.Users.Customer;
 import com.example.UC_Backend.Users.ServiceAgent;
@@ -47,7 +48,7 @@ public class Helper {
     private OrderRepository orderCollection;
 
     // static {
-    //     System.loadLibrary("rangeChecker");
+    // System.loadLibrary("rangeChecker");
     // }
 
     public native ArrayList<String> getInRangeAgents(String CustomerLocation, ArrayList<ServiceAgent> agentsList);
@@ -63,7 +64,8 @@ public class Helper {
             } else if (existingCustomerByPhone.isPresent()) {
                 return new addCustomerResponse("Customer with this phone number already exists.", 0);
             } else {
-                Customer customer = new Customer(request.getName(), request.getEmail(), request.getPhone(), request.getPassword());
+                Customer customer = new Customer(request.getName(), request.getEmail(), request.getPhone(),
+                        request.getPassword());
                 customerCollection.save(customer);
                 return new addCustomerResponse("Customer added successfully.", customer.getCustomerId());
             }
@@ -76,22 +78,22 @@ public class Helper {
     public loginCustomerResponse loginCustomer(@RequestBody loginCustomerRequest request) {
         try {
             Optional<Customer> existingCustomerByEmail = customerCollection.findByEmail(request.getEmail());
-            
-            if(existingCustomerByEmail.isPresent()) {
+
+            if (existingCustomerByEmail.isPresent()) {
                 Customer customer_fetched = existingCustomerByEmail.get();
 
                 if (customer_fetched.getPassword().equals(request.getPassword())) {
-                    return new loginCustomerResponse("Customer logedin successfully.",customer_fetched.getCustomerId());
+                    return new loginCustomerResponse("Customer logedin successfully.",
+                            customer_fetched.getCustomerId());
                 } else {
-                    return new loginCustomerResponse("INCORRECT PASSWORD",0);
+                    return new loginCustomerResponse("INCORRECT PASSWORD", 0);
                 }
-            }
-            else{
-        
-                return new loginCustomerResponse("EMAIL ID DOES NOT EXIST",0);
+            } else {
+
+                return new loginCustomerResponse("EMAIL ID DOES NOT EXIST", 0);
             }
         } catch (Exception e) {
-            return new loginCustomerResponse(e.getMessage(),-1);
+            return new loginCustomerResponse(e.getMessage(), -1);
         }
     }
 
@@ -104,18 +106,17 @@ public class Helper {
                 return new addServiceAgentResponse("EMAIL ID EXISTS", 0);
             } else {
                 ServiceAgent sa = new ServiceAgent(
-                    request.getName(),
-                    request.getEmail(),
-                    request.getPassword(),
-                    request.getSkill(), // This is already String[]
-                    request.getRange(),
-                    request.getLocation()
-                );
+                        request.getName(),
+                        request.getEmail(),
+                        request.getPassword(),
+                        request.getSkill(), // This is already String[]
+                        request.getRange(),
+                        request.getLocation());
                 saCollection.save(sa);
                 return new addServiceAgentResponse("Service agent added successfully", sa.getAgentId());
             }
         } catch (Exception e) {
-            return new addServiceAgentResponse(e.getMessage(),-1);
+            return new addServiceAgentResponse(e.getMessage(), -1);
         }
     }
 
@@ -124,52 +125,50 @@ public class Helper {
         try {
             Optional<Admin> existingAdminByEmail = adminCollection.findByEmail(request.getEmail());
 
-            
-            if(existingAdminByEmail.isPresent()) {
+            if (existingAdminByEmail.isPresent()) {
                 Admin admin_fetched = existingAdminByEmail.get();
-                if (admin_fetched.getPassword().equals(request.getPassword()) && admin_fetched.getAccessCode().equals(request.getAccessCode())) {
-                        return new loginAdminResponse("Admin logedin successfully", admin_fetched.getAdminId());
+                if (admin_fetched.getPassword().equals(request.getPassword())
+                        && admin_fetched.getAccessCode().equals(request.getAccessCode())) {
+                    return new loginAdminResponse("Admin logedin successfully", admin_fetched.getAdminId());
                 } else {
-                    return new loginAdminResponse("INCORRECT CREDENTIALS",0);
+                    return new loginAdminResponse("INCORRECT CREDENTIALS", 0);
                 }
-            }
-            else {
-                return new loginAdminResponse("INCORRECT CREDENTIALS",0);//Sending null
+            } else {
+                return new loginAdminResponse("INCORRECT CREDENTIALS", 0);// Sending null
             }
         } catch (Exception e) {
-            return new loginAdminResponse(e.getMessage(),-1);//Error
+            return new loginAdminResponse(e.getMessage(), -1);// Error
         }
     }
-    
+
     @PostMapping("/loginsa")
     public LoginSAResponse loginSA(@RequestBody LoginSARequest request) {
         try {
             Optional<ServiceAgent> existingSAEmail = saCollection.findByEmail(request.getEmail());
 
-            if(existingSAEmail.isPresent()) {
+            if (existingSAEmail.isPresent()) {
                 ServiceAgent sa_fetched = existingSAEmail.get();
                 if (sa_fetched.getPassword().equals(request.getPassword())) {
                     return new LoginSAResponse("Service Agent logedin successfully", sa_fetched.getAgentId());
                 } else {
-                    return new LoginSAResponse("INCORRECT PASSWORD",0);
+                    return new LoginSAResponse("INCORRECT PASSWORD", 0);
                 }
+            } else {
+                return new LoginSAResponse("EMAIL ID DOES NOT EXIST", 0);
             }
-            else{
-                return new LoginSAResponse("EMAIL ID DOES NOT EXIST",0);
-            }
-        }
-        catch (Exception e) {
-            return new LoginSAResponse(e.getMessage(),-1);
+        } catch (Exception e) {
+            return new LoginSAResponse(e.getMessage(), -1);
         }
     }
 
     @PostMapping("/getcustomerdetails")
     public getCustomerDetailsResponse getCustomerDetails(@RequestBody getCustomerDetailsRequest request) {
         try {
-        Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
+            Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
             if (customerOptional.isPresent()) {
                 Customer customer = customerOptional.get();
-                return new getCustomerDetailsResponse("Customer Details Sent Succussfully", customer.getName(), customer.getEmail(), customer.getPhone());
+                return new getCustomerDetailsResponse("Customer Details Sent Succussfully", customer.getName(),
+                        customer.getEmail(), customer.getPhone());
             } else {
                 return new getCustomerDetailsResponse("AGENT_ID_NOT_FOUND", "NULL", "NULL", -1);
             }
@@ -178,10 +177,25 @@ public class Helper {
         }
     }
 
+    @PostMapping("/getagentdetails")
+    public getAgentDetailsResponse getAgentDetails(@RequestBody getAgentDetailsRequest request) {
+        try {
+            Optional<ServiceAgent> ServiceAgentOptional = saCollection.findByAgentId(request.getAgentId());
+            if (ServiceAgentOptional.isPresent()) {
+                ServiceAgent agent = ServiceAgentOptional.get();
+                return new getAgentDetailsResponse("Customer Details Sent Succussfully", agent);
+            } else {
+                return new getAgentDetailsResponse("AGENT_ID_NOT_FOUND", null);
+            }
+        } catch (Exception e) {
+            return new getAgentDetailsResponse("ERROR", null);
+        }
+    }
+
     @PostMapping("/addToCart")
     public addtoCartResponse addtoCustomerCart(@RequestBody addtoCartRequest request) {
         try {
-        Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
+            Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
 
             if (customerOptional.isPresent()) {
                 Customer customer = customerOptional.get();
@@ -189,8 +203,7 @@ public class Helper {
                 // Check if the serviceId is already in the cart
                 if (customer.getShoppingCart().contains(request.getServiceId())) {
                     return new addtoCartResponse("Service is already in the shopping cart.");
-                }
-                else{   
+                } else {
                     // Add the serviceId to the shoppingCart
                     customer.getShoppingCart().add(request.getServiceId());
                     // Save the updated customer back to the database
@@ -218,8 +231,7 @@ public class Helper {
                     // Save the updated customer back to the database
                     customerCollection.save(customer);
                     return new removeFromCartResponse("Service removed from shopping cart successfully.");
-                }
-                else{
+                } else {
                     return new removeFromCartResponse("Service is not in the shopping cart.");
                 }
             } else {
@@ -230,11 +242,14 @@ public class Helper {
         }
     }
 
+    // @PostMapping("/sa/order/accept")
+    
+
     @GetMapping("/getCartItems/{customerId}")
     public Map<String, List<String>> getCartItems(@PathVariable int customerId) {
         Optional<Customer> customerOptional = customerCollection.findByCustomerId(customerId);
         Map<String, List<String>> response = new HashMap<>();
-        
+
         if (customerOptional.isPresent()) {
             Customer customer = customerOptional.get();
             response.put("cartItems", new ArrayList<>(customer.getShoppingCart()));
@@ -244,106 +259,104 @@ public class Helper {
         return response;
     }
 
-    @PostMapping("/checkout")//add Order
-    public checkoutResponse Checkout (@RequestBody checkoutRequest request){
-     try{
-        Optional<Customer> customerOptional=customerCollection.findByCustomerId(request.getCustomerId());
+    @PostMapping("/checkout") // add Order
+    public checkoutResponse Checkout(@RequestBody checkoutRequest request) {
+        try {
+            Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
 
-        if(customerOptional.isPresent())
-        {
-            Customer customer=customerOptional.get();
-            Order order=new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED" ,request.getTotalprice(), request.getLocation());
-            order.setCart(customer.getShoppingCart());
-            orderCollection.save(order);
-                        // System.out.print("1111111");
+            if (customerOptional.isPresent()) {
+                Customer customer = customerOptional.get();
+                Order order = new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED", request.getTotalprice(),
+                        request.getLocation());
+                order.setCart(customer.getShoppingCart());
+                orderCollection.save(order);
+                // System.out.print("1111111");
 
+                // GEtting all service agents
+                ArrayList<ServiceAgent> agents = new ArrayList<>();
+                saCollection.findAll().forEach(agents::add);
 
-            //GEtting all service agents
-            ArrayList<ServiceAgent> agents = new ArrayList<>();
-            saCollection.findAll().forEach(agents::add);
+                // System.out.print("2222222");
 
-            // System.out.print("2222222");
+                // System.out.print("3333333");
 
- 
-            // System.out.print("3333333");
+                // Object created for getting available Service Agents
+                getAvailableSA obj = new getAvailableSA(agents);
+                // System.out.println("dfaafada");
 
-            //Object created for getting available Service Agents
-            getAvailableSA obj= new getAvailableSA(agents);
-            // System.out.println("dfaafada");
+                for (String itemId : order.getCart()) {
+                    // System.out.println("44444");
 
-            for(String itemId: order.getCart()){
-                        // System.out.println("44444");
+                    ArrayList<ServiceAgent> availableSA = new ArrayList<ServiceAgent>();
+                    availableSA = obj.findAvailableSA(itemId);
+                    // System.out.println("5555555");
+                    // We will get filtered list of agents in array of string from cpp
+                    for (ServiceAgent sa : availableSA) {
+                        // System.out.println("6666666");
+                        sa.getPending_orders().put(itemId, order);
+                        // sa.getCurrent_orders().put(itemId,order);
+                        // System.out.println(sa.getPending_orders().get(0));
+                        // System.out.println(sa.getOrderObject(itemId));
 
-                ArrayList<ServiceAgent> availableSA= new ArrayList<ServiceAgent>();
-                availableSA=obj.findAvailableSA(itemId);
-                // System.out.println("5555555");
-                //We will get filtered list of agents in array of string from cpp
-                for(ServiceAgent sa: availableSA){
-                    // System.out.println("6666666");
-                    sa.getPending_orders().put(itemId,order);
-                    // sa.getCurrent_orders().put(itemId,order);
-                    // System.out.println(sa.getPending_orders().get(0));
-                    // System.out.println(sa.getOrderObject(itemId));
+                        saCollection.save(sa);
+                    }
 
-                    saCollection.save(sa);
                 }
-                
-            }
 
-            //ArrayList<String> inRangeAgentsIDs = new Helper().getInRangeAgents(customer.getLocation(), agentsList);
-            
-            return new checkoutResponse("SUCCESSFULL ADDED");
-        }
-        else{
-            return new checkoutResponse("NO_SUCH_CUSTOMER_EXISTS");
-        }
-        }catch(Exception e){
+                // ArrayList<String> inRangeAgentsIDs = new
+                // Helper().getInRangeAgents(customer.getLocation(), agentsList);
+
+                return new checkoutResponse("SUCCESSFULL ADDED");
+            } else {
+                return new checkoutResponse("NO_SUCH_CUSTOMER_EXISTS");
+            }
+        } catch (Exception e) {
             return new checkoutResponse("ERROR");
         }
     }
 
     @PostMapping("/getAllServiceAgents")
-    public  getAllSAResponse getAllServiceAgents() {
+    public getAllSAResponse getAllServiceAgents() {
         // Fetch all service agent details
-        try{
+        try {
             ArrayList<ServiceAgent> agents = new ArrayList<>();
             saCollection.findAll().forEach(agents::add);
 
-            return new getAllSAResponse("Sent Successfully",agents);
-        }catch(Exception e) {
-            return new getAllSAResponse("Error",null);
+            return new getAllSAResponse("Sent Successfully", agents);
+        } catch (Exception e) {
+            return new getAllSAResponse("Error", null);
         }
     }
 
     @PostMapping("/sa/orders")
-    public  giveSAOrdersResponse RequestSAOrder (@RequestBody giveSAOrdersRequest request) {
+    public giveSAOrdersResponse RequestSAOrder(@RequestBody giveSAOrdersRequest request) {
         // Fetch all service agent details
-        try{
+        try {
             Optional<ServiceAgent> saOptional = saCollection.findByAgentId(request.getAgentId());
             ServiceAgent sa = saOptional.get();
             return new giveSAOrdersResponse("Sent Successfully", sa);
-        }catch(Exception e) {
+        } catch (Exception e) {
             return new giveSAOrdersResponse("Error", null);
         }
     }
-    
+
     @PostMapping("/order-history")
     public getOrderDetailsResponse getOrderDetails(@RequestBody getOrderDetailsRequest request) {
         try {
 
-                ArrayList<Order> orderList = new ArrayList<>();
+            ArrayList<Order> orderList = new ArrayList<>();
 
-                // Fetch all orders by customerId
-                List<Order> orders = orderCollection.findByCustomerId(request.getCustomerId());
-                
-                // Add all orders to the ArrayList
-                orderList.addAll(orders);
-            
-                return new getOrderDetailsResponse("Order Details", orderList);
-            
+            // Fetch all orders by customerId
+            List<Order> orders = orderCollection.findByCustomerId(request.getCustomerId());
+
+            // Add all orders to the ArrayList
+            orderList.addAll(orders);
+
+            return new getOrderDetailsResponse("Order Details", orderList);
+
         } catch (Exception e) {
-            return new getOrderDetailsResponse(e.getMessage(),null);
-       }
+            return new getOrderDetailsResponse(e.getMessage(), null);
+        }
     }
 
 }

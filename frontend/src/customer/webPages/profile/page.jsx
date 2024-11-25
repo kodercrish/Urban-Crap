@@ -1,4 +1,3 @@
-// CustomerProfile.js
 import React, { useState, useEffect } from 'react';
 import Layout from '../../layout.jsx';
 import { FaUser, FaPhone, FaEnvelope } from 'react-icons/fa';
@@ -6,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const CustomerProfile = () => {
-  
+
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -18,7 +17,7 @@ const CustomerProfile = () => {
 
   // Check if the admin is authenticated
   useEffect(() => {
-    const customerToken = localStorage.getItem('customerId'); // Example: storing a token in local storage
+    const customerToken = localStorage.getItem('customerId');
     if (!customerToken) {
       navigate("/customer/SignIn"); // Redirect to login if no token is found
     } else {
@@ -26,20 +25,6 @@ const CustomerProfile = () => {
       fetchProfileData(customerToken);
     };
   }, [navigate]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const customerToken = localStorage.getItem('customerId');
-  //     if (!customerToken) {
-  //       navigate("/customer/SignIn");
-  //     } else {
-  //       setIsAuthenticated(true);
-  //       await fetchProfileData(customerToken);
-  //     }
-  //   };
-    
-  //   fetchData();
-  // }, [navigate]);
 
   const fetchProfileData = async (customerId) => {
     try {
@@ -49,12 +34,12 @@ const CustomerProfile = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          customerId: parseInt(customerId)  // Make sure this matches your backend expected field name
+          customerId: parseInt(customerId)
         })
       });
 
       const data = await response.json();
-      if (data.phone!=-1) {
+      if (data.phone != -1) {
         setProfileData({
           name: data.name,
           email: data.email,
@@ -69,17 +54,15 @@ const CustomerProfile = () => {
     }
   };
 
-
-
   // Only render the page if the admin is authenticated
   if (!isAuthenticated) {
-    return null; // Optionally display a loading spinner here
+    return null;
   }
 
   return (
     <Layout>
       <div className="w-4/5 max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg p-5">
-              
+
         {/* Header Section */}
         <div className="flex flex-col items-center bg-[#1c4e80] text-white p-4 rounded-t-lg">
           <h1 className="text-2xl font-bold mt-2">Welcome, {profileData.name}!</h1>
@@ -121,8 +104,4 @@ const CustomerProfile = () => {
 };
 
 export default CustomerProfile;
-
-
-
-
 

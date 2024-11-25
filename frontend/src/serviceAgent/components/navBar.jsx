@@ -41,7 +41,7 @@ const NavBar = () => {
                   />
                   </Link>
                 </div>
-                <Link to ="/agent/SignIn">
+                <Link to ="/agent/profile">
                 <button 
                 onClick={() => {
                   localStorage.removeItem("agentId"); // Remove the admin token from local storage
