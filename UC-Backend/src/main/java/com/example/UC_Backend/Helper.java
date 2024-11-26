@@ -19,14 +19,19 @@ import com.example.UC_Backend.HelperFunctionIO.loginServiceAgent.*;
 import com.example.UC_Backend.HelperFunctionIO.orderHistory.*;
 import com.example.UC_Backend.HelperFunctionIO.removeFromCart.*;
 import com.example.UC_Backend.HelperFunctionIO.getAgentDetails.*;
+import com.example.UC_Backend.HelperFunctionIO.acceptOrder.*;
+import com.example.UC_Backend.HelperFunctionIO.rejectOrder.*;
+
 import com.example.UC_Backend.Users.Admin;
 import com.example.UC_Backend.Users.Customer;
 import com.example.UC_Backend.Users.ServiceAgent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -267,7 +272,7 @@ public class Helper {
             if (customerOptional.isPresent()) {
                 Customer customer = customerOptional.get();
                 Order order = new Order(customer.getCustomerId(), "PENDING_NOT_ASSIGNED", request.getTotalprice(),
-                        request.getLocation());
+                request.getLocation());
                 order.setCart(customer.getShoppingCart());
                 orderCollection.save(order);
                 // System.out.print("1111111");
@@ -291,15 +296,16 @@ public class Helper {
                     availableSA = obj.findAvailableSA(itemId);
                     // System.out.println("5555555");
                     // We will get filtered list of agents in array of string from cpp
+
+
                     for (ServiceAgent sa : availableSA) {
                         // System.out.println("6666666");
                         sa.getPending_orders().put(itemId, order);
-                        // sa.getCurrent_orders().put(itemId,order);
-                        // System.out.println(sa.getPending_orders().get(0));
-                        // System.out.println(sa.getOrderObject(itemId));
+                        order.getRequestAgents().add(sa.getAgentId());//Agent Ids stored
 
                         saCollection.save(sa);
                     }
+                    orderCollection.save(order);
 
                 }
 
@@ -312,6 +318,69 @@ public class Helper {
             }
         } catch (Exception e) {
             return new checkoutResponse("ERROR");
+        }
+    }
+
+
+    @PostMapping("sa/acceptOrder")
+    public acceptOrderResponse acceptOrder(@RequestBody acceptOrderRequest request){
+        try{
+            // Optional<ServiceAgent> sa=saCollection.findByAgentId(request.getAgentId());
+            Optional<Order> order=orderCollection.findByOrderId(request.getOrderId());
+
+            if(order.isPresent()){
+                // ServiceAgent agent=sa.get();
+                Order fetched_order=order.get();
+
+                for(Integer agentId: fetched_order.getRequestAgents()){
+
+                    Optional<ServiceAgent> sa=saCollection.findByAgentId(agentId);
+                    ServiceAgent fetched_agent=sa.get();
+                    fetched_agent.getPending_orders().remove(agentId);
+                    if(agentId==request.getAgentId()){
+                        fetched_agent.getCompleted_orders().put(request.getItemId(),fetched_order);
+                    }
+                    saCollection.save(fetched_agent);
+                }
+                fetched_order.getRequestAgents().clear();
+                fetched_order.setAgentId(request.getAgentId());
+                orderCollection.save(fetched_order);
+
+                return new acceptOrderResponse("SUCCESSFULLY ACCEPTED");
+            }
+            else{
+                return new acceptOrderResponse("ORDER NOT FETCHED");
+
+            }
+        }catch(Exception e){
+            return new acceptOrderResponse("ERROR");
+        }
+    }
+
+    @PostMapping("sa/rejectOrder")
+    public rejectOrderResponse rejectOrder(@RequestBody rejectOrderRequest request){
+        try{
+            Optional<ServiceAgent> sa=saCollection.findByAgentId(request.getAgentId());
+            Optional<Order> order=orderCollection.findByOrderId(request.getOrderId());
+
+            if(sa.isPresent()){
+                ServiceAgent fetched_agent=sa.get();
+                Order fetched_order=order.get();
+
+                fetched_order.getRequestAgents().remove(request.getAgentId());
+                fetched_agent.getPending_orders().remove(request.getItemId());
+
+                orderCollection.save(fetched_order);
+                saCollection.save(fetched_agent);
+
+                return new rejectOrderResponse("SUCCESSFULLY REJECTED");
+            }
+            else{
+                return new rejectOrderResponse("ORDER NOT FETCHED");
+
+            }
+        }catch(Exception e){
+            return new rejectOrderResponse("ERROR");
         }
     }
 

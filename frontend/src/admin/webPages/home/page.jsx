@@ -173,7 +173,6 @@ const AdminHome = () => {
     <div>
       <Layout>
         <div className="admin-home bg-gradient-to-br from-blue-50 to-gray-100 min-h-screen p-6">
-          {/* Keep existing header section */}
           <div className="bg-white rounded-xl shadow-lg p-8 mb-6">
             <h1 className="text-blue-800 text-4xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
               Welcome to the Admin Home Page

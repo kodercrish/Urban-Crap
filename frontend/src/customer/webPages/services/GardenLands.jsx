@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ServicesList } from '../../../customer/components/ServicesList';
 
 function GardeningLandscapingPage() {
-  const [activeCategory, setActiveCategory] = useState('design');
+  const [activeCategory, setActiveCategory] = useState('gardening');
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartItems, setCartItems] = useState(new Set());
@@ -93,8 +93,8 @@ function GardeningLandscapingPage() {
 
           <div className="flex justify-center mb-6">
             <button
-              onClick={() => setActiveCategory('design')}
-              className={`px-6 py-2 mr-2 rounded-lg ${activeCategory === 'design' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+              onClick={() => setActiveCategory('gardening')}
+              className={`px-6 py-2 mr-2 rounded-lg ${activeCategory === 'gardening' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'}`}
             >
               Design Services
             </button>

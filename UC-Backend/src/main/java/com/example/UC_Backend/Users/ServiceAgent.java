@@ -19,11 +19,8 @@ public class ServiceAgent extends User{
     private int range;
     private String[] skill;
     private String location;
-    private  HashMap<String,Order> completed_orders;
+    private HashMap<String,Order> completed_orders;
     private HashMap<String,Order> pending_orders;
-
-
-
 
     public ServiceAgent(String name, String email, String password, String[] skill, int range, String location) {
         super(name, email, password);

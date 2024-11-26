@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import logo from '../../assets/logo.jpg';
 import { FaShoppingCart } from 'react-icons/fa';
 
+import profileLogo from '../../assets/profile2.jpg';
+
 const NavBar = () => {
     const handleLogout = () => {
         localStorage.removeItem('customerId');

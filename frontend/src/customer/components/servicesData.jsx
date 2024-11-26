@@ -72,7 +72,9 @@ import irrigationImage2 from "../../assets/Website_Images/Gardening and Landscap
 import shrubsImage from "../../assets/Website_Images/Gardening and Landscapes/planting and installation/shrubs and flowe.jpg";
 import treeplantingImage from "../../assets/Website_Images/Gardening and Landscapes/planting and installation/tree planting.jpg";
 
-
+// painting and decor images
+/*import housePainting from "../../assets/Home.jpg";
+import wallPainting from "../../assets/Wall.jpg";*/
 export const services = {
     appliances: [
       { 
@@ -295,6 +297,40 @@ export const services = {
         ]
       },
     ],
+    /*painter: [
+      {
+    id: "PD1",
+    name: "Full Home Painting",
+    price: "₹15,000",
+    description: "Complete home painting solution with premium quality paints and professional service.",
+    image: housePainting,
+    duration: "7-10 days",
+    includes: [
+      "Professional color consultation",
+      "Premium quality paints",
+      "Experienced painters",
+      "Furniture protection",
+      "Complete cleanup after work"
+
+        ]
+      },
+      {
+    id: "PD2",
+    name: "Rooms/Walls Painting",
+    price: "₹4,000",
+    description: "Professional painting service for individual rooms or specific walls.",
+    image: wallPainting,
+    duration: "2-3 days",
+    includes: [
+      "Room-specific color consultation",
+      "Quality paint products",
+      "Skilled painters", 
+      "Furniture protection",
+      "Same-day cleanup"
+        ]
+      },
+    ],
+    */
     pestControl: [
       {
         id: "PC1",
@@ -339,84 +375,7 @@ export const services = {
         ]
       },
     ],
-    ////////////////////////////////
-    // electrical: [
-    //   {
-    //     id: "EL1",
-    //     category: 'Electrical',
-    //     name: 'Switch & Socket Service',
-    //     price: '₹199',
-    //     description: 'Professional repair and replacement of faulty switches and sockets.',
-    //     image: switchSocketImage,
-    //     duration: '2-3 hours',
-    //     includes: [
-    //       'Detailed switch and socket inspection',
-    //       'Replacement of faulty components',
-    //       'Wiring connections check',
-    //       'Switch functionality test'
-    //     ]
-    //   },
-    //   {
-    //     id: "EL2",
-    //     category: 'Electrical',
-    //     name: 'Fan Service',
-    //     price: '₹299',
-    //     description: 'Complete fan installation, repair, and maintenance.',
-    //     image: fanRepairImage,
-    //     duration: '2-3 hours',
-    //     includes: [
-    //       'Fan motor inspection and repair',
-    //       'New installation if needed',
-    //       'Blade and bearing alignment',
-    //       'Test run for operation'
-    //     ]
-    //   },
-    //   {
-    //     id: "EL3",
-    //     category: 'Electrical',
-    //     name: 'Wall/Ceiling Light',
-    //     price: '₹249',
-    //     description: 'Installation and repair of wall or ceiling light fixtures.',
-    //     image: ceilingLightImage,
-    //     duration: '2-3 hours',
-    //     includes: [
-    //       'Fixture and bulb replacement',
-    //       'New installation',
-    //       'Wiring inspection',
-    //       'Safety check after installation'
-    //     ]
-    //   },
-    //   {
-    //     id: "EL4",
-    //     category: 'Electrical',
-    //     name: 'Geyser Service',
-    //     price: '₹599',
-    //     description: 'Complete geyser installation and repair with safety checks.',
-    //     image: geyserImage,
-    //     duration: '2-3 hours',
-    //     includes: [
-    //       'Geyser placement and mounting',
-    //       'Repair of existing unit',
-    //       'Electrical connections',
-    //       'Safety and functionality test'
-    //     ]
-    //   },
-    //   {
-    //     id: "EL5",
-    //     category: 'Electrical',
-    //     name: 'Wiring Service',
-    //     price: '₹799',
-    //     description: 'New wiring installation and existing wiring repairs.',
-    //     image: wiringImage2,
-    //     duration: '2-3 hours',
-    //     includes: [
-    //       'New wiring system installation',
-    //       'Repair of existing wiring',
-    //       'Electrical safety checks',
-    //       'Complete testing'
-    //     ]
-    //   }
-    // ],
+    
     carpenter: [
       {
         id: "CP1",
@@ -553,50 +512,8 @@ export const services = {
         ]
       }
     ],
-    landscaping: [
-      {
-        id: "LA1",
-        name: 'Tree Planting',
-        price: '₹3,999',
-        description: 'Professional tree planting service including selection, placement, and installation.',
-        image: '/api/placeholder/300/200?text=Tree+Planting',
-        duration: '1-2 days',
-        includes: [
-          'Tree species consultation',
-          'Location assessment',
-          'Soil preparation',
-          'Post-planting care guide'
-        ]
-      },
-      {
-        id: "LA2",
-        name: 'Shrubs and Flower Bed Installation',
-        price: '₹7,999',
-        description: 'Complete installation service for shrubs and flower beds to enhance your garden.',
-        image: '/api/placeholder/300/200?text=Flower+Beds',
-        duration: '2-3 days',
-        includes: [
-          'Bed preparation and edging',
-          'Plant arrangement',
-          'Mulching service',
-          'Care instructions'
-        ]
-      },
-      {
-        id: "LA3",
-        name: 'Irrigation System Installation',
-        price: '₹24,999',
-        description: 'Professional installation of automated irrigation systems for your garden.',
-        image: '/api/placeholder/300/200?text=Irrigation+System',
-        duration: '3-4 days',
-        includes: [
-          'System component installation',
-          'Timer and control setup',
-          'Testing and calibration',
-          'Usage training'
-        ]
-      }
-    ],
+    
+   
     ////////////////////////////////
     men: [
       {
@@ -840,256 +757,15 @@ export const services = {
         ]
       }
     ],
-    Ser: [
-      {
-        id: "SE1",
-        category: "Electrician",
-        name: "Switch & Socket Repair",
-        price: "₹199",
-        description: "Professional repair and replacement of faulty switches and sockets.",
-        image: "/api/placeholder/300/200?text=Switch+Repair",
-        duration: "30-45 mins",
-        includes: [
-          "Inspection of switches and sockets",
-          "Repair or replacement of faulty parts",
-          "Safety checks",
-          "Cleanup after service"
-        ]
-      },
-      {
-        id: "SE2",
-        category: "Electrician",
-        name: "Fan Repair",
-        price: "₹299",
-        description: "Complete fan servicing, repair, and maintenance.",
-        image: "/api/placeholder/300/200?text=Fan+Repair",
-        duration: "45-60 mins",
-        includes: [
-          "Fan disassembly and cleaning",
-          "Motor repair or replacement",
-          "Lubrication of moving parts",
-          "Reassembly and testing"
-        ]
-      },
-      {
-        id: "SE3",
-        category: "Electrician",
-        name: "Wall/Ceiling Light",
-        price: "₹249",
-        description: "Replacement and repair of wall or ceiling light fixtures.",
-        image: "/api/placeholder/300/200?text=Light+Repair",
-        duration: "30-45 mins",
-        includes: [
-          "Removal of old fixtures",
-          "Installation of new fixtures",
-          "Electrical wiring adjustments",
-          "Functional testing"
-        ]
-      },
-      {
-        id: "SC4",
-        category: "Carpenter",
-        name: "Cupboard & Drawer",
-        price: "₹299",
-        description: "Repair of cupboards, drawers, and cabinet hardware.",
-        image: "/api/placeholder/300/200?text=Cupboard+Repair",
-        duration: "30-45 mins",
-        includes: [
-          "Hinge adjustments",
-          "Drawer runner replacement",
-          "Hardware tightening",
-          "Surface refinishing"
-        ]
-      },
-      {
-        id: "SC5",
-        category: "Carpenter",
-        name: "Door Repair",
-        price: "₹349",
-        description: "Comprehensive door repair and alignment services.",
-        image: "/api/placeholder/300/200?text=Door+Repair",
-        duration: "45-60 mins",
-        includes: [
-          "Door hinge repair",
-          "Alignment adjustments",
-          "Lock mechanism repair",
-          "Surface refinishing"
-        ]
-      },
-      {
-        id: "SC6",
-        category: "Carpenter",
-        name: "Furniture Repair",
-        price: "₹399",
-        description: "General furniture repair and restoration services.",
-        image: "/api/placeholder/300/200?text=Furniture+Repair",
-        duration: "1-2 hours",
-        includes: [
-          "Wood polishing",
-          "Joint reinforcement",
-          "Hardware replacement",
-          "Surface repairs"
-        ]
-      }
-    ],
-    installations: [
-      {
-        id: "IE1",
-        category: "Electrician",
-        name: "Fan Installation",
-        price: "₹399",
-        description: "Professional ceiling fan installation with wiring.",
-        image: fanImage2,
-        duration: "45-60 mins",
-        includes: [
-          "Bracket mounting",
-          "Wiring and connections",
-          "Alignment adjustments",
-          "Operational testing"
-        ]
-      },
-      {
-        id: "IE2",
-        category: "Electrician",
-        name: "Geyser Installation",
-        price: "₹599",
-        description: "Complete geyser installation with safety checks.",
-        image: geyserImage,
-        duration: "1-2 hours",
-        includes: [
-          "Wall mounting",
-          "Plumbing and wiring connections",
-          "Safety testing",
-          "Operational demonstration"
-        ]
-      },
-      {
-        id: "IE3",
-        category: "Electrician",
-        name: "Wiring",
-        price: "₹799",
-        description: "New wiring installation and existing wiring updates.",
-        image: wiringImage2,
-        duration: "2-3 hours",
-        includes: [
-          "Wire routing",
-          "Switchboard connections",
-          "Safety insulation checks",
-          "Functionality testing"
-        ]
-      },
-      {
-        id: "IC4",
-        category: "Carpenter",
-        name: "Curtain Rod Installation",
-        price: "₹299",
-        description: "Secure installation of curtain rods and brackets.",
-        image: curtainImage,
-        duration: "30-45 mins",
-        includes: [
-          "Bracket mounting",
-          "Rod alignment",
-          "Wall drilling and fixing",
-          "Stability testing"
-        ]
-      },
-      {
-        id: "IC5",
-        category: "Carpenter",
-        name: "Bathroom Accessories",
-        price: "₹249",
-        description: "Installation of bathroom holders and hangers.",
-        image: bathroomImage2,
-        duration: "30-45 mins",
-        includes: [
-          "Position marking",
-          "Drilling and fixing",
-          "Stability testing",
-          "Cleanup after installation"
-        ]
-      },
-      {
-        id: "IC6",
-        category: "Carpenter",
-        name: "Door Lock Installation",
-        price: "₹349",
-        description: "Professional door lock and handle installation.",
-        image: doorLockImage,
-        duration: "45-60 mins",
-        includes: [
-          "Positioning and alignment",
-          "Lock and handle fixing",
-          "Functionality testing",
-          "Safety demonstration"
-        ]
-      }
-    ],
-    design: [
-      {
-        id: "D1",
-        name: "Landscape Design",
-        price: "₹15,999",
-        description: "Professional landscape design service to transform your outdoor space into a beautiful and functional area.",
-        duration: "3-5 days",
-        image: landscapeImage,
-        includes: [
-          "Site analysis and assessment",
-          "3D visualization of design",
-          "Plant selection consultation",
-          "Detailed implementation plan"
-        ]
-      },
-      {
-        id: "D2",
-        name: "Garden Design",
-        price: "₹8,999",
-        description: "Custom garden design service focusing on creating beautiful and sustainable garden spaces.",
-        duration: "2-3 days",
-        image: gardenImage,
-        includes: [
-          "Color scheme planning",
-          "Seasonal plant selection",
-          "Garden layout design",
-          "Maintenance guidelines"
-        ]
-      },
-      {
-        id: "D3",
-        name: "Irrigation Design",
-        price: "₹12,999",
-        description: "Expert irrigation system design for efficient water management and plant health.",
-        duration: "2-3 days",
-        image: irrigationImage,
-        includes: [
-          "Water requirement analysis",
-          "Sprinkler layout planning",
-          "Drip system design",
-          "Control system specification"
-        ]
-      },
-      {
-        id: "D4",
-        name: "Lawn Renovation",
-        price: "₹9,999",
-        description: "Complete lawn makeover service to revitalize your green space.",
-        duration: "3-4 days",
-        image: lawnImage,
-        includes: [
-          "Soil testing and preparation",
-          "Grass type selection",
-          "Leveling and grading",
-          "Initial maintenance plan"
-        ]
-      }
-    ],
+   
     planting: [
       {
-        id: "P1",
+        id: "PL1",
         name: "Tree Planting",
         price: "₹3,999",
         description: "Professional tree planting service including selection, placement, and installation.",
-        duration: "1-2 days",
         image: treeplantingImage,
+        duration: "1-2 days",
         includes: [
           "Tree species consultation",
           "Location assessment",
@@ -1098,12 +774,12 @@ export const services = {
         ]
       },
       {
-        id: "P2",
+        id: "PL2",
         name: "Shrubs and Flower Bed Installation",
         price: "₹7,999",
         description: "Complete installation service for shrubs and flower beds to enhance your garden.",
-        duration: "2-3 days",
         image: shrubsImage,
+        duration: "2-3 days",
         includes: [
           "Bed preparation and edging",
           "Plant arrangement",
@@ -1112,12 +788,12 @@ export const services = {
         ]
       },
       {
-        id: "P3",
+        id: "PL3",
         name: "Vegetable Garden Installation",
         price: "₹4,999",
         description: "Turn your backyard into a sustainable vegetable garden.",
-        duration: "2-3 days",
         image: irrigationImage2,
+        duration: "2-3 days",
         includes: [
           "Soil preparation",
           "Seedling planting",

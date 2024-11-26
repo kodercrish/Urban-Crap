@@ -26,6 +26,7 @@ public class Order {
     private ArrayList<String> cart = new ArrayList<String>();
     private int totalprice;
     private String location;
+    private ArrayList<Integer> request_agents;
 
     //constructor
     public Order() {
@@ -37,6 +38,7 @@ public class Order {
         this.orderStatus = orderStatus;
         this.totalprice=totalprice;
         this.location=location;
+        request_agents=new ArrayList<>();
     }
 
     //getters and setters
@@ -87,5 +89,11 @@ public class Order {
     }
     public void setLocation(String location){
         this.location=location;
+    }
+    public ArrayList<Integer> getRequestAgents(){
+        return this.request_agents;
+    }
+    public void setRequestAgents(ArrayList<Integer> request_agents){
+        this.request_agents=request_agents;
     }
 }

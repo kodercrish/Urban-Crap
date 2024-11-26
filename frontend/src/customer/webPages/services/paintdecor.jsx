@@ -5,7 +5,7 @@ import wallpaintingImage from "../../../assets/WebImages2/Painting/wallPainting.
 
 function PaintingDecorServices() {
   const [selectedService, setSelectedService] = useState(null);
-
+  //const [cart, setCart] = useState([]); // Track items in the cart
   const services = {
     fullHome: {
       id: 1,
@@ -142,7 +142,17 @@ function PaintingDecorServices() {
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
     </svg>
   );
+  /*const isInCart = (serviceId) => cart.includes(serviceId);
 
+  // Handle adding or removing services from the cart
+  const toggleCart = (serviceId) => {
+    setCart((prevCart) =>
+      isInCart(serviceId)
+        ? prevCart.filter((id) => id !== serviceId) // Remove from cart
+        : [...prevCart, serviceId] // Add to cart
+    );
+  };
+  */
   return (
     <Layout>
     <div className="min-h-screen bg-gray-100">

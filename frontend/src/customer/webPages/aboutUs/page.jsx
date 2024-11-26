@@ -1,6 +1,6 @@
 import Layout from '../../layout.jsx';
 import storyImage from '../../../assets/WebImages2/AboutUs/HappyCustomers.png';
-import successImage from '../../../assets/success.jpg';
+import ourStoryImage from '../../../assets/OurStory2.jpg';
 
 const AboutUs = () => {
     return (
@@ -24,9 +24,10 @@ const AboutUs = () => {
                     <section className="flex flex-col lg:flex-row items-center mb-16">
                         <div className="lg:w-1/2 mb-8 lg:mb-0">
                             <img
-                                src={successImage}
+                                src={ourStoryImage}
                                 alt="Our story"
                                 className="rounded-lg shadow-lg w-full"
+                                style={{ width: '600px', height: '600px', objectFit: 'cover' }}
                             />
                         </div>
                         <div className="lg:w-1/2 lg:pl-12">
@@ -34,8 +35,10 @@ const AboutUs = () => {
                                 Our Story
                             </h2>
                             <p className="text-gray-700 leading-relaxed">
-                                Urban Crap was inspired by a simple idea: making expert home services accessible, reliable, and stress-free. 
-                                From fixing leaky faucets to transforming spaces with stunning decor, our journey began with a mission to take the hassle out of finding trustworthy service providers.
+                            Urban Crap was inspired by a simple idea: making expert home services accessible, reliable, and stress-free.
+From fixing leaky faucets to transforming spaces with stunning decor, our journey began with a mission to take the hassle out of finding trustworthy service providers.
+
+We believe that your home deserves the best care, whether it’s a quick repair, a thorough cleaning, or a complete makeover. Over the years, we've built a network of skilled professionals who share our passion for delivering exceptional quality and seamless experiences.
                             </p>
                         </div>
                     </section>

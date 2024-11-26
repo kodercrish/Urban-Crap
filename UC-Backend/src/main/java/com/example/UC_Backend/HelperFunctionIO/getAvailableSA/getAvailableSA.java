@@ -32,7 +32,7 @@ public class getAvailableSA{
             }
         }
         // ELECTRICIAN
-        else if(service.substring(0,3).equals("ACE") || service.substring(0,3).equals("REE") || service.substring(0,3).equals("INE") || service.substring(0,2).equals("SE") || service.substring(0,2).equals("IE") | service.substring(0,2).equals("EL")){
+        else if(service.substring(0,3).equals("ACE") ){
             for(ServiceAgent agent: agents){
                 if(Arrays.asList(agent.getSkill()).contains("Electrician"))
                 {
@@ -42,7 +42,7 @@ public class getAvailableSA{
 
         }
         //CARPENTER
-        else if(service.substring(0,3).equals("REC") || service.substring(0,3).equals("INC") || service.substring(0,2).equals("SC") || service.substring(0,2).equals("IC") || service.substring(0,2).equals("CP")) {
+        else if(service.substring(0,2).equals("CP")) {
             for(ServiceAgent agent: agents){
                 if(Arrays.asList(agent.getSkill()).contains("Carpenter"))
                 {
@@ -52,7 +52,7 @@ public class getAvailableSA{
         }
 
         //GARDENER
-        else if(service.substring(0,2).equals("GA") || service.substring(0,2).equals("LA") || service.substring(0,1).equals("P")) {
+        else if(service.substring(0,2).equals("GA") ) {
             for(ServiceAgent agent: agents){
                 if(Arrays.asList(agent.getSkill()).contains("Gardener"))
                 {
@@ -60,7 +60,16 @@ public class getAvailableSA{
                 }
             }
         }
+// Planting
 
+        else if(service.substring(0,2).equals("PL") ) {
+            for(ServiceAgent agent: agents){
+                if(Arrays.asList(agent.getSkill()).contains("Planting"))
+                {
+                    availableSA.add(agent);
+                }
+            }
+        }
         //PEST CONTROLLER
         else if(service.substring(0,2).equals("PC")) {
             for(ServiceAgent agent: agents){
@@ -91,8 +100,8 @@ public class getAvailableSA{
             } 
         }
 
-        //PAINTER
-        else if(service.substring(0,1).equals("D")) {
+        
+       /* else if(service.substring(0,2).equals("PD")) {
             for(ServiceAgent agent: agents){
                 if(Arrays.asList(agent.getSkill()).contains("Painter"))
                 {
@@ -100,7 +109,7 @@ public class getAvailableSA{
                 }
             }
         }
-
+*/
         //CLEANER
         else if(service.substring(0,1).equals("C")) {
             for(ServiceAgent agent: agents){
