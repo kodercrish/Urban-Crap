@@ -20,7 +20,7 @@ import com.example.UC_Backend.Database.AdminRepository;
 import com.example.UC_Backend.Database.CustomerRepository;
 import com.example.UC_Backend.Database.OrderRepository;
 import com.example.UC_Backend.Database.ServiceAgentRepository;
-import com.example.UC_Backend.Extra.RangeChecker;
+// import com.example.UC_Backend.Extra.RangeChecker;
 import com.example.UC_Backend.HelperFunctionIO.acceptOrder.acceptOrderRequest;
 import com.example.UC_Backend.HelperFunctionIO.acceptOrder.acceptOrderResponse;
 import com.example.UC_Backend.HelperFunctionIO.addCustomer.addCustomerRequest;
@@ -317,21 +317,23 @@ public class Helper {
                     // System.out.println("5555555");
                     // We will get filtered list of agents in array of string from cpp
 
-                    ArrayList<ServiceAgent> inRangeSA = new ArrayList<ServiceAgent>();
+                    // ArrayList<ServiceAgent> inRangeSA = new ArrayList<ServiceAgent>();
 
-                    for(ServiceAgent sa : availableSA) {
-                        int distance = new RangeChecker().getAgentsInRange(order.getLocation(), sa.getLocation());
-                        // System.out.println("Distance: " + distance);
+                    // for(ServiceAgent sa : availableSA) {
+                    //     int distance = new RangeChecker().getAgentsInRange(order.getLocation(), sa.getLocation());
+                    //     // System.out.println("Distance: " + distance);
 
-                        if (distance < sa.getRange()) {
-                            inRangeSA.add(sa);
-                        }
+                    //     if (distance < sa.getRange()) {
+                    //         inRangeSA.add(sa);
+                    //     }
                         
-                    }
+                    // }
 
-                    for (ServiceAgent sa : inRangeSA) {
+                    for (ServiceAgent sa : availableSA) {
                         // System.out.println("6666666");
-                        sa.getPending_orders().put(itemId, order);
+                        // Check if the key already exists
+                        sa.getPending_orders().putIfAbsent(itemId, new ArrayList<>()); // Initialize if not present
+                        sa.getPending_orders().get(itemId).add(order); // Add the Order to the ArrayList
                         order.getRequestAgents().add(sa.getAgentId());//Agent Ids stored
 
                         saCollection.save(sa);
@@ -352,69 +354,149 @@ public class Helper {
         }
     }
 
+    // @PostMapping("sa/acceptOrder")
+    // public acceptOrderResponse acceptOrder(@RequestBody acceptOrderRequest request){
+    //     try{
+    //         // Optional<ServiceAgent> sa=saCollection.findByAgentId(request.getAgentId());
+    //         Optional<Order> order=orderCollection.findByOrderId(request.getOrderId());
+
+    //         if(order.isPresent()){
+    //             // ServiceAgent agent=sa.get();
+    //             Order fetched_order=order.get();
+
+    //             for(Integer agentIdIterating : fetched_order.getRequestAgents()){
+
+    //                 Optional<ServiceAgent> sa=saCollection.findByAgentId(agentIdIterating);
+                    
+    //                 ServiceAgent fetched_agent=sa.get();
+                    
+    //                 fetched_agent.getPending_orders().remove(request.getItemId());
+
+    //                 System.out.println(request.getItemId());
+    //                 System.out.println(fetched_agent.getPending_orders());
+                    
+    //                 if(agentIdIterating==request.getAgentId()){
+    //                     fetched_agent.getCompleted_orders().put(request.getItemId(),fetched_order);
+    //                 }
+    //                 saCollection.save(fetched_agent);
+    //             }
+    //             fetched_order.getRequestAgents().clear();
+    //             fetched_order.setAgentId(request.getAgentId());
+    //             orderCollection.save(fetched_order);
+
+    //             return new acceptOrderResponse("SUCCESSFULLY ACCEPTED");
+    //         }
+    //         else{
+    //             return new acceptOrderResponse("ORDER NOT FETCHED");
+
+    //         }
+    //     }catch(Exception e){
+    //         return new acceptOrderResponse("ERROR");
+    //     }
+    // }
+
+    // @PostMapping("sa/rejectOrder")
+    // public rejectOrderResponse rejectOrder(@RequestBody rejectOrderRequest request){
+    //     try{
+    //         Optional<ServiceAgent> sa=saCollection.findByAgentId(request.getAgentId());
+    //         Optional<Order> order=orderCollection.findByOrderId(request.getOrderId());
+
+    //         if(sa.isPresent()){
+    //             ServiceAgent fetched_agent=sa.get();
+    //             Order fetched_order=order.get();
+
+    //             fetched_order.getRequestAgents().remove(Integer.valueOf(request.getAgentId()));
+    //             fetched_agent.getPending_orders().remove(request.getItemId());
+
+    //             orderCollection.save(fetched_order);
+    //             saCollection.save(fetched_agent);
+
+    //             return new rejectOrderResponse("SUCCESSFULLY REJECTED");
+    //         }
+    //         else{
+    //             return new rejectOrderResponse("ORDER NOT FETCHED");
+
+    //         }
+    //     }catch(Exception e){
+    //         return new rejectOrderResponse("ERROR");
+    //     }
+    // }
+
     @PostMapping("sa/acceptOrder")
-    public acceptOrderResponse acceptOrder(@RequestBody acceptOrderRequest request){
-        try{
-            // Optional<ServiceAgent> sa=saCollection.findByAgentId(request.getAgentId());
-            Optional<Order> order=orderCollection.findByOrderId(request.getOrderId());
+public acceptOrderResponse acceptOrder(@RequestBody acceptOrderRequest request) {
+    try {
+        Optional<Order> order = orderCollection.findByOrderId(request.getOrderId());
 
-            if(order.isPresent()){
-                // ServiceAgent agent=sa.get();
-                Order fetched_order=order.get();
+        if(order.isPresent()) {
+            Order fetched_order = order.get();
 
-                for(Integer agentIdIterating : fetched_order.getRequestAgents()){
-
-                    Optional<ServiceAgent> sa=saCollection.findByAgentId(agentIdIterating);
-                    ServiceAgent fetched_agent=sa.get();
-                    fetched_agent.getPending_orders().remove(request.getItemId());
-                    System.out.println(request.getItemId());
-                    System.out.println(fetched_agent.getPending_orders());
-                    if(agentIdIterating==request.getAgentId()){
-                        fetched_agent.getCompleted_orders().put(request.getItemId(),fetched_order);
-                    }
-                    saCollection.save(fetched_agent);
+            for(Integer agentIdIterating : fetched_order.getRequestAgents()) {
+                Optional<ServiceAgent> sa = saCollection.findByAgentId(agentIdIterating);
+                ServiceAgent fetched_agent = sa.get();
+                
+                // Remove from pending orders ArrayList
+                ArrayList<Order> pendingList = fetched_agent.getPending_orders().get(request.getItemId());
+                if(pendingList != null) {
+                    pendingList.removeIf(o -> o.getOrderId() == request.getOrderId());
                 }
-                fetched_order.getRequestAgents().clear();
-                fetched_order.setAgentId(request.getAgentId());
-                orderCollection.save(fetched_order);
-
-                return new acceptOrderResponse("SUCCESSFULLY ACCEPTED");
-            }
-            else{
-                return new acceptOrderResponse("ORDER NOT FETCHED");
-
-            }
-        }catch(Exception e){
-            return new acceptOrderResponse("ERROR");
-        }
-    }
-
-    @PostMapping("sa/rejectOrder")
-    public rejectOrderResponse rejectOrder(@RequestBody rejectOrderRequest request){
-        try{
-            Optional<ServiceAgent> sa=saCollection.findByAgentId(request.getAgentId());
-            Optional<Order> order=orderCollection.findByOrderId(request.getOrderId());
-
-            if(sa.isPresent()){
-                ServiceAgent fetched_agent=sa.get();
-                Order fetched_order=order.get();
-
-                fetched_order.getRequestAgents().remove(Integer.valueOf(request.getAgentId()));
-                fetched_agent.getPending_orders().remove(request.getItemId());
-
-                orderCollection.save(fetched_order);
+                
+                if(agentIdIterating == request.getAgentId()) {
+                    // Add to completed orders ArrayList
+                    fetched_agent.getCompleted_orders()
+                        .computeIfAbsent(request.getItemId(), k -> new ArrayList<>())
+                        .add(fetched_order);
+                }
                 saCollection.save(fetched_agent);
-
-                return new rejectOrderResponse("SUCCESSFULLY REJECTED");
             }
-            else{
-                return new rejectOrderResponse("ORDER NOT FETCHED");
 
-            }
-        }catch(Exception e){
-            return new rejectOrderResponse("ERROR");
+            fetched_order.getRequestAgents().remove(Integer.valueOf(request.getAgentId()));
+            fetched_order.setAgentId(request.getAgentId());
+            orderCollection.save(fetched_order);
+
+            return new acceptOrderResponse("SUCCESSFULLY ACCEPTED");
         }
+        return new acceptOrderResponse("ORDER NOT FETCHED");
+    } catch(Exception e) {
+        return new acceptOrderResponse("ERROR");
     }
+}
+
+@PostMapping("sa/rejectOrder")
+public rejectOrderResponse rejectOrder(@RequestBody rejectOrderRequest request) {
+    try {
+        Optional<ServiceAgent> sa = saCollection.findByAgentId(request.getAgentId());
+        Optional<Order> order = orderCollection.findByOrderId(request.getOrderId());
+
+        if(sa.isPresent() && order.isPresent()) {
+            ServiceAgent fetched_agent = sa.get();
+            Order fetched_order = order.get();
+
+            ArrayList<Order> pendingList = fetched_agent.getPending_orders().get(request.getItemId());
+            if(pendingList != null) {
+                boolean orderExists = pendingList.stream()
+                    .anyMatch(o -> o.getOrderId() == request.getOrderId());
+                    
+                if(orderExists) {
+                    pendingList.removeIf(o -> o.getOrderId() == request.getOrderId());
+
+                            // Remove the key if list is empty
+                    if(pendingList.isEmpty()) {
+                        fetched_agent.getPending_orders().remove(request.getItemId());
+                    }
+                    fetched_order.getRequestAgents().remove(Integer.valueOf(request.getAgentId()));
+
+                    orderCollection.save(fetched_order);
+                    saCollection.save(fetched_agent);
+                    return new rejectOrderResponse("SUCCESSFULLY REJECTED");
+                }
+            }
+            return new rejectOrderResponse("ORDER NOT FOUND IN PENDING LIST");
+        }
+        return new rejectOrderResponse("ORDER NOT FETCHED");
+    } catch(Exception e) {
+        return new rejectOrderResponse("ERROR");
+    }
+}
 
     @PostMapping("/getAllServiceAgents")
     public getAllSAResponse getAllServiceAgents() {

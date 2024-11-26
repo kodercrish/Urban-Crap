@@ -2,6 +2,8 @@ package com.example.UC_Backend.Users;
 
 import com.example.UC_Backend.Extra.ExtraFunctions;
 import com.example.UC_Backend.Order;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
@@ -19,8 +21,8 @@ public class ServiceAgent extends User{
     private int range;
     private String[] skill;
     private String location;
-    private HashMap<String,Order> completed_orders;
-    private HashMap<String,Order> pending_orders;
+    private HashMap<String,ArrayList<Order>> completed_orders;
+    private HashMap<String,ArrayList<Order>> pending_orders;
 
     public ServiceAgent(String name, String email, String password, String[] skill, int range, String location) {
         super(name, email, password);
@@ -53,13 +55,11 @@ public class ServiceAgent extends User{
     public String getLocation(){
         return this.location;
     }
-    public HashMap<String,Order> getCompleted_orders(){
+    public HashMap<String, ArrayList<Order>> getCompleted_orders() {
         return completed_orders;
     }
-    public HashMap<String,Order> getPending_orders(){
+
+    public HashMap<String, ArrayList<Order>> getPending_orders() {
         return pending_orders;
-    }
-    public Order getOrderObject(String itemId){
-        return pending_orders.get(itemId);
     }
 }
