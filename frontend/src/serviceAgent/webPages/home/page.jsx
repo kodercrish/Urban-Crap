@@ -58,28 +58,38 @@ function AgentHome() {
 
       if(data.message=="SUCCESSFULLY ACCEPTED"){
         alert(data.message);
-        // Update the state
-        setOrders((prevOrders) => {
-          const updatedPending = prevOrders.pending.filter(
-            (order) => order.orderId !== orderId
-          );
-          const acceptedOrder = prevOrders.pending.find(
-            (order) => order.orderId === orderId
-          );
-          return {
-            pending: updatedPending,
-            completed: [...prevOrders.completed, acceptedOrder],
-          };
-        });
-      }
-      else{
-        alert(data.message);
       }
 
     } catch (error) {
       console.error('Error accepting order:', error);
     }
   };
+
+  // const handleAccept = async (orderId, serviceId) => {
+  //   try {
+  //     const response = await fetch('http://localhost:8080/api/sa/acceptOrder', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         agentId: parseInt(agentId),
+  //         orderId: orderId,
+  //         itemId: serviceId
+  //       })
+  //     });
+  
+  //     const data = await response.json();
+  //     if(data.message === "SUCCESSFULLY ACCEPTED") {
+  //       // Fetch updated orders immediately after successful acceptance
+  //       await fetchOrders();
+  //       alert(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error accepting order:', error);
+  //   }
+  // };
+  
 
   // Handle Reject Order
   const handleReject = async (orderId,serviceId) => {
@@ -98,19 +108,6 @@ function AgentHome() {
 
       const data = await response.json();
       if(data.message=="SUCCESSFULLY REJECTED"){
-        alert(data.message);
-        // Update the state
-        setOrders((prevOrders) => {
-          const updatedPending = prevOrders.pending.filter(
-            (order) => order.orderId !== orderId
-          );
-          return {
-            ...prevOrders,
-            pending: updatedPending,
-          };
-        });
-      }
-      else{
         alert(data.message);
       }
 
@@ -182,13 +179,13 @@ function AgentHome() {
                     <div className="flex mt-6 space-x-4">
                       <button
                         className="flex-1 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors duration-200 font-medium"
-                        onClick={() => handleAccept(order.orderId,serviceId)}
+                        onClick={() => handleAccept(order.orderId, order.cart[serviceId])}
                       >
                         Accept Order
                       </button>
                       <button
                         className="flex-1 bg-red-500 text-white px-6 py-3 rounded-lg hover:bg-red-600 transition-colors duration-200 font-medium"
-                        onClick={() => handleReject(order.orderId,serviceId)}
+                        onClick={() => handleReject(order.orderId, order.cart[serviceId])}
                       >
                         Reject Order
                       </button>

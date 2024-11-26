@@ -2,7 +2,6 @@ package com.example.UC_Backend.HelperFunctionIO.acceptOrder;
 /**
  * This class is used to recieve from frontend when service agent accepts order
  */
-
 public class acceptOrderRequest{
     private int agentId;
     private int orderId;

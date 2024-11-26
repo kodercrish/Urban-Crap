@@ -321,7 +321,6 @@ public class Helper {
         }
     }
 
-
     @PostMapping("sa/acceptOrder")
     public acceptOrderResponse acceptOrder(@RequestBody acceptOrderRequest request){
         try{
@@ -332,12 +331,14 @@ public class Helper {
                 // ServiceAgent agent=sa.get();
                 Order fetched_order=order.get();
 
-                for(Integer agentId: fetched_order.getRequestAgents()){
+                for(Integer agentIdIterating : fetched_order.getRequestAgents()){
 
-                    Optional<ServiceAgent> sa=saCollection.findByAgentId(agentId);
+                    Optional<ServiceAgent> sa=saCollection.findByAgentId(agentIdIterating);
                     ServiceAgent fetched_agent=sa.get();
-                    fetched_agent.getPending_orders().remove(agentId);
-                    if(agentId==request.getAgentId()){
+                    fetched_agent.getPending_orders().remove(request.getItemId());
+                    System.out.println(request.getItemId());
+                    System.out.println(fetched_agent.getPending_orders());
+                    if(agentIdIterating==request.getAgentId()){
                         fetched_agent.getCompleted_orders().put(request.getItemId(),fetched_order);
                     }
                     saCollection.save(fetched_agent);
@@ -367,7 +368,7 @@ public class Helper {
                 ServiceAgent fetched_agent=sa.get();
                 Order fetched_order=order.get();
 
-                fetched_order.getRequestAgents().remove(request.getAgentId());
+                fetched_order.getRequestAgents().remove(Integer.valueOf(request.getAgentId()));
                 fetched_agent.getPending_orders().remove(request.getItemId());
 
                 orderCollection.save(fetched_order);
