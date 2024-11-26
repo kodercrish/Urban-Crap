@@ -1,15 +1,20 @@
 package com.example.UC_Backend.Extra;
 
-import com.example.UC_Backend.Users.ServiceAgent;
-import java.util.ArrayList;
+public class RangeChecker {
+    private static volatile boolean loaded = false;
+    private static final Object lock = new Object();
 
-public class RangeChecker{
-
-    static{
-        // System.setProperty("java.library.path", "/path/to/library");
-        System.loadLibrary("RangeChecker");
+    static {
+        synchronized (lock) {
+            if (!loaded) {
+                String libraryPath = RangeChecker.class.getResource("/lib/libRangeChecker.dylib").getPath();
+                System.load(libraryPath);
+                loaded = true;
+            }
+        }
     }
 
-    public native ArrayList<String> getAgentsInRange(String customer_location, ArrayList<ServiceAgent> AgentsList);
+    public native int getAgentsInRange(String CustomerLocation, String AgentLocation);
 
-};
+    
+}
