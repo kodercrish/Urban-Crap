@@ -307,7 +307,7 @@ public class Helper {
                     for(ServiceAgent sa : availableSA) {
                         int distance = new RangeChecker().getAgentsInRange(order.getLocation(),
                         sa.getLocation());
-                    System.out.println("Distance: " + distance);
+                    // System.out.println("Distance: " + distance);
 
                     if (distance < sa.getRange()) {
                     inRangeSA.add(sa);
