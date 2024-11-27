@@ -27,9 +27,11 @@ const AdminHome = () => {
     "Carpenter",
     "Painter",
     "Technician",
-    "Cleaning",
+    "Cleaner",
     "Pest Controller",
-    "Gardening"
+    "Gardener",
+    "Men's Styler",
+    "Women's Styler"
   ]
   // New function to filter service agents
   const getFilteredAgents = () => {

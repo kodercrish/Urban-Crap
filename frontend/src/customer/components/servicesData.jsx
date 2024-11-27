@@ -255,7 +255,7 @@ export const services = {
     ////////////////////////////////
     cleaning: [
       {
-        id: "C1",
+        id: "CLE1",
         name: 'Bathroom Cleaning',
         price: '₹299',
         description: 'Comprehensive bathroom deep cleaning service.',
@@ -269,7 +269,7 @@ export const services = {
         ]
       },
       {
-        id: "C2",
+        id: "CLE2",
         name: 'Kitchen Cleaning',
         price: '₹499',
         description: 'Complete kitchen deep cleaning and degreasing.',
@@ -283,7 +283,7 @@ export const services = {
         ]
       },
       {
-        id: "C3",
+        id: "CLE3",
         name: 'Full Home Cleaning',
         price: '₹1299',
         description: 'Comprehensive cleaning of entire living space.',

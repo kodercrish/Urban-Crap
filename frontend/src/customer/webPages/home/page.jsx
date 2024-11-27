@@ -2,16 +2,11 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../../layout.jsx';
 import aclogo from '../../../assets/ac.jpeg';
-import cleaninglogo from '../../../assets/cleaning.jpeg';
 import gardeninglogo from '../../../assets/gardening.jpeg';
 import paintinglogo from '../../../assets/painting.png';
 import plumbinglogo from '../../../assets/plumbing.png';
 import pest from '../../../assets/pest.png';
-import collage from '../../../assets/clg.png';
 import salon from '../../../assets/salon.png';
-import spa from '../../../assets/spa.png';
-import bedbug from '../../../assets/bed.png';
-
 import profServices from '../../../assets/2.jpg'; 
 
 const CustomerHome = () => {
@@ -61,12 +56,6 @@ const CustomerHome = () => {
           <p className="mb-6 text-lg text-center">
             Find trusted experts for all your home needs. From repairs to wellness, we've got you covered.
           </p>
-          {/* <Link
-            to="/customer/services"
-            className="bg-white text-[#003366] font-semibold px-6 py-3 rounded-lg shadow hover:bg-gray-200 transition"
-          >
-            Explore Services
-          </Link> */}
         </div>
         <div className="hidden md:block w-1/2">
           <img 
