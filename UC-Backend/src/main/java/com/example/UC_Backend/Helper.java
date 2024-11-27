@@ -20,8 +20,7 @@ import com.example.UC_Backend.Database.AdminRepository;
 import com.example.UC_Backend.Database.CustomerRepository;
 import com.example.UC_Backend.Database.OrderRepository;
 import com.example.UC_Backend.Database.ServiceAgentRepository;
-
-// import com.example.UC_Backend.Extra.RangeChecker;
+import com.example.UC_Backend.Extra.RangeChecker;
 import com.example.UC_Backend.HelperFunctionIO.acceptOrder.acceptOrderRequest;
 import com.example.UC_Backend.HelperFunctionIO.acceptOrder.acceptOrderResponse;
 import com.example.UC_Backend.HelperFunctionIO.addCustomer.addCustomerRequest;
@@ -52,7 +51,6 @@ import com.example.UC_Backend.HelperFunctionIO.rejectOrder.rejectOrderRequest;
 import com.example.UC_Backend.HelperFunctionIO.rejectOrder.rejectOrderResponse;
 import com.example.UC_Backend.HelperFunctionIO.removeFromCart.removeFromCartRequest;
 import com.example.UC_Backend.HelperFunctionIO.removeFromCart.removeFromCartResponse;
-
 import com.example.UC_Backend.Users.Admin;
 import com.example.UC_Backend.Users.Customer;
 import com.example.UC_Backend.Users.ServiceAgent;
@@ -304,21 +302,21 @@ public class Helper {
                     availableSA = obj.findAvailableSA(itemId);
 
                     // We will get filtered list of agents in array of string from cpp
-                    // ArrayList<ServiceAgent> inRangeSA = new ArrayList<ServiceAgent>();
+                    ArrayList<ServiceAgent> inRangeSA = new ArrayList<ServiceAgent>();
 
-                    // for(ServiceAgent sa : availableSA) {
-                    // int distance = new RangeChecker().getAgentsInRange(order.getLocation(),
-                    // sa.getLocation());
-                    // // System.out.println("Distance: " + distance);
+                    for(ServiceAgent sa : availableSA) {
+                        int distance = new RangeChecker().getAgentsInRange(order.getLocation(),
+                        sa.getLocation());
+                    System.out.println("Distance: " + distance);
 
-                    // if (distance < sa.getRange()) {
-                    // inRangeSA.add(sa);
-                    // }
+                    if (distance < sa.getRange()) {
+                    inRangeSA.add(sa);
+                    }
 
-                    // }
+                    }
 
                     // for (ServiceAgent sa : inRangeSA) {
-                    for (ServiceAgent sa : availableSA) {
+                    for (ServiceAgent sa : inRangeSA) {
 
                         // Check if the key already exists
                         sa.getPending_orders().putIfAbsent(itemId, new ArrayList<>()); // Initialize if not present
