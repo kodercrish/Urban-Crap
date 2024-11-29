@@ -1,6 +1,5 @@
 package com.example.UC_Backend;
 
-//Importing Users
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +56,8 @@ import com.example.UC_Backend.Users.ServiceAgent;
 
 /**
  * Helper handles the input/output operations coming from the frontend.
+ * Different methods in helper then performs necessary functions and accordingly
+ * changes data in database
  */
 @RestController
 @RequestMapping("/api")
@@ -74,10 +75,14 @@ public class Helper {
 
     public native ArrayList<String> getInRangeAgents(String CustomerLocation, ArrayList<ServiceAgent> agentsList);
 
+    // This method is used to register a customer
     @PostMapping("/addcustomer")
     public addCustomerResponse addCustomer(@RequestBody addCustomerRequest request) {
         try {
+            // Gets customer object by using email ID
             Optional<Customer> existingCustomerByEmail = customerCollection.findByEmail(request.getEmail());
+            
+            // Gets customer object by using phone number
             Optional<Customer> existingCustomerByPhone = customerCollection.findByPhone(request.getPhone());
 
             if (existingCustomerByEmail.isPresent()) {
@@ -95,6 +100,7 @@ public class Helper {
         }
     }
 
+    // This method is used for logging a customer
     @PostMapping("/logincustomer")
     public loginCustomerResponse loginCustomer(@RequestBody loginCustomerRequest request) {
         try {
@@ -118,6 +124,7 @@ public class Helper {
         }
     }
 
+    // This method is used for adding service agent
     @PostMapping("/addsa")
     public addServiceAgentResponse addServiceAgent(@RequestBody addServiceAgentRequest request) {
         try {
@@ -141,6 +148,7 @@ public class Helper {
         }
     }
 
+    // This method is used for login of admin
     @PostMapping("/loginadmin")
     public loginAdminResponse loginAdmin(@RequestBody loginAdminRequest request) {
         try {
@@ -162,6 +170,7 @@ public class Helper {
         }
     }
 
+    // This method is used for login of service agent
     @PostMapping("/loginsa")
     public LoginSAResponse loginSA(@RequestBody LoginSARequest request) {
         try {
@@ -182,6 +191,7 @@ public class Helper {
         }
     }
 
+    // This method is used for getting customer details
     @PostMapping("/getcustomerdetails")
     public getCustomerDetailsResponse getCustomerDetails(@RequestBody getCustomerDetailsRequest request) {
         try {
@@ -198,6 +208,7 @@ public class Helper {
         }
     }
 
+    // This method is used for getting agent details
     @PostMapping("/getagentdetails")
     public getAgentDetailsResponse getAgentDetails(@RequestBody getAgentDetailsRequest request) {
         try {
@@ -213,6 +224,7 @@ public class Helper {
         }
     }
 
+    // This method is used for adding items to cart
     @PostMapping("/addToCart")
     public addtoCartResponse addtoCustomerCart(@RequestBody addtoCartRequest request) {
         try {
@@ -239,6 +251,7 @@ public class Helper {
         }
     }
 
+    // This method is used when an item is removed from cart
     @PostMapping("/removeFromCart")
     public removeFromCartResponse removeFromCart(@RequestBody removeFromCartRequest request) {
         try {
@@ -263,6 +276,7 @@ public class Helper {
         }
     }
 
+    // This method is used for showing cart items in frontend
     @GetMapping("/getCartItems/{customerId}")
     public Map<String, List<String>> getCartItems(@PathVariable int customerId) {
         Optional<Customer> customerOptional = customerCollection.findByCustomerId(customerId);
@@ -277,7 +291,14 @@ public class Helper {
         return response;
     }
 
-    @PostMapping("/checkout") // add Order
+    /*
+     * This method is used when customer checks out
+     * When a customer checks out a new order id is created which stores the
+     * customer location and also stores the details of those agents to whom request
+     * has been sent
+     * Also shopping cart of customer is emptied after order is successfully placed
+     */
+    @PostMapping("/checkout")
     public checkoutResponse Checkout(@RequestBody checkoutRequest request) {
         try {
             Optional<Customer> customerOptional = customerCollection.findByCustomerId(request.getCustomerId());
@@ -289,6 +310,9 @@ public class Helper {
                 order.setCart(customer.getShoppingCart());
                 orderCollection.save(order);
 
+                customer.getShoppingCart().clear();
+                customerCollection.save(customer);
+
                 // GEtting all service agents
                 ArrayList<ServiceAgent> agents = new ArrayList<>();
                 saCollection.findAll().forEach(agents::add);
@@ -298,24 +322,22 @@ public class Helper {
 
                 for (String itemId : order.getCart()) {
 
+                    // We will get list of those agents which have the required skill to perform the job
                     ArrayList<ServiceAgent> availableSA = new ArrayList<ServiceAgent>();
                     availableSA = obj.findAvailableSA(itemId);
 
                     // We will get filtered list of agents in array of string from cpp
+                    // These are those agents which are in range and available
                     ArrayList<ServiceAgent> inRangeSA = new ArrayList<ServiceAgent>();
 
-                    for(ServiceAgent sa : availableSA) {
-                        int distance = new RangeChecker().getAgentsInRange(order.getLocation(),
-                        sa.getLocation());
-                    // System.out.println("Distance: " + distance);
-
-                    if (distance < sa.getRange()) {
-                    inRangeSA.add(sa);
+                    for (ServiceAgent sa : availableSA) {
+                        int distance = new RangeChecker().getAgentsInRange(order.getLocation(), sa.getLocation());
+                        if (distance < sa.getRange()) {
+                            inRangeSA.add(sa);
+                        }
                     }
 
-                    }
-
-                    // for (ServiceAgent sa : inRangeSA) {
+                    // for (ServiceAgent sa : availableSA) {
                     for (ServiceAgent sa : inRangeSA) {
 
                         // Check if the key already exists
@@ -337,7 +359,8 @@ public class Helper {
         }
     }
 
-    @PostMapping("sa/acceptOrder")
+    // This method is used when service agent accepts order
+    @PostMapping("service-agent/acceptOrder")
     public acceptOrderResponse acceptOrder(@RequestBody acceptOrderRequest request) {
         try {
             Optional<Order> order = orderCollection.findByOrderId(request.getOrderId());
@@ -349,14 +372,14 @@ public class Helper {
                     Optional<ServiceAgent> sa = saCollection.findByAgentId(agentIdIterating);
                     ServiceAgent fetched_agent = sa.get();
 
-                    // Remove from pending orders ArrayList
+                    // Remove from pending orders ArrayList in service agent
                     ArrayList<Order> pendingList = fetched_agent.getPending_orders().get(request.getItemId());
                     if (pendingList != null) {
                         pendingList.removeIf(o -> o.getOrderId() == request.getOrderId());
                     }
 
                     if (agentIdIterating == request.getAgentId()) {
-                        // Add to completed orders ArrayList
+                        // Add to completed orders ArrayList in service agent
                         fetched_agent.getCompleted_orders()
                                 .computeIfAbsent(request.getItemId(), k -> new ArrayList<>())
                                 .add(fetched_order);
@@ -376,7 +399,8 @@ public class Helper {
         }
     }
 
-    @PostMapping("sa/rejectOrder")
+    // This method is used when service agent rejects an order
+    @PostMapping("service-agent/rejectOrder")
     public rejectOrderResponse rejectOrder(@RequestBody rejectOrderRequest request) {
         try {
             Optional<ServiceAgent> sa = saCollection.findByAgentId(request.getAgentId());
@@ -413,6 +437,7 @@ public class Helper {
         }
     }
 
+    // This method is used for getting detials of all service agents
     @PostMapping("/getAllServiceAgents")
     public getAllSAResponse getAllServiceAgents() {
         // Fetch all service agent details
@@ -426,7 +451,8 @@ public class Helper {
         }
     }
 
-    @PostMapping("/sa/orders")
+    // This method is used for giving service agent orders
+    @PostMapping("/service-agent/orders")
     public giveSAOrdersResponse RequestSAOrder(@RequestBody giveSAOrdersRequest request) {
         // Fetch all service agent details
         try {
@@ -438,6 +464,7 @@ public class Helper {
         }
     }
 
+    // This method is used for getting order history of customers
     @PostMapping("/order-history")
     public getOrderDetailsResponse getOrderDetails(@RequestBody getOrderDetailsRequest request) {
         try {
@@ -446,7 +473,7 @@ public class Helper {
             // Fetch all orders by customerId
             List<Order> orders = orderCollection.findByCustomerId(request.getCustomerId());
 
-            // Add all orders to the ArrayList
+            // Adding all orders to the ArrayList
             orderList.addAll(orders);
 
             return new getOrderDetailsResponse("Order Details", orderList);
@@ -456,4 +483,3 @@ public class Helper {
     }
 
 }
-

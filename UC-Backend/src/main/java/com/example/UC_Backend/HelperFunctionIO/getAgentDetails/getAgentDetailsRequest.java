@@ -6,7 +6,9 @@ package com.example.UC_Backend.HelperFunctionIO.getAgentDetails;
 public class getAgentDetailsRequest {
     int agentId;
 
-    public getAgentDetailsRequest() {}
+    public getAgentDetailsRequest() {
+    }
+
     public getAgentDetailsRequest(int agentId) {
         this.agentId = agentId;
     }

@@ -13,7 +13,7 @@ const AdminHome = () => {
     location: ""
   });
 
-  // Add new state for search and location filtering
+  // New state for search and location filtering
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("");
 
@@ -21,7 +21,6 @@ const AdminHome = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState([]);
-
   const availableSkills = [
     "Electrician",
     "Carpenter",
@@ -33,6 +32,7 @@ const AdminHome = () => {
     "Men's Styler",
     "Women's Styler"
   ]
+
   // New function to filter service agents
   const getFilteredAgents = () => {
     return serviceAgents.filter(agent => {
@@ -49,9 +49,9 @@ const AdminHome = () => {
     });
   };
 
-  // Check if the admin is authenticated
+  // Checks if the admin is authenticated
   useEffect(() => {
-    const adminToken = localStorage.getItem("adminId"); // Example: storing a token in local storage
+    const adminToken = localStorage.getItem("adminId");
     if (!adminToken) {
       navigate("/admin/SignIn"); // Redirect to login if no token is found
     } else {
@@ -335,8 +335,8 @@ const AdminHome = () => {
       </Layout>
       {/* Popup Form */}
       {showForm && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-y-auto">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-lg relative slide-down my-8">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-y-auto p-4">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-11/12 max-w-lg relative slide-down my-8 max-h-screen overflow-y-auto">
             <h2 className="text-2xl font-semibold text-[#1c4e80] mb-4">
               Add New Entry
             </h2>

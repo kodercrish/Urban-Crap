@@ -4,22 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 const AdminProfile = () => {
 
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Check if the admin is authenticated
+  // Checks if the admin is authenticated
   useEffect(() => {
-    const adminToken = localStorage.getItem("adminId"); // Example: storing a token in local storage
+    const adminToken = localStorage.getItem("adminId");
     if (!adminToken) {
-      navigate("/admin/SignIn"); // Redirect to login if no token is found
+      navigate("/admin/SignIn");  // Redirect to login if no token is found
     } else {
-      setIsAuthenticated(true); // Mark as authenticated
+      setIsAuthenticated(true);   // Mark as authenticated
     }
   }, [navigate]);
 
   // Only render the page if the admin is authenticated
   if (!isAuthenticated) {
-    return null; // Optionally display a loading spinner here
+    return null;
   }
 
   return (

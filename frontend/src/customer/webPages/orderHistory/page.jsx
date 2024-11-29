@@ -18,11 +18,11 @@ const OrderHistory = () => {
             setIsAuthenticated(true);
         }
     }, [navigate]);
-    
+
     useEffect(() => {
         const fetchOrders = async () => {
             const customerId = localStorage.getItem('customerId');
-            
+
             try {
                 const response = await fetch('http://localhost:8080/api/order-history', {
                     method: 'POST',
@@ -78,7 +78,7 @@ const OrderHistory = () => {
                                         </span>
                                         <span className="text-green-600 font-bold">₹{order.totalPrice}</span>
                                     </div>
-                                    
+
                                     <div className="border-t pt-4">
                                         <h3 className="font-semibold text-gray-800 mb-2">Services Ordered:</h3>
                                         <ul className="space-y-2">
@@ -86,7 +86,7 @@ const OrderHistory = () => {
                                                 const service = Object.values(services)
                                                     .flat()
                                                     .find(service => service.id === serviceId);
-                                                
+
                                                 return (
                                                     <li key={index} className="bg-gray-50 p-2 rounded flex justify-between items-center">
                                                         <span className="text-gray-700">

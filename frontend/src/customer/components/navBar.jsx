@@ -1,9 +1,7 @@
 import { Link } from 'react-router-dom';
-import React, { useState } from 'react';
+import React from 'react';
 import logo from '../../assets/logo.jpg';
 import { FaShoppingCart } from 'react-icons/fa';
-
-import profileLogo from '../../assets/profile2.jpg';
 
 const NavBar = () => {
     const handleLogout = () => {
@@ -30,9 +28,8 @@ const NavBar = () => {
 
                         {/* Right Section: Navigation, Shopping Cart and Profile */}
                         <div className="flex items-center gap-8">
-                            {/* Navigation Links */}
                             <div className="flex items-center gap-8">
-                            <Link to="/customer/order-history" className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
+                                <Link to="/customer/order-history" className="text-[#e8f0e5] font-medium cursor-pointer transition-colors duration-300 hover:text-[#99cceb] text-lg">
                                     Order History
                                 </Link>
                                 <Link to="/customer/aboutUs">

@@ -1,6 +1,5 @@
 package com.example.UC_Backend.HelperFunctionIO.addCustomer;
 
-
 /**
  * For giving back response to the frontend in json format
  */
@@ -16,6 +15,7 @@ public class addCustomerResponse {
     public String getMessage() {
         return message;
     }
+
     public int getCustomerId() {
         return customerId;
     }

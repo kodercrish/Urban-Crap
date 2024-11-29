@@ -5,20 +5,21 @@ package com.example.UC_Backend.HelperFunctionIO.getAgentDetails;
  */
 import com.example.UC_Backend.Users.ServiceAgent;
 
-public class getAgentDetailsResponse{
+public class getAgentDetailsResponse {
     private String message;
     private ServiceAgent agent;
 
     public getAgentDetailsResponse(String message, ServiceAgent agent) {
         this.message = message;
-        this.agent=agent;
+        this.agent = agent;
     }
 
     public String getMessage() {
         return message;
     }
-    public ServiceAgent getAgent(){
+
+    public ServiceAgent getAgent() {
         return this.agent;
     }
-    
+
 }

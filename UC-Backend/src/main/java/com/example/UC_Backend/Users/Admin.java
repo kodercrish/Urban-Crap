@@ -9,34 +9,36 @@ import java.util.UUID;
  * Contains details of Admin
  */
 @Document(collection = "admins")
-public class Admin extends User{
+public class Admin extends User {
     @Id
     private String id = UUID.randomUUID().toString(); // Unique value for each document;
     private int adminId;
     private String accesscode;
 
-    public Admin(int adminId,String name, String email, String password, String accesscode) {
+    public Admin(int adminId, String name, String email, String password, String accesscode) {
         super(name, email, password);
-        this.accesscode=accesscode;
-        this.adminId=adminId;
-    
+        this.accesscode = accesscode;
+        this.adminId = adminId;
+
     }
 
-    public String getName()
-    {
+    public String getName() {
         return super.name;
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return super.email;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
-    public String getAccessCode(){
+
+    public String getAccessCode() {
         return accesscode;
     }
-    public int getAdminId(){
+
+    public int getAdminId() {
         return adminId;
     }
 }

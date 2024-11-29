@@ -10,8 +10,9 @@ import java.util.ArrayList;
 public class getAllSAResponse {
     private String message;
     private ArrayList<ServiceAgent> agents;
+
     public getAllSAResponse(String message, ArrayList<ServiceAgent> agents) {
-        this.message=message;
+        this.message = message;
         this.agents = agents;
     }
 
@@ -22,12 +23,13 @@ public class getAllSAResponse {
     public void setAgents(ArrayList<ServiceAgent> agents) {
         this.agents = agents;
     }
+
     public String getMessage() {
         return message;
     }
-    public void setMessage(String message)
-    {
-        this.message=message;
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

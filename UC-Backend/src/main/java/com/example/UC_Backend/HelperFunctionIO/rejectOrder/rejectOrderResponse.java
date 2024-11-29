@@ -1,6 +1,5 @@
 package com.example.UC_Backend.HelperFunctionIO.rejectOrder;
 
-
 /**
  * For giving back response to the frontend in json format
  */

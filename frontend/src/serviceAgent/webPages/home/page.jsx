@@ -4,11 +4,11 @@ import services from '../../../customer/components/servicesData.jsx';
 
 function AgentHome() {
   const [orders, setOrders] = useState({ pending: {}, completed: {} });
-  const agentId = localStorage.getItem('agentId'); // AgentId from localStorage
+  const agentId = localStorage.getItem('agentId');  // AgentId from localStorage
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://localhost:8080/api/sa/orders', {
+      const response = await fetch('http://localhost:8080/api/service-agent/orders', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -18,11 +18,11 @@ function AgentHome() {
       const data = await response.json();
       const serviceAgent = data.agent;
 
-      // Create a map of service IDs to orders
+      // A map of service IDs to orders
       const pendingOrders = {};
       const completedOrders = {};
 
-      // Process pending orders
+      // Processes pending orders
       if (serviceAgent.pending_orders) {
         Object.entries(serviceAgent.pending_orders).forEach(([serviceId, orderList]) => {
           orderList.forEach(order => {
@@ -31,7 +31,7 @@ function AgentHome() {
         });
       }
 
-      // Process completed orders
+      // Processes completed orders
       if (serviceAgent.completed_orders) {
         Object.entries(serviceAgent.completed_orders).forEach(([serviceId, orderList]) => {
           orderList.forEach(order => {
@@ -51,7 +51,6 @@ function AgentHome() {
 
   useEffect(() => {
     fetchOrders(); // Initial fetch
-
     const interval = setInterval(() => {
       fetchOrders(); // Fetch orders every 5 seconds
     }, 5000);
@@ -59,10 +58,9 @@ function AgentHome() {
     return () => clearInterval(interval); // Cleanup the interval on unmount
   }, []);
 
-  // Handle Accept Order
   const handleAccept = async (orderId, serviceId) => {
     try {
-      const response = await fetch('http://localhost:8080/api/sa/acceptOrder', {
+      const response = await fetch('http://localhost:8080/api/service-agent/acceptOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -77,17 +75,15 @@ function AgentHome() {
       const data = await response.json();
       if (data.message === "SUCCESSFULLY ACCEPTED") {
         await fetchOrders();
-        // alert(data.message);
       }
     } catch (error) {
       console.error('Error accepting order:', error);
     }
   };
 
-  // Handle Reject Order
   const handleReject = async (orderId, serviceId) => {
     try {
-      const response = await fetch('http://localhost:8080/api/sa/rejectOrder', {
+      const response = await fetch('http://localhost:8080/api/service-agent/rejectOrder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +98,6 @@ function AgentHome() {
       const data = await response.json();
       if (data.message === "SUCCESSFULLY REJECTED") {
         await fetchOrders();
-        // alert(data.message);
       }
     } catch (error) {
       console.error('Error rejecting order:', error);

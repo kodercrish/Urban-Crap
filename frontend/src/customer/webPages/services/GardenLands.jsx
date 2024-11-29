@@ -29,7 +29,7 @@ function GardeningLandscapingPage() {
         console.error('Error fetching cart items:', error);
       }
     };
-    
+
     if (isAuthenticated) {
       fetchCartItems();
     }
@@ -79,9 +79,7 @@ function GardeningLandscapingPage() {
     }
   }
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (!isAuthenticated) return null;
 
   return (
     <Layout>

@@ -1,8 +1,8 @@
 import Layout from '../../layout.jsx';
-import storyImage from '../../../assets/WebImages2/AboutUs/HappyCustomers.png';
-import ourStoryImage from '../../../assets/OurStory2.jpg';
+import storyImage from '../../../assets/Website_Images/AboutUs/HappyCustomers.png';
+import ourStoryImage from '../../../assets/Website_Images/AboutUs/OurStory2.jpg';
 
-const AboutUs = () => {
+const CustomerAboutUs = () => {
     return (
         <Layout>
             <div className="bg-gradient-to-b from-white to-blue-50 min-h-screen py-16">
@@ -35,10 +35,10 @@ const AboutUs = () => {
                                 Our Story
                             </h2>
                             <p className="text-gray-700 leading-relaxed">
-                            Urban Crap was inspired by a simple idea: making expert home services accessible, reliable, and stress-free.
-From fixing leaky faucets to transforming spaces with stunning decor, our journey began with a mission to take the hassle out of finding trustworthy service providers.
+                                Urban Crap was inspired by a simple idea: making expert home services accessible, reliable, and stress-free.
+                                From fixing leaky faucets to transforming spaces with stunning decor, our journey began with a mission to take the hassle out of finding trustworthy service providers.
 
-We believe that your home deserves the best care, whether it’s a quick repair, a thorough cleaning, or a complete makeover. Over the years, we've built a network of skilled professionals who share our passion for delivering exceptional quality and seamless experiences.
+                                We believe that your home deserves the best care, whether it’s a quick repair, a thorough cleaning, or a complete makeover. Over the years, we've built a network of skilled professionals who share our passion for delivering exceptional quality and seamless experiences.
                             </p>
                         </div>
                     </section>
@@ -98,7 +98,7 @@ We believe that your home deserves the best care, whether it’s a quick repair,
                                 Our Mission & Vision
                             </h2>
                             <p className="text-gray-700 leading-relaxed">
-                                At Urban Crap, our mission is simple: to provide unparalleled home services that enhance your lifestyle. 
+                                At Urban Crap, our mission is simple: to provide unparalleled home services that enhance your lifestyle.
                                 With a vision to become the go-to platform for all home needs, we’re committed to delivering solutions that are efficient, reliable, and tailored to your requirements.
                             </p>
                         </div>
@@ -117,10 +117,10 @@ We believe that your home deserves the best care, whether it’s a quick repair,
                             Join the Urban Crap Journey
                         </h2>
                         <p className="text-gray-700 max-w-2xl mx-auto mb-6">
-                            Ready to transform your home? Explore our wide range of services and experience the Urban Crap difference today. 
+                            Ready to transform your home? Explore our wide range of services and experience the Urban Crap difference today.
                             Let’s create the home of your dreams, one service at a time.
                         </p>
-                        
+
                     </section>
                 </div>
             </div>
@@ -128,4 +128,4 @@ We believe that your home deserves the best care, whether it’s a quick repair,
     );
 };
 
-export default AboutUs;
+export default CustomerAboutUs;

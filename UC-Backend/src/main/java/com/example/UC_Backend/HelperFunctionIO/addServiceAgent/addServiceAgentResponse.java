@@ -1,6 +1,5 @@
 package com.example.UC_Backend.HelperFunctionIO.addServiceAgent;
 
-
 /**
  * For giving back response to the frontend in json format
  */
@@ -16,6 +15,7 @@ public class addServiceAgentResponse {
     public String getMessage() {
         return message;
     }
+
     public int getAgentId() {
         return agentId;
     }

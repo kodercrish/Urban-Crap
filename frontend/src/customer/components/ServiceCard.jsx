@@ -1,3 +1,6 @@
+/**
+ * Contains the ServiceCard component
+ */
 export const ServiceCard = ({ service, onBook, onRemove, isInCart }) => {
     return (
         <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition-shadow flex flex-col w-full max-w-xl">

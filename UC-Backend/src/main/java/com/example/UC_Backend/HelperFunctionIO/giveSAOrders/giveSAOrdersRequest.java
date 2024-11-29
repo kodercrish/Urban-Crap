@@ -7,15 +7,18 @@ package com.example.UC_Backend.HelperFunctionIO.giveSAOrders;
 public class giveSAOrdersRequest {
     private int agentId;
 
-    public giveSAOrdersRequest() {} // Default constructor for deserialization
+    public giveSAOrdersRequest() {
+    } // Default constructor for deserialization
 
     public giveSAOrdersRequest(int agentId) {
         this.agentId = agentId;
     }
+
     public int getAgentId() {
         return agentId;
     }
-    public void setAgentId(int agentId) { 
+
+    public void setAgentId(int agentId) {
         this.agentId = agentId;
     }
 }

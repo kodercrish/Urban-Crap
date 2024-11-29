@@ -96,7 +96,7 @@ public class getAvailableSA {
          * }
          * }
          */
-        
+
         // CLEANER
         else if (service.substring(0, 3).equals("CLE")) {
             for (ServiceAgent agent : agents) {

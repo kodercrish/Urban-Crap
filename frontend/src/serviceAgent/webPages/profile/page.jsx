@@ -6,7 +6,7 @@ import { FaMapMarkerAlt } from "react-icons/fa";
 
 
 const AgentProfile = () => {
-  
+
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -19,7 +19,7 @@ const AgentProfile = () => {
 
   // Check if the admin is authenticated
   useEffect(() => {
-    const agentToken = localStorage.getItem('agentId'); // Example: storing a token in local storage
+    const agentToken = localStorage.getItem('agentId');
     if (!agentToken) {
       navigate("/agent/SignIn"); // Redirect to login if no token is found
     } else {
@@ -36,13 +36,13 @@ const AgentProfile = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          agentId: parseInt(agentId)  // Make sure this matches your backend expected field name
+          agentId: parseInt(agentId)
         })
       });
 
       const data = await response.json();
       if (data.agent) {
-        const agentData=data.agent;
+        const agentData = data.agent;
         setProfileData({
           name: agentData.name,
           email: agentData.email,
@@ -66,7 +66,7 @@ const AgentProfile = () => {
   return (
     <Layout>
       <div className="w-4/5 max-w-3xl mx-auto my-12 bg-white rounded-lg shadow-lg p-5">
-              
+
         {/* Header Section */}
         <div className="flex flex-col items-center bg-[#1c4e80] text-white p-4 rounded-t-lg">
           <h1 className="text-2xl font-bold mt-2">Welcome, {profileData.name}!</h1>
@@ -95,14 +95,14 @@ const AgentProfile = () => {
             <span className="text-gray-600">{profileData.email}</span>
           </div>
 
-          
+
           <div className="flex items-center py-3 border-b border-gray-200">
             <FaPhone className="text-[#1c4e80] text-xl mr-3" />
             <span className="font-semibold text-gray-700 mr-2">Location:</span>
             <span className="text-gray-600">{profileData.location}</span>
           </div>
 
-          
+
           <div className="flex items-center py-3 border-b border-gray-200">
             <FaMapMarkerAlt className="text-[#1c4e80] text-xl mr-3" />
             <span className="font-semibold text-gray-700 mr-2">Service Radius:</span>

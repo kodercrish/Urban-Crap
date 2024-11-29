@@ -1,8 +1,8 @@
 package com.example.UC_Backend.HelperFunctionIO.addServiceAgent;
 
-
 /**
- * For taking input from the frontend in json format and converting it into java object of this class.
+ * For taking input from the frontend in json format and converting it into java
+ * object of this class.
  */
 public class addServiceAgentRequest {
     private String name;
@@ -12,15 +12,17 @@ public class addServiceAgentRequest {
     private int range;
     private String location;
 
-    public addServiceAgentRequest() {};
-    public addServiceAgentRequest(String name, String email, String password,String[] skill,int range,String location) {
+    public addServiceAgentRequest() {} // for deserialization
+    public addServiceAgentRequest(String name, String email, String password, String[] skill, int range,
+            String location) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.skill=skill;
-        this.range=range;
-        this.location=location;
+        this.skill = skill;
+        this.range = range;
+        this.location = location;
     }
+
     public String getName() {
         return name;
     }
@@ -33,10 +35,10 @@ public class addServiceAgentRequest {
     public String getPassword() {
         return password;
     }
-    public int getRange(){
+    public int getRange() {
         return range;
     }
-    public String getLocation(){
+    public String getLocation() {
         return location;
     }
 }

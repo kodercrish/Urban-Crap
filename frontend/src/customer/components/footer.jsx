@@ -1,6 +1,8 @@
 import logo from '../../assets/logo.jpg';
-import { Link } from 'react-router-dom';
 
+/**
+ * Footer component for the customer page.
+ */
 function Footer() {
     return (
         <footer className="bg-[#1c4e80] p-1 __className_8cc72f">

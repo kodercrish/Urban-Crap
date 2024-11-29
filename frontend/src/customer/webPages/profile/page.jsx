@@ -3,7 +3,6 @@ import Layout from '../../layout.jsx';
 import { FaUser, FaPhone, FaEnvelope } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-
 const CustomerProfile = () => {
 
   const [profileData, setProfileData] = useState({
@@ -11,8 +10,7 @@ const CustomerProfile = () => {
     email: '',
     phone: ''
   });
-
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // Check if the admin is authenticated
@@ -104,4 +102,3 @@ const CustomerProfile = () => {
 };
 
 export default CustomerProfile;
-

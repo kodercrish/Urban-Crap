@@ -9,7 +9,6 @@ import AgentSignIn from './serviceAgent/webPages/signIn/page.jsx';
 import CustomerSignUp from './customer/webPages/signUp/page.jsx';
 
 import AdminHome from "./admin/webPages/home/page.jsx";
-import AdminProfile from "./admin/webPages/profile/page.jsx";
 
 import AgentHome from "./serviceAgent/webPages/home/page.jsx";
 import AgentProfile from "./serviceAgent/webPages/profile/page.jsx";
@@ -19,7 +18,6 @@ import CustomerProfile from "./customer/webPages/profile/page.jsx";
 import CustomerShoppingCart from "./customer/webPages/cart/page.jsx";
 import OrderHistory from './customer/webPages/orderHistory/page.jsx';
 
-
 import ACRepairPage from './customer/webPages/services/ACRepair.jsx';
 import CleaningPestPage from './customer/webPages/services/CleanPest.jsx';
 import EPCPage from './customer/webPages/services/epc.jsx';
@@ -27,11 +25,8 @@ import PaintingPage from './customer/webPages/services/paintdecor.jsx';
 import SalonPage from './customer/webPages/services/Salon.jsx';
 import GardeningPage from './customer/webPages/services/GardenLands.jsx';
 
-
-import AboutUs from './customer/webPages/aboutUs/page.jsx';
+import CustomerAboutUs from './customer/webPages/aboutUs/page.jsx';
 import AgentAboutUs from './serviceAgent/webPages/aboutUs/page.jsx';
-
-
 
 const App = () => {
     return (
@@ -57,7 +52,6 @@ const App = () => {
                 <Route path="/agent/profile" element={<AgentProfile />} />
 
                 <Route path="/admin/home" element={<AdminHome />} />
-                <Route path="/admin/profile" element={<AdminProfile />} />
 
                 {/*Customer Service Pages*/}
                 <Route path="/customer/services/ACRepair" element={<ACRepairPage />} />
@@ -71,7 +65,7 @@ const App = () => {
                 <Route path="/customer/cart" element={<CustomerShoppingCart />} />
 
                 {/*About Us*/}
-                <Route path="/customer/aboutUs" element={<AboutUs />} />
+                <Route path="/customer/aboutUs" element={<CustomerAboutUs />} />
                 <Route path="/agent/aboutUs" element={<AgentAboutUs />} />
             </Routes>
         </Router>

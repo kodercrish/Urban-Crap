@@ -1,6 +1,5 @@
 package com.example.UC_Backend.HelperFunctionIO.loginAdmin;
 
-
 /**
  * For giving back response to the frontend in json format
  */
@@ -16,6 +15,7 @@ public class loginAdminResponse {
     public String getMessage() {
         return message;
     }
+
     public int getAdminId() {
         return adminId;
     }

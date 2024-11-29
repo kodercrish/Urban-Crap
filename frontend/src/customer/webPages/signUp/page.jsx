@@ -10,60 +10,57 @@ const CustomerSignUp = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-          if (password !== confirmPassword) {
-              alert("Passwords do not match");
-              return;
-          }
-  
-          const response = await fetch('http://localhost:8080/api/addcustomer', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  name: name,
-                  email: email,
-                  phone: parseInt(phone), // Convert to integer
-                  password: password
-              })
-          });
-
-        const data = await response.json();
-        if(data.customerId==0 || data.customerId==-1){
-          alert(data.message);
-        }
-        else{
-          // store the customerId in local storage
-
-          navigate('/customer/home');
-        }
-      } catch (error) {
-          alert("Registration failed. Please try again.");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return;
       }
+      const response = await fetch('http://localhost:8080/api/addcustomer', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          phone: parseInt(phone), // Convert to integer
+          password: password
+        })
+      });
+
+      const data = await response.json();
+      if (data.customerId == 0 || data.customerId == -1) {
+        alert(data.message);
+      }
+      else {
+        navigate('/customer/home');
+      }
+    } catch (error) {
+      alert("Registration failed. Please try again.");
+    }
   }
 
   return (
     <div className="min-h-screen bg-[#eaf0f7] p-8">
       {/* Back Button */}
-      <button 
+      <button
         onClick={() => navigate(-1)}
         className="flex items-center gap-2 text-[#1c4e80] hover:text-[#2d7abc] mb-8"
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-5 w-5" 
-          fill="none" 
-          viewBox="0 0 24 24" 
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M10 19l-7-7m0 0l7-7m-7 7h18" 
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"
           />
         </svg>
         Back
@@ -71,9 +68,9 @@ const CustomerSignUp = () => {
 
       {/* Logo and Company Name */}
       <div className="flex flex-col items-center mb-7">
-        <img 
-          src={logo} 
-          alt="Urban Crap Logo" 
+        <img
+          src={logo}
+          alt="Urban Crap Logo"
           className="w-24 h-24 rounded-full mb-4"
         />
         <h1 className="text-3xl font-bold text-[#1c4e80]">Urban Crap</h1>
@@ -88,7 +85,7 @@ const CustomerSignUp = () => {
       {/* Sign Up Form */}
       <div className="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
         <h2 className="text-2xl font-semibold text-[#1c4e80] mb-8">Let's go!</h2>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <input

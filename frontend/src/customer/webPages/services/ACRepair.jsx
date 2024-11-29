@@ -17,7 +17,7 @@ function ACApplianceService() {
       setIsAuthenticated(true);
     }
   }, [navigate, customerToken]);
-  
+
   // New useEffect to fetch cart items on mount
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -30,61 +30,57 @@ function ACApplianceService() {
         console.error('Error fetching cart items:', error);
       }
     };
-    
+
     if (isAuthenticated) {
       fetchCartItems();
     }
   }, [isAuthenticated]);
-  
-  if (!isAuthenticated) {
-    return null;
-  }
-  
-// Modify addServiceToCart function
-const addServiceToCart = async (serviceId) => {
-  const customerId = localStorage.getItem('customerId');
-    try {
-        const response = await fetch('http://localhost:8080/api/addToCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                serviceId: serviceId,
-                customerId: parseInt(customerId),
-            })
-        });
-        const data = await response.json();
-        setCartItems(prev => new Set([...prev, serviceId]));
-    } catch (error) {
-        alert("Error");
-    }
-}
 
-// Add new remove function
-const removeFromCart = async (serviceId) => {
-  const customerId = localStorage.getItem('customerId');
+  if (!isAuthenticated) return null;
+
+  const addServiceToCart = async (serviceId) => {
+    const customerId = localStorage.getItem('customerId');
     try {
-        const response = await fetch('http://localhost:8080/api/removeFromCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                serviceId: serviceId,
-                customerId: parseInt(customerId),
-            })
-        });
-        const data = await response.json();
-        setCartItems(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(serviceId);
-            return newSet;
-        });
+      const response = await fetch('http://localhost:8080/api/addToCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          serviceId: serviceId,
+          customerId: parseInt(customerId),
+        })
+      });
+      const data = await response.json();
+      setCartItems(prev => new Set([...prev, serviceId]));
     } catch (error) {
-        alert("Error");
+      alert("Error");
     }
-}
+  }
+
+  const removeFromCart = async (serviceId) => {
+    const customerId = localStorage.getItem('customerId');
+    try {
+      const response = await fetch('http://localhost:8080/api/removeFromCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          serviceId: serviceId,
+          customerId: parseInt(customerId),
+        })
+      });
+      const data = await response.json();
+      setCartItems(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(serviceId);
+        return newSet;
+      });
+    } catch (error) {
+      alert("Error");
+    }
+  }
 
   return (
     <Layout>
@@ -95,33 +91,31 @@ const removeFromCart = async (serviceId) => {
           </h1>
 
           <div className="flex justify-center mb-6">
-            <button 
+            <button
               onClick={() => setActiveCategory('appliances')}
-              className={`px-4 py-2 mr-2 rounded-lg ${
-                activeCategory === 'appliances' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
+              className={`px-4 py-2 mr-2 rounded-lg ${activeCategory === 'appliances'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700'
+                }`}
             >
               Home Appliances
             </button>
-            <button 
+            <button
               onClick={() => setActiveCategory('electrical')}
-              className={`px-4 py-2 rounded-lg ${
-                activeCategory === 'electrical' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
+              className={`px-4 py-2 rounded-lg ${activeCategory === 'electrical'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700'
+                }`}
             >
               Electrical Services
             </button>
           </div>
-            {ServicesList({ 
-              category: activeCategory,
-              onBookService: addServiceToCart,
-              onRemoveService: removeFromCart,
-              cartItems: cartItems
-            })}
+          {ServicesList({
+            category: activeCategory,
+            onBookService: addServiceToCart,
+            onRemoveService: removeFromCart,
+            cartItems: cartItems
+          })}
           <div className="mt-6 text-center bg-blue-100 p-4 rounded-lg border border-blue-300">
             <p className="text-blue-800 font-semibold">
               🏠 Professional Home Services Available

@@ -29,7 +29,7 @@ function EPCServicesPage() {
         console.error('Error fetching cart items:', error);
       }
     };
-    
+
     if (isAuthenticated) {
       fetchCartItems();
     }
@@ -79,9 +79,7 @@ function EPCServicesPage() {
     }
   }
 
-  if (!isAuthenticated) {
-    return null;
-  }
+  if (!isAuthenticated) return null;
 
   return (
     <Layout>
@@ -94,22 +92,20 @@ function EPCServicesPage() {
           <div className="flex justify-center mb-6 space-x-4">
             <button
               onClick={() => setActiveCategory('electrical')}
-              className={`px-6 py-2 rounded-lg transition-colors duration-200 ${
-                activeCategory === 'electrical' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+              className={`px-6 py-2 rounded-lg transition-colors duration-200 ${activeCategory === 'electrical'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
             >
               Electrical
             </button>
-           
+
             <button
               onClick={() => setActiveCategory('carpenter')}
-              className={`px-6 py-2 rounded-lg transition-colors duration-200 ${
-                activeCategory === 'carpenter' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+              className={`px-6 py-2 rounded-lg transition-colors duration-200 ${activeCategory === 'carpenter'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
             >
               Carpenter
             </button>

@@ -30,7 +30,6 @@ const CustomerSignIn = () => {
         // Store the agentId in local storage
         localStorage.setItem('agentId', data.agentId);
 
-        // store the agentId in local storage
         navigate('/agent/home');
       }
     } catch (error) {

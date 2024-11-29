@@ -30,7 +30,7 @@ function SalonPage() {
         console.error('Error fetching cart items:', error);
       }
     };
-    
+
     if (isAuthenticated) {
       fetchCartItems();
     }
@@ -93,29 +93,27 @@ function SalonPage() {
           </h1>
 
           <div className="flex justify-center mb-6">
-            <button 
+            <button
               onClick={() => setActiveCategory('men')}
-              className={`px-4 py-2 mr-2 rounded-lg ${
-                activeCategory === 'men' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
+              className={`px-4 py-2 mr-2 rounded-lg ${activeCategory === 'men'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700'
+                }`}
             >
               Men's Services
             </button>
-            <button 
+            <button
               onClick={() => setActiveCategory('women')}
-              className={`px-4 py-2 rounded-lg ${
-                activeCategory === 'women' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-200 text-gray-700'
-              }`}
+              className={`px-4 py-2 rounded-lg ${activeCategory === 'women'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700'
+                }`}
             >
               Women's Services
             </button>
           </div>
 
-          {ServicesList({ 
+          {ServicesList({
             category: activeCategory,
             onBookService: addServiceToCart,
             onRemoveService: removeFromCart,

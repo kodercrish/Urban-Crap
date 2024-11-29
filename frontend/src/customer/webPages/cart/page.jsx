@@ -12,7 +12,6 @@ const CustomerShoppingCart = () => {
     const [selectedLocation, setSelectedLocation] = useState('');
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
     const locations = [
         "Electronic City",
         "Bommasandra",
@@ -45,11 +44,11 @@ const CustomerShoppingCart = () => {
 
     // Check if the admin is authenticated
     useEffect(() => {
-        const customerToken = localStorage.getItem('customerId'); // Example: storing a token in local storage
+        const customerToken = localStorage.getItem('customerId');
         if (!customerToken) {
-            navigate("/customer/SignIn"); // Redirect to login if no token is found
+            navigate("/customer/SignIn");   // Redirect to login if no token is found
         } else {
-            setIsAuthenticated(true); // Mark as authenticated
+            setIsAuthenticated(true);   // Mark as authenticated
         };
     }, [navigate]);
 
@@ -138,7 +137,7 @@ const CustomerShoppingCart = () => {
         }
     };
 
-    // Add this JSX for the location popup
+    // JSX for the location popup
     const LocationPopup = () => (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-6 rounded-lg shadow-xl w-96">
@@ -219,7 +218,7 @@ const CustomerShoppingCart = () => {
                 </div>
 
             </div>
-            {/* Add the popup to your return statement before the closing Layout tag: */}
+            {/* Popup before the closing Layout tag: */}
             {showLocationPopup && <LocationPopup />}
         </Layout>
     );

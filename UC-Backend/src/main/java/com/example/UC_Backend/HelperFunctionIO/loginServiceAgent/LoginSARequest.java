@@ -1,5 +1,9 @@
 package com.example.UC_Backend.HelperFunctionIO.loginServiceAgent;
 
+/**
+ * Accepts data from frontend in json format
+ */
+
 public class LoginSARequest {
     private String email;
     private String password;
@@ -12,6 +16,7 @@ public class LoginSARequest {
     public String getEmail() {
         return email;
     }
+
     public String getPassword() {
         return password;
     }
