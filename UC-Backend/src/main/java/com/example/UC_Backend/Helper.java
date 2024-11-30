@@ -310,8 +310,8 @@ public class Helper {
                 order.setCart(customer.getShoppingCart());
                 orderCollection.save(order);
 
-                customer.getShoppingCart().clear();
-                customerCollection.save(customer);
+                // customer.getShoppingCart().clear();
+                // customerCollection.save(customer);
 
                 // GEtting all service agents
                 ArrayList<ServiceAgent> agents = new ArrayList<>();
